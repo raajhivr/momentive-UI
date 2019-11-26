@@ -1490,7 +1490,7 @@ selectItem(index, data, radiodata): void {
   this.selectedId = index;
   this.value = data;
   this.radiovalue = radiodata;
-  this.productBox(index, this.value, this.radiovalue);
+  this.productRadioBox(index, this.value, this.radiovalue);
 }
 /*Product Attribute*/
 
@@ -1665,7 +1665,60 @@ onChangeProductAttribute(item) {
     }
   }
 
-  productBox(index, value, Item) {
+  productBox(index, value) {
+    this.selectedboxId = index;
+    console.log(this.selectedboxId);
+    console.log(value);
+    this.selectedId = index;
+    this.modalValue = value;
+    console.log(this.selectedId);
+    console.log(this.modalValue);
+    console.log(this.radioItem);
+    this.firstModal = false;
+    this.secondModal = false;
+    this.thirdModal = false;
+    this.fourthModal = false;
+    this.fifthModal = false;
+    this.sixthModal = false;
+    this.seventhModal = false;
+    this.eightModal = false;
+    if ( this.modalValue === 'compositionModal') {
+    this.productTitle = 'Product Attributes';
+    this.firstModal = true;
+    this.onChangeProductAttribute(this.radioItem);
+  } else if ( this.modalValue === 'complianceModal') {
+    this.productTitle = 'Product Complaince';
+    this.secondModal = true;
+    this. onChangeProductCompliance(this.radioItem);
+  } else if ( this.modalValue === 'communicationModal') {
+    this.productTitle = 'Customer Communication';
+    this.thirdModal = true;
+    this.onChangeCommunication(this.radioItem);
+  } else if ( this.modalValue === 'restrictedSubstanceModal') {
+    this.productTitle = 'Restricted Substance';
+    this.fourthModal = true;
+    this.onChangeRestricted(this.radioItem);
+  } else if ( this.modalValue === 'toxicologyModal') {
+    this.productTitle = 'Toxicology';
+    this.fifthModal = true;
+    this.onChangeToxicology(this.radioItem);
+  } else if ( this.modalValue === 'salesModal') {
+    this.productTitle = 'Sales Information';
+    this.sixthModal = true;
+    this.onChangeSales(this.radioItem);
+  }
+    if ( this.modalValue === 'reportModal') {
+    this.productTitle = 'Report Data';
+    this.seventhModal = true;
+  }
+    if ( this.modalValue === 'serviceReportModal') {
+    this.productTitle = 'Self Service Report';
+    this.eightModal = true;
+  }
+  }
+
+
+  productRadioBox(index, value, Item) {
     this.selectedboxId = index;
     console.log(this.selectedboxId);
     console.log(value);
@@ -1750,18 +1803,18 @@ console.log(value);
   }
 
   /* Excel Report for click Functionality*/
-  exportAsXLSX(data): void {
-    this.homeService.exportAsExcelFile(this.ExcelCommunicationHistoryData, 'communication_History');
-  }
-  exportStandardXLSX(data): void {
-    this.homeService.exportAsExcelFile(this.ExcelStandardData, 'standard_composition');
-  }
-  exportLegalXLSX(data): void {
-    this.homeService.exportAsExcelFile(this.legalCompositionData, 'legal_Composition');
-  }
-  exportHunderedXLSX(data): void {
-    this.homeService.exportAsExcelFile(this.hunderedCompositionData, 'hundered_Composition');
-  }
+  // exportAsXLSX(data): void {
+  //   this.homeService.exportAsExcelFile(this.ExcelCommunicationHistoryData, 'communication_History');
+  // }
+  // exportStandardXLSX(data): void {
+  //   this.homeService.exportAsExcelFile(this.ExcelStandardData, 'standard_composition');
+  // }
+  // exportLegalXLSX(data): void {
+  //   this.homeService.exportAsExcelFile(this.legalCompositionData, 'legal_Composition');
+  // }
+  // exportHunderedXLSX(data): void {
+  //   this.homeService.exportAsExcelFile(this.hunderedCompositionData, 'hundered_Composition');
+  // }
 
   onItemSelect(item: any) {
     console.log(item);
@@ -2037,7 +2090,7 @@ topCheckBox(checkStatus, data) {
   });
 }
 }
-subCheckBox(checkStatus, data, id) {
+subCheckBox(checkStatus,data,id) {
   console.log(id);
   this.parentObject = this.sidebarCategoriesData[id];
   console.log(this.parentObject);
