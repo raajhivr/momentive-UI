@@ -65,14 +65,10 @@ export class HomeComponent implements OnInit {
   flowDiagrams = false;
   /*Product compliance */
   ProductComplianceCheck: any = [];
-  productComplianceCheck = 'US FDA Letter';
-  usFDA = true;
-  EuFoodContact = false;
-  complianceNotification = false;
+  productComplianceCheck = 'Notification Status';
+  complianceNotification = true;
   complianceRegistration = false;
-  notificationStatus = false;
-  registrationStatus = false;
-  regionParts: any = [];
+   regionParts: any = [];
   regionValueCheck: any;
   // tslint:disable-next-line: variable-name
   complaint_EU = true;
@@ -86,8 +82,10 @@ export class HomeComponent implements OnInit {
   complaint_america = false;
   regionPart: any = [];
   customerCommunicationChecks: any = [];
-  customerCommunicationTab = 'Heavy Metals Composition';
-  heavyMetals = true;
+  customerCommunicationTab = 'US FDA Letter';
+  usFDA = true;
+  EuFoodContact = false;
+  heavyMetals = false;
   communicationHistory = false;
   restrictedSubstanceChecks: any = [];
   restrictedSubstanceTab = 'GADSL';
@@ -1011,16 +1009,10 @@ export class HomeComponent implements OnInit {
                  tab_modal: 'complianceModal',
                  tab_content: [
                   {
-                    name: 'US FDA Letter', id: 1,
+                    name: 'Notification Status', id: 1,
                   },
                   {
-                    name: 'EU Food Contact', id: 2,
-                  },
-                  {
-                    name: 'Notification Status', id: 3,
-                  }, 
-                  {
-                    name: 'AG Registration Status', id: 4,
+                    name: 'AG Registration Status', id: 2,
                   }],
               },
               {
@@ -1034,10 +1026,16 @@ export class HomeComponent implements OnInit {
                  customer_name: 'OU EUROBIO LAB',
                  tab_content: [
                   {
-                    name: 'Heavy Metals Composition', id: 1,
+                    name: 'US FDA Letter', id: 1,
                   },
                   {
-                    name: 'Communication History', id: 2,
+                    name: 'EU Food Contact', id: 2,
+                  },
+                  {
+                    name: 'Heavy Metals Composition', id: 3,
+                  },
+                  {
+                    name: 'Communication History', id: 4,
                   }],
               },
               {
@@ -1489,7 +1487,7 @@ CompositionTypes(value) {
 selectItem(index, data, radiodata): void {
   this.selectedId = index;
   this.value = data;
-  this.radiovalue = radiodata;
+  this.radiovalue = radiodata;  
   this.productRadioBox(index, this.value, this.radiovalue);
 }
 /*Product Attribute*/
@@ -1548,28 +1546,15 @@ onChangeProductAttribute(item) {
       this.compositionStandardTypes = true;
     }
   }
-
+ 
   /*Product compliance*/
   onChangeProductCompliance(item) {
     this.productComplianceCheck = item;
-    if (this.productComplianceCheck === 'US FDA Letter') {
-      this.usFDA = true;
-      this.EuFoodContact = false;
-      this.notificationStatus = false;
-      this.registrationStatus = false;
-    } else if (this.productComplianceCheck === 'EU Food Contact') {
-      this.usFDA = false;
-      this.EuFoodContact = true;
-      this.notificationStatus = false;
-      this.registrationStatus = false;
-    } else if (this.productComplianceCheck === 'Notification Status') {
-      this.usFDA = false;
-      this.EuFoodContact = false;
+     // tslint:disable-next-line: align
+     if (this.productComplianceCheck === 'Notification Status') {
       this.complianceNotification = true;
       this.complianceRegistration = false;
     } else if (this.productComplianceCheck === 'AG Registration Status') {
-      this.usFDA = false;
-      this.EuFoodContact = false;
       this.complianceNotification = false;
       this.complianceRegistration = true;
     }
@@ -1592,13 +1577,26 @@ onChangeProductAttribute(item) {
   }
   onChangeCommunication(item) {
     this.customerCommunicationTab = item;
-    if ( this.customerCommunicationTab === 'Heavy Metals Composition') {
+    if (this.customerCommunicationTab === 'US FDA Letter') {
+      this.usFDA = true;
+      this.EuFoodContact = false;
+      this.heavyMetals = false;
+      this.communicationHistory = false;
+    } else if (this.customerCommunicationTab === 'EU Food Contact') {
+      this.usFDA = false;
+      this.EuFoodContact = true;
+      this.heavyMetals = false;
+      this.communicationHistory = false;
+    } else if ( this.customerCommunicationTab === 'Heavy Metals Composition') {
       this.heavyMetals = true;
       this.communicationHistory = false;
-    }
-    if (this.customerCommunicationTab === 'Communication History') {
+      this.usFDA = false;
+      this.EuFoodContact = false;
+    } else if (this.customerCommunicationTab === 'Communication History') {
       this.heavyMetals = false;
       this.communicationHistory = true;
+      this.usFDA = false;
+      this.EuFoodContact = false;
     }
   }
   onChangeRestricted(item) {
@@ -2054,8 +2052,11 @@ MouseModalBox(id: any, data: any) {
   modalOpenData.forEach(obj => {
     if (obj.tab_modal) {
       const ModalBoxId = obj.tab_modal;
-      this.openId = '#' + ModalBoxId;
-      $(this.openId).modal('show');
+      setTimeout(function() {
+          this.openId = '#' + ModalBoxId;
+          console.log(this.openId);
+          $(this.openId).modal('show');
+       }, 100);
       this.selectItem(index, ModalBoxId, Item);
     }});
 }

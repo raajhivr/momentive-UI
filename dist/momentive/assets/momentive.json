@@ -489,11 +489,17 @@
                     "modal_id": "customerCommunication",
                     "tab_modal": "communicationModal",
                     "tab_content":[
+                      {
+                        "name": "US FDA Letter","id":"1"
+                      },
+                      {
+                        "name": "EU Food Contact","id":"2"
+                      },
                      {
-                       "name": "Heavy Metals Composition","id":"1"
+                       "name": "Heavy Metals Composition","id":"3"
                      }, 
                      {
-                       "name": "Communication History","id":"2"
+                       "name": "Communication History","id":"4"
                      }],
      
                      "table_column":[{
@@ -624,16 +630,10 @@
 
                                 "tab_content":[
                                 {
-                                  "name": "US FDA Letter","id":"1"
-                                },
-                                {
-                                  "name": "EU Food Contact","id":"2"
-                                },
-                                {
-                                  "name": "Notification Status","id":"3"
+                                  "name": "Notification Status","id":"1"
                                 }, 
                                 {
-                                  "name": "AG Registration Status","id":"4"
+                                  "name": "AG Registration Status","id":"2"
                                 }]
                 
                             },
@@ -649,10 +649,16 @@
 
                               "tab_content":[
                                 {
-                                  "name": "Heavy Metals Composition","id":"1"
+                                  "name": "US FDA Letter","id":"1"
+                                },
+                                {
+                                  "name": "EU Food Contact","id":"2"
+                                },
+                                {
+                                  "name": "Heavy Metals Composition","id":"3"
                                 }, 
                                 {
-                                  "name": "Communication History","id":"2"
+                                  "name": "Communication History","id":"4"
                                 }]
 
                             },
@@ -792,19 +798,11 @@
 
               "tab_content":[
                 {
-                  "name": "US FDA Letter","id":"1",
-                  "sub": []
-                },
-                {
-                  "name": "EU Food Contact","id":"2",
-                  "sub": []
-                },
-                {
-                  "name": "Notification Status","id":"3",
+                  "name": "Notification Status","id":"1",
                   "sub": []
                 }, 
                 {
-                  "name": "AG Registration Status","id":"4",
+                  "name": "AG Registration Status","id":"2",
                   "sub": []
                 }]
 
@@ -821,11 +819,19 @@
 
               "tab_content":[
                 {
-                  "name": "Heavy Metals Composition","id":"1",
+                  "name": "US FDA Letter","id":"1",
+                  "sub": []
+                },
+                {
+                  "name": "EU Food Contact","id":"2",
+                  "sub": []
+                },
+                {
+                  "name": "Heavy Metals Composition","id":"3",
                   "sub": []
                 }, 
                 {
-                  "name": "Communication History","id":"2",
+                  "name": "Communication History","id":"4",
                   "sub": []
                 }]
 
@@ -966,21 +972,13 @@
                       "modal_id": "product_Compliance",
                       "tab_modal": "complianceModal",
                       "tab_content":[
+                  
                        {
-                         "name": "US FDA Letter","id":"1",
-                         "sub": []
-                       },
-                       {
-                         "name": "EU Food Contact","id":"2",
-                         "sub": []
-
-                       },
-                       {
-                         "name": "Notification Status","id":"3",
+                         "name": "Notification Status","id":"1",
                          "sub": []
                        }, 
                        {
-                         "name": "AG Registration Status","id":"4",
+                         "name": "AG Registration Status","id":"2",
                          "sub": []
                        }]
        
@@ -995,12 +993,21 @@
                       "tab_modal": "communicationModal",
                       "customer_name":"OU EUROBIO LAB",
                       "tab_content":[
+                        {
+                          "name": "US FDA Letter","id":"1",
+                          "sub": []
+                        },
+                        {
+                          "name": "EU Food Contact","id":"2",
+                          "sub": []
+ 
+                        },
                        {
-                         "name": "Heavy Metals Composition","id":"1",
+                         "name": "Heavy Metals Composition","id":"3",
                          "sub": []
                        }, 
                        {
-                         "name": "Communication History","id":"2",
+                         "name": "Communication History","id":"4",
                          "sub": []
                        }]
        
@@ -1295,7 +1302,20 @@
                      "checked": false
                   }
                     ],
-          "ProductComplianceCheck" : [{
+          "ProductComplianceCheck" : [
+          {
+              "name":"Notification Status",
+              "value":"item_3",
+              "checked": true
+           },
+           {
+               "name":"AG Registration Status",
+               "value":"item_4",
+               "checked": false
+          }],
+
+          "customerCommunicationChecks" : [
+            {
             "name":"US FDA Letter",
             "value":"item_1",
             "checked": true
@@ -1304,22 +1324,10 @@
              "name":"EU Food Contact",
              "value":"item_2",
              "checked": false
-          },
-          {
-              "name":"Notification Status",
-              "value":"item_3",
-              "checked": false
-           },
-           {
-               "name":"AG Registration Status",
-               "value":"item_4",
-               "checked": false
-          }],
-
-          "customerCommunicationChecks" : [{
+          },{
                "name":"Heavy Metals Composition",
                "value":"item_1",
-              "checked": true
+              "checked": false
           },{
               "name":"Communication History",
               "value":"item_2",
