@@ -109,6 +109,17 @@ call :ExecuteCmd !NPM_CMD! run build
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 )
+:: 3. Angular web-config
+IF EXIST "%DEPLOYMENT_SOURCE%/web.config" (
+echo Building App in %DEPLOYMENT_SOURCE%…
+pushd "%DEPLOYMENT_SOURCE%"
+call :ExecuteCmd cp web.config dist\
+:: If the above command fails comment above and uncomment below one
+IF !ERRORLEVEL! NEQ 0 goto error
+popd
+)
+
+
 
 :: 1. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (

@@ -92,7 +92,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "assets", "config.json",".htaccess"
+              "web.config"
             ],
             "styles": [
               "./node_modules/@ng-select/ng-select/themes/default.theme.css",
