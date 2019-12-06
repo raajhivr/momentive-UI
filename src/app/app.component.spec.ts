@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'momentive'`, () => {
+  it(`should have as title 'PIH-momentive'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('momentive');
+    expect(app.title).toEqual('PIH-momentive');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('momentive app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('PIH-momentive app is running!');
   });
 });
