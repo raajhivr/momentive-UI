@@ -1,16 +1,18 @@
 {
     "product_Name" : [
-        { "name":"LSR 2680FC A", "product":"Product Name"},
-        { "name":"LSR 2680FC B",  "product":"Product Name"},
-        { "name": "LSR 2680-BC C2",  "product":"Product Name"},
-        { "name": "LSR 2680FC B-C3", "product":"Product Name"},
-        { "name":  "LSR 2680FC A-C3", "product":"Product Name"},
-        { "name":  "LSR2680FC-A-BLK",  "product":"Product Name"},
-        { "name": "LSR2680FC-W A " ,  "product":"Product Name"},
-        { "name": "Silsoft* ETS", "product":"Product Name"},
-        { "name":"Silsoft* A-843 conditioning agent", "product":"Product Name"},
-        { "name":"Silsoft* 034 organosilicone", "product":"Product Name"},
-        { "name": "17861-60-8", "product":"Product Name"},
+        { "name":"LSR 2680FC A", "product":"Nam Prod"},
+        { "name":"LSR 2680FC B",  "product":"Nam Prod"},
+        { "name": "LSR 2680-BC C2",  "product":"Nam Prod"},
+        { "name": "LSR 2680FC B-C3", "product":"Nam Prod"},
+        { "name":  "LSR 2680FC A-C3", "product":"Nam Prod"},
+        { "name":  "LSR2680FC-A-BLK",  "product":"Nam Prod"},
+        { "name": "LSR2680FC-W A " ,  "product":"Nam Prod"},
+        { "name":"LSR2050", "product":"Nam Prod"},
+        { "name":"LSR2650",  "product":"Nam Prod"},
+        { "name": "Silsoft* ETS", "product":"Nam Prod"},
+        { "name":"Silsoft* A-843 conditioning agent", "product":"Nam Prod"},
+        { "name":"Silsoft* 034 organosilicone", "product":"Nam Prod"},
+        { "name": "17861-60-8", "product":"Nam Prod"},
         { "name":"556-67-2", "product":"CAS Number"},
         { "name":"541-02-6", "product":"CAS Number"},
         { "name":"68083-19-2", "product":"CAS Number"},
@@ -26,7 +28,6 @@
          { "name":"73835 SILSOFT ETS/0.907KG/SAMPLE", "product":"Material Id"},
         { "name":"94193 SILSOFT ETS/5SPL/15KG JA", "product":"Material Id"},
         { "name":"139983 INDUSIL ESS 010/SDR/167KG", "product":"Material Id"},
-        { "name":"LSR2050A - US Made", "product":"Namproduct"},
           { "name":"LSR2680", "product":"BDT"},
          { "name":"NLR160-80", "product":"BDT"},
          { "name":"NLR160-80", "product":"BDT"},
@@ -109,7 +110,6 @@
          { "name":"131439 NLR160-80-DRUMKIT(882LB-400KG)", "product":"Material Id"},
          { "name":"135599 T6227/PAIL/40KG", "product":"Material Id"},
          { "name":"85195 Remix LSR2680(A)", "product":"Material Id"},
-         { "name":"LSR 2680FC A", "product":"Nam Prod"},
          { "name":"LSR2680", "product":"BDT"},
          { "name":"NLR160-80", "product":"BDT"},
          { "name":"NLR160-80", "product":"BDT"},
@@ -157,7 +157,6 @@
            { "name":"131439 NLR160-80-DRUMKIT(882LB-400KG)", "product":"Material Id"},
            { "name":"135599 T6227/PAIL/40KG", "product":"Material Id"},
            { "name":"85195 Remix LSR2680(A)", "product":"Material Id"},
-           { "name":"LSR 2680FC A", "product":"Nam Prod"},
            { "name":"LSR2680", "product":"BDT"},
            { "name":"NLR160-80", "product":"BDT"},
            { "name":"NLR160-80", "product":"BDT"},
@@ -204,7 +203,6 @@
                 "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL",
                 "Heavy Metals Composition Available":"Yes",
                 "Top 3 compositions present in the product":["Calcium 1.36 PPM","Aluminum: 0.2 PPM", "Cadmium: 0.12 PPM"],
-                "Customer Communication History Available":"Yes",
                 "Top Topics":["Customer product Quality Questionnaires", "REACH CLP"," Regulatory Information - Animal Testing"  
                ]
      
@@ -1115,6 +1113,12 @@
                     "id":3,
                    "type" :"100% Composition",
                     "value":"hundered"
+                   },
+                  
+                   {
+                    "id":4,
+                   "type" :"INCI Composition",
+                    "value":"inci"
                    }],
           
                   "communicationPart" : [
@@ -1336,11 +1340,11 @@
           "restrictedSubstanceChecks" : [{
             "name":"GADSL",
             "value":"item_1",
-            "checked": "true"
+            "checked": true
           },{
             "name":"California Prop 65",
             "value":"item_2",
-            "checked": "false"
+            "checked": false
           }
         ],
           
@@ -1814,7 +1818,7 @@
                   {
                     "product":"Silwet 806",
                     "country":"Albania",
-                    "holder":"7631-86-9",
+                    "holder":"-",
                     "registration":"-",
                     "expiry":"-",
                     "status":"Active",
@@ -1841,42 +1845,54 @@
                 ],    
 
                     "complianceRegistrationCanada_Header" : [
-                      { "field": "product", "header": "product","width": "10%" },
-                      { "field": "country", "header": "Country","width": "10%"},
-                      { "field": "holder", "header": "Holder","width": "10%"},
-                      { "field": "registration", "header": "Registration","width": "10%" },
-                      { "field": "expiry", "header": "Expiry","width": "10%"},
-                      { "field": "status", "header": "Status","width": "10%" },
-                      { "field": "certificate", "header": "Certificate","width": "10%" }
+                      { "field": "product Name", "header": "Product Name","width": "10%" },
+                      { "field": "EPA Inert Product Listing", "header": "EPA Inert Product Listing","width": "10%"},
+                      { "field": "CA DPR", "header": "CA DPR","width": "10%"},
+                      { "field": "CP DA", "header": "CP DA","width": "10%" },
+                      { "field": "WSDA", "header": "WSDA","width": "10%"},
+                      { "field": "OMRI", "header": "OMRI","width": "10%" },
+                      { "field": "OMRI Reneval Date", "header": "OMRI Reneval Date","width": "10%" },
+                      { "field": "Canada OMRI", "header": "Canada OMRI","width": "10%" },
+                      { "field": "OMRI Reneval Dates", "header": "OMRI Reneval Date","width": "10%" },
+                      { "field": "PMRA", "header": "PMRA","width": "10%" }
                     ],
                     
                     "complianceRegistrationCanada_Data" : [
                       {
-                        "product":"Silwet 806",
-                        "country":"US Canada",
-                        "holder":"7631-86-9",
-                        "registration":"-",
-                        "expiry":"-",
-                        "status":"Active",
-                        "certificate":"N/A"
+                        "product Name":"AF9000",
+                        "EPA Inert Product Listing":"40CFR§180.960",
+                        "CA DPR":"-",
+                        "CP DA":"-",
+                        "WSDA":"-",
+                        "OMRI":"-",
+                        "OMRI Reneval Date":"-",
+                        "Canada OMRI":"-",
+                        "OMRI Reneval Dates":"-",
+                        "PMRA":"-"
                       },
                       {
-                        "product":"Silwet 806",
-                        "country":"US Canada",
-                        "holder":"N/A",
-                        "registration":"Not Required",
-                        "expiry":"N/A",
-                        "status":"Active",
-                        "certificate":"N/A"
+                        "product Name":"AF9000NE",
+                        "EPA Inert Product Listing":"40CFR§180.960",
+                        "CA DPR":"-",
+                        "CP DA":"-",
+                        "WSDA":"-",
+                        "OMRI":"-",
+                        "OMRI Reneval Date":"-",
+                        "Canada OMRI":"-",
+                        "OMRI Reneval Dates":"-",
+                        "PMRA":"-"
                       },
                       {
-                        "product":"Silwet 806",
-                        "country":"US Canada",
-                        "holder":"N/A",
-                        "registration":"Not Required but defer to Germany",
-                        "expiry":"N/A",
-                        "status":"Active",
-                        "certificate":"N/A"
+                        "product Name":"AgroSpred* 100",
+                        "EPA Inert Product Listing":"40CFR§180.960",
+                        "CA DPR":"-",
+                        "CP DA":"-",
+                        "WSDA":"-",
+                        "OMRI":"-",
+                        "OMRI Reneval Date":"-",
+                        "Canada OMRI":"-",
+                        "OMRI Reneval Dates":"-",
+                        "PMRA":"-"
                       }
                     ],
 
@@ -1884,41 +1900,124 @@
              "complianceRegistrationLatin_Header" : [
               { "field": "product", "header": "product","width": "10%" },
               { "field": "country", "header": "Country","width": "10%"},
-              { "field": "holder", "header": "Holder","width": "10%"},
-              { "field": "registration", "header": "Registration","width": "10%" },
-              { "field": "expiry", "header": "Expiry","width": "10%"},
-              { "field": "status", "header": "Status","width": "10%" },
-              { "field": "certificate", "header": "Certificate","width": "10%" }
+              { "field": "Registered Name", "header": "Registered Name","width": "10%"},
+              { "field": "Date Granted", "header": "Date Granted","width": "10%" },
+              { "field": "Date of Expiry", "header": "Date of Expiry","width": "10%"},
+              { "field": "Registration Holder", "header": "Registration Holder","width": "10%" },
+              { "field": "Registration Certificate", "header": "Registration Certificate (Location)","width": "10%" }
             ],
             
             "complianceRegistrationLatin_Data" : [
               {
-                "product":"Silwet 806",
-                "country":"Latin America",
-                "holder":"7631-86-9",
-                "registration":"-",
-                "expiry":"-",
-                "status":"Active",
-                "certificate":"N/A"
+                "product":"Silwet L-77",
+                "country":"Costa Rica",
+                "Registered Name":"Silwet L 77 100 SL",
+                "Date Granted":"10/13/2006",
+                "Date of Expiry":"N/A",
+                "Registration Holder":"Momentive",
+                "Registration Certificate":"x (P Drive - Costa Rica)"
               },
               {
                 "product":"Silwet 806",
-                "country":"Latin America",
-                "holder":"N/A",
-                "registration":"Not Required",
-                "expiry":"N/A",
-                "status":"Active",
-                "certificate":"N/A"
+                "country":"Ecuador",
+                "Registered Name":"Silwet 806",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"UPL",
+                "Registration Certificate":"-"
               },
               {
-                "product":"Silwet 806",
-                "country":"Latin America",
-                "holder":"N/A",
-                "registration":"Not Required but defer to Germany",
-                "expiry":"N/A",
-                "status":"Active",
-                "certificate":"N/A"
-              }],    
+                "product":"Silwet L-77",
+                "country":"Colombia",
+                "Registered Name":"Silwet L-77",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Segitis",
+                "Registration Certificate":"-"
+              },  
+              {
+                "product":"Silwet L-77",
+                "country":"Colombia",
+                "Registered Name":"Silwet L-77",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Segitis",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet 408",
+                "country":"Chile",
+                "Registered Name":"",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"DIGAR",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet TX (Clone of Silwet 408)",
+                "country":"Chile",
+                "Registered Name":"",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"DIGAR",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet L-77",
+                "country":"Chile",
+                "Registered Name":"",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"-",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet L AG",
+                "country":"Chile",
+                "Registered Name":"-",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"-",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet 408",
+                "country":"Argentina",
+                "Registered Name":"-",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Momentive",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet 408",
+                "country":"Uruguay",
+                "Registered Name":"-",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Agromill",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet 408",
+                "country":"Parguay",
+                "Registered Name":"-",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Momentive (Roberto Diaz is contact)",
+                "Registration Certificate":"-"
+              },
+              {
+                "product":"Silwet 408",
+                "country":"Bolivia",
+                "Registered Name":"-",
+                "Date Granted":"-",
+                "Date of Expiry":"-",
+                "Registration Holder":"Rizobacter",
+                "Registration Certificate":"-"
+              }
+            
+              ],    
               
          "ccHeavyMetals_Data" : [
               {
@@ -2352,22 +2451,19 @@
         {"image" : "https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg"},
         {"Product Identification": "LSR 2680FC A,NLR160-80,NLR160-80,T6227" },
         {"Product Application":"Dental / surgical devices, Diagnostics / imaging, Fluid and drug delivery devices, Orthopedics / prosthetics, Advanced Wound Care & Scar Management, Septa / stoppers / laboratory accessories"},
-        {"Relabels":"N/A"},
         {"tab_modal": "compositionModal"}
       ],
     "Product Complaince":[ 
        {"image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT"},
-       {"US FDA Compliance" : "No"},
-       {"EU Food Contact ": "Compliance: Yes"},
+       {"Negative Regulatory Notification Lists":"ENCS (JP) - Japan (ENCS) List , NDSL - Canada NDSL Inventory "},
        {"AG Registration Status":"Active: USA Canada, Latin America ; Not Active: EU region"},
        {"tab_modal": "complianceModal"}
       ],      
     "Customer Communication":[
       {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL"},
-      {"Heavy Metals Composition Available": "Yes"},
-      {"Top 3 compositions":"Calcium 1.36 PPM; Aluminum: 0.2 PPM; Cadmium: 0.12 PPM"},
-      {"Customer Communication History Available": "Yes"},
-      {"Top Topics":"Customer product Quality Questionnaires, REACH CLP, Regulatory Information - Animal Testing"},
+      {"US FDA Compliance" : "No"},
+      {"EU Food Contact ": "Compliance: Yes"},
+      {"Top 3 Heavy Metal compositions":"Calcium 1.36 PPM; Aluminum: 0.2 PPM; Cadmium: 0.12 PPM"},
       {"tab_modal": "communicationModal"}
      ],
      "Toxicology":[
@@ -2415,7 +2511,6 @@
       {"image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL"},
       {"Heavy Metals Composition Available": "Yes"},
       {"Top 3 compositions present in the product" :"Calcium 1.36 PPM; Aluminum: 0.2 PPM; Cadmium: 0.12 PPM"},
-      {"Customer Communication History Available": "Yes"},
       {"Top Topics":"Customer product Quality Questionnaires, REACH CLP, Regulatory Information - Animal Testing"}
   
      ],
@@ -2633,19 +2728,32 @@
       "prec_Statements": "-",
       "additional_Information": "Not applicable"
      }],
-    "Structure And Formulas": [{}],
+    "Structure And Formulas": [{
+      
+    }],
     "Compositions" :[{}],
     "Flow Diagrams":[{}]
   
     }],
-    "Product Com[liance" :[{
+    "Product Compliance" :[{
       "US FDA Letter":[{}],
       "EU Food Contact":[{}],
       "Notification Status": [{}],
       "AG Registration Status" :[{}]
       }]
 
-}
+},
+  "Ontology_product_Name" : [
+        { "name":"LSR 2680FC A", "product":"Nam Prod"},
+        { "name":"LSR 2680FC B",  "product":"Nam Prod"},
+        { "name": "LSR 2680-BC C2",  "product":"Nam Prod"},
+        { "name": "LSR 2680FC B-C3", "product":"Nam Prod"},
+        { "name":  "LSR 2680FC A-C3", "product":"Nam Prod"},
+        { "name":  "LSR2680FC-A-BLK",  "product":"Nam Prod"},
+        { "name": "LSR2680FC-W A " ,  "product":"Nam Prod"}
+    ]
+
+
 } 
 
   

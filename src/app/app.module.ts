@@ -22,12 +22,19 @@ import {InputTextModule, SliderModule} from 'primeng/primeng';
 import {HomeService} from './service/home-service.service';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown-angular7';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { MomentiveService} from './service/momentive.service';
 import { ViewReportComponent } from './view-report/view-report.component';
-
-
-
-
+import { PageindexComponent } from './pageindex/pageindex.component';
+import { ProductAttributesComponent } from './product-attributes/product-attributes.component';
+import { ProductComplianceComponent } from './product-compliance/product-compliance.component';
+import { CustomerCommunicationComponent } from './customer-communication/customer-communication.component';
+import { ToxicologyComponent } from './toxicology/toxicology.component';
+import { RestrictedSubstanceComponent } from './restricted-substance/restricted-substance.component';
+import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
+import { ReportDataComponent } from './report-data/report-data.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import {SharedService } from './service/shared.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +42,16 @@ import { ViewReportComponent } from './view-report/view-report.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    ViewReportComponent
+    ViewReportComponent,
+    PageindexComponent,
+    ProductAttributesComponent,
+    ProductComplianceComponent,
+    CustomerCommunicationComponent,
+    ToxicologyComponent,
+    RestrictedSubstanceComponent,
+    SalesVolumeComponent,
+    ReportDataComponent,
+    SidebarComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +69,7 @@ import { ViewReportComponent } from './view-report/view-report.component';
     TableModule,
     CommonModule,
     SharedModule,
+    Ng2FilterPipeModule,
     ButtonModule,
     EditorModule,
     DropdownModule,
@@ -62,7 +79,7 @@ import { ViewReportComponent } from './view-report/view-report.component';
     NgMultiSelectDropDownModule.forRoot(),
     NgSelectModule
     ],
-  providers: [HomeService, MomentiveService],
+  providers: [HomeService, MomentiveService,SharedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

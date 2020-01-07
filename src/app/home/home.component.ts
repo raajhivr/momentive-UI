@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Attribute } from '@angular/compiler';
-import {MatTableDataSource} from '@angular/material';
+import { MatTableDataSource} from '@angular/material';
 import {TableModule} from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
 import {MatDatepickerModule} from '@angular/material/datepicker';
@@ -12,6 +12,8 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption} from '@ng-select/ng-select';
 import { MomentiveService} from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SharedService } from '../service/shared.service';
+import { ProductAttributesComponent } from '../product-attributes/product-attributes.component';
 declare var $: any;
 // tslint:disable-next-line: class-name
 interface product_Name {
@@ -25,6 +27,7 @@ interface product_Name {
 
 })
 export class HomeComponent implements OnInit {
+
   dateForm: FormGroup;
   name = '';
   selectednav: 'active';
@@ -58,11 +61,6 @@ export class HomeComponent implements OnInit {
 /*Product Attributes */
   productAttributesCheck = 'Basic Information';
   productAttributeCheck: any = [];
-  primaryInformtionTypes = true;
-  ghsLabeling = false;
-  structureAndFormulaTypes = false;
-  compositionTypes = false;
-  flowDiagrams = false;
   /*Product compliance */
   ProductComplianceCheck: any = [];
   productComplianceCheck = 'Notification Status';
@@ -262,7 +260,7 @@ export class HomeComponent implements OnInit {
   product_NameData: any[];
   sidebarData: any;
   copysidebarData: any = [];
-  sidebarCategoriesData:any = [];
+  sidebarCategoriesData: any = [];
   basicData = false;
   // tslint:disable-next-line: variable-name
   productLsr_Name: any = [];
@@ -285,7 +283,7 @@ export class HomeComponent implements OnInit {
   intialDataDetails: any;
   intialDispalyDetails: any = [];
   intialPageDetails: any;
-  radioItem: any;
+  @Input()radioItem: any;
   basicBoxDetails = false;
   basicMouseoverDetails = false;
   otherMouseoverDetails = false;
@@ -304,16 +302,18 @@ export class HomeComponent implements OnInit {
   pdfIcon = false;
   searchRelatedMessage = false;
   // New Data;
-  product_Data: any = [];
+  productdata: any = [];
 
   objectKeys = Object.keys;
   public items$: Observable<product_Name[]>;
   public input$ = new Subject<string | null>();
+
   @ViewChild('code', {static: false}) private codeRef?: ElementRef<HTMLElement>;
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
               private router: Router, private homeService: HomeService,
-              private momentiveService: MomentiveService) {
+              private momentiveService: MomentiveService,
+              private sharedService: SharedService) {
     this.reactiveForm = fb.group({
       Searchname: ['', Validators.required]
     });
@@ -321,6 +321,7 @@ export class HomeComponent implements OnInit {
       start_Date: new FormControl(new Date()),
       end_Date: new FormControl(new Date()),
     });
+
     // this.input$.subscribe((newTerm) => {
     //   const logLine = `Typeahead emit: ${newTerm}\n`;
     //   this.codeRef.nativeElement.innerText += logLine;
@@ -334,46 +335,56 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
+    
   // Product Name
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.product_Name = this.product_Data.product_Name;
-      console.log(this.product_Data);
+      this.productdata = data;
+      this.product_Name = this.productdata.product_Name;
+      console.log(this.productdata);
     }, err => {
       console.error(err);
     });
 // LSR 2680FC
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.productLsr_Name = this.product_Data.productLsr_Name;
-      console.log(this.product_Data);
+      this.productdata = data;
+      this.productLsr_Name = this.productdata.productLsr_Name;
+      console.log(this.productdata);
     }, err => {
       console.error(err);
     });
 
 // Silsoft
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.productSilsoft_Name = this.product_Data.productSilsoft_Name;
-      console.log(this.product_Data);
+      this.productdata = data;
+      this.productSilsoft_Name = this.productdata.productSilsoft_Name;
+      console.log(this.productdata);
     }, err => {
       console.error(err);
     });
 
 // CAS NUMBER 556-67-2
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.productCAS_Number = this.product_Data.productCAS_Number;
-      console.log(this.product_Data);
+      this.productdata = data;
+      this.productCAS_Number = this.productdata.productCAS_Number;
+      console.log(this.productdata);
     }, err => {
       console.error(err);
     });
   // intialData_Details
 
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.intialData_Details = this.product_Data.intialData_Details;
-    console.log(this.product_Data);
+    this.productdata = data;
+    this.intialData_Details = this.productdata.intialData_Details;
+    console.log(this.productdata);
+  }, err => {
+    console.error(err);
+  });
+
+   // sidebarCategoriesDat
+    this.momentiveService.getSearchData().subscribe(data => {
+    this.productdata = data;
+    this.sidebarCategoriesData = this.productdata.sidebarCategoriesData;
+    console.log(this.sidebarCategoriesData);
   }, err => {
     console.error(err);
   });
@@ -382,8 +393,8 @@ export class HomeComponent implements OnInit {
 
    // Product Level
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.productLevel = this.product_Data.productLevel;
+    this.productdata = data;
+    this.productLevel = this.productdata.productLevel;
     console.log(this.productLevel);
   }, err => {
     console.error(err);
@@ -391,8 +402,8 @@ export class HomeComponent implements OnInit {
 
   // MaterialLevel
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.MaterialLevel = this.product_Data.MaterialLevel;
+    this.productdata = data;
+    this.MaterialLevel = this.productdata.MaterialLevel;
     console.log(this.MaterialLevel);
   }, err => {
     console.error(err);
@@ -400,8 +411,8 @@ export class HomeComponent implements OnInit {
 
   // componentLevel
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.componentLevel = this.product_Data.componentLevel;
+    this.productdata = data;
+    this.componentLevel = this.productdata.componentLevel;
     console.log(this.componentLevel);
   }, err => {
     console.error(err);
@@ -409,26 +420,26 @@ export class HomeComponent implements OnInit {
 
   // product_type
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.product_type = this.product_Data.product_type;
+    this.productdata = data;
+    this.product_type = this.productdata.product_type;
     console.log(this.product_type);
   }, err => {
     console.error(err);
   });
     // sales_Report
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.salesReport = this.product_Data.salesReport;
+      this.productdata = data;
+      this.salesReport = this.productdata.salesReport;
       console.log(this.salesReport);
     }, err => {
       console.error(err);
     });
     // sidebarData
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.sidebarData = this.product_Data.sidebarData;
+      this.productdata = data;
+      this.sidebarData = this.productdata.sidebarData;
       console.log(this.sidebarData);
-      if (this.sidebarData.length > 16){
+      if (this.sidebarData.length > 16) {
         this.sidebarTopIcon = true;
       }
     }, err => {
@@ -437,8 +448,8 @@ export class HomeComponent implements OnInit {
     // sidebarCategoriesDat
 
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.sidebarCategoriesData = this.product_Data.sidebarCategoriesData;
+      this.productdata = data;
+      this.sidebarCategoriesData = this.productdata.sidebarCategoriesData;
       console.log(this.sidebarCategoriesData);
     }, err => {
       console.error(err);
@@ -446,8 +457,8 @@ export class HomeComponent implements OnInit {
     // compositionPart
 
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.compositionPart = this.product_Data.compositionPart;
+      this.productdata = data;
+      this.compositionPart = this.productdata.compositionPart;
       console.log(this.compositionPart);
     }, err => {
       console.error(err);
@@ -456,8 +467,8 @@ export class HomeComponent implements OnInit {
     // communicationPart
 
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.communicationPart = this.product_Data.communicationPart;
+      this.productdata = data;
+      this.communicationPart = this.productdata.communicationPart;
       console.log(this.communicationPart);
     }, err => {
       console.error(err);
@@ -466,8 +477,8 @@ export class HomeComponent implements OnInit {
     // communicationBU
 
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.communicationBU = this.product_Data.communicationBU;
+      this.productdata = data;
+      this.communicationBU = this.productdata.communicationBU;
       console.log(this.communicationBU);
     }, err => {
       console.error(err);
@@ -476,16 +487,16 @@ export class HomeComponent implements OnInit {
     // productCommunication
 
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.productCommunication = this.product_Data.productCommunication;
+      this.productdata = data;
+      this.productCommunication = this.productdata.productCommunication;
       console.log(this.productCommunication);
     }, err => {
       console.error(err);
     });
 // topicCommunication
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.topicCommunication = this.product_Data.topicCommunication;
+      this.productdata = data;
+      this.topicCommunication = this.productdata.topicCommunication;
       console.log(this.topicCommunication);
     }, err => {
       console.error(err);
@@ -493,65 +504,65 @@ export class HomeComponent implements OnInit {
 
       // regionPart
     this.momentiveService.getSearchData().subscribe(data => {
-        this.product_Data = data;
-        this.regionPart = this.product_Data.regionPart;
+        this.productdata = data;
+        this.regionPart = this.productdata.regionPart;
         console.log(this.regionPart);
       }, err => {
         console.error(err);
       });
     // ProductAttributeCheck
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      console.log(this.product_Data);
-      this.productAttributeCheck = this.product_Data.productAttributeCheck;
+      this.productdata = data;
+      console.log(this.productdata);
+      this.productAttributeCheck = this.productdata.productAttributeCheck;
       console.log(this.productAttributeCheck);
     }, err => {
       console.error(err);
     });
    // ProductComplianceCheck
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.ProductComplianceCheck = this.product_Data.ProductComplianceCheck;
+    this.productdata = data;
+    this.ProductComplianceCheck = this.productdata.ProductComplianceCheck;
     console.log(this.ProductComplianceCheck);
   }, err => {
     console.error(err);
   });
   // customerCommunicationChecks
     this.momentiveService.getSearchData().subscribe(data => {
-    this.product_Data = data;
-    this.customerCommunicationChecks = this.product_Data.customerCommunicationChecks;
+    this.productdata = data;
+    this.customerCommunicationChecks = this.productdata.customerCommunicationChecks;
     console.log(this.customerCommunicationChecks);
   }, err => {
     console.error(err);
   });
     // restrictedSubstanceChecks
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.restrictedSubstanceChecks = this.product_Data.restrictedSubstanceChecks;
+      this.productdata = data;
+      this.restrictedSubstanceChecks = this.productdata.restrictedSubstanceChecks;
       console.log(this.restrictedSubstanceChecks);
     }, err => {
       console.error(err);
     });
     // toxicologyChecks
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.toxicologyChecks = this.product_Data.toxicologyChecks;
+      this.productdata = data;
+      this.toxicologyChecks = this.productdata.toxicologyChecks;
       console.log(this.toxicologyChecks);
     }, err => {
       console.error(err);
     });
     // toxicologydropData
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.toxicologydropData = this.product_Data.toxicologydropData;
+      this.productdata = data;
+      this.toxicologydropData = this.productdata.toxicologydropData;
       console.log(this.toxicologydropData);
     }, err => {
       console.error(err);
     });
     // salesCheckData
     this.momentiveService.getSearchData().subscribe(data => {
-      this.product_Data = data;
-      this.salesCheckData = this.product_Data.salesCheckData;
+      this.productdata = data;
+      this.salesCheckData = this.productdata.salesCheckData;
       console.log(this.salesCheckData);
     }, err => {
       console.error(err);
@@ -559,8 +570,8 @@ export class HomeComponent implements OnInit {
 
 // cols
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.cols = this.product_Data.cols;
+  this.productdata = data;
+  this.cols = this.productdata.cols;
   console.log(this.cols);
 }, err => {
   console.error(err);
@@ -568,89 +579,89 @@ export class HomeComponent implements OnInit {
 
 // legalProducts
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.legalProducts = this.product_Data.legalProducts;
+  this.productdata = data;
+  this.legalProducts = this.productdata.legalProducts;
   console.log(this.legalProducts);
 }, err => {
   console.error(err);
 });
 // ghsLabelingHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.ghsLabelingHeader = this.product_Data.ghsLabelingHeader;
+  this.productdata = data;
+  this.ghsLabelingHeader = this.productdata.ghsLabelingHeader;
   console.log(this.ghsLabelingHeader);
 }, err => {
   console.error(err);
 });
 //ghsLabelingData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.ghsLabelingData = this.product_Data.ghsLabelingData;
+  this.productdata = data;
+  this.ghsLabelingData = this.productdata.ghsLabelingData;
   console.log(this.ghsLabelingData);
 }, err => {
   console.error(err);
 });
 // reportDataHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.reportDataHead = this.product_Data.reportDataHead;
+  this.productdata = data;
+  this.reportDataHead = this.productdata.reportDataHead;
   console.log(this.reportDataHead);
 }, err => {
   console.error(err);
 });
 // reportDataProducts
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.reportDataproducts = this.product_Data.reportDataproducts;
+  this.productdata = data;
+  this.reportDataproducts = this.productdata.reportDataproducts;
   console.log(this.reportDataproducts);
 }, err => {
   console.error(err);
 });
 // saleDataHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.saleDataHead = this.product_Data.saleDataHead;
+  this.productdata = data;
+  this.saleDataHead = this.productdata.saleDataHead;
   console.log(this.saleDataHead);
 }, err => {
   console.error(err);
 });
 // saleDataProducts
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  console.log(this.product_Data);
-  this.saleDataProducts = this.product_Data.saleDataProducts;
+  this.productdata = data;
+  console.log(this.productdata);
+  this.saleDataProducts = this.productdata.saleDataProducts;
   console.log(this.saleDataProducts);
 }, err => {
   console.error(err);
 });
 // toxicologyStudyHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.toxicologyStudyHead = this.product_Data.toxicologyStudyHead;
+  this.productdata = data;
+  this.toxicologyStudyHead = this.productdata.toxicologyStudyHead;
   console.log(this.toxicologyStudyHead);
 }, err => {
   console.error(err);
 });
 // toxicologyStudyData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.toxicologyStudyData = this.product_Data.toxicologyStudyData;
+  this.productdata = data;
+  this.toxicologyStudyData = this.productdata.toxicologyStudyData;
   console.log(this.toxicologyStudyData);
 }, err => {
   console.error(err);
 });
 // toxicologyMonthlyHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.toxicologyMonthlyHeader = this.product_Data.toxicologyMonthlyHeader;
+  this.productdata = data;
+  this.toxicologyMonthlyHeader = this.productdata.toxicologyMonthlyHeader;
   console.log(this.toxicologyMonthlyHeader);
 }, err => {
   console.error(err);
 });
 // toxicologyMonthlyData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.toxicologyMonthlyData = this.product_Data.toxicologyMonthlyData;
+  this.productdata = data;
+  this.toxicologyMonthlyData = this.productdata.toxicologyMonthlyData;
   console.log(this.toxicologyMonthlyData);
 }, err => {
   console.error(err);
@@ -658,40 +669,40 @@ export class HomeComponent implements OnInit {
 
 // restrictedGASDLHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.restrictedGASDLHeader = this.product_Data.restrictedGASDLHeader;
+  this.productdata = data;
+  this.restrictedGASDLHeader = this.productdata.restrictedGASDLHeader;
   console.log(this.restrictedGASDLHeader);
 }, err => {
   console.error(err);
 });
 // restrictedGASDLData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.restrictedGASDLData = this.product_Data.restrictedGASDLData;
+  this.productdata = data;
+  this.restrictedGASDLData = this.productdata.restrictedGASDLData;
   console.log(this.restrictedGASDLData);
 }, err => {
   console.error(err);
 });
 // restrictedCaliforniaHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.restrictedCaliforniaHeader = this.product_Data.restrictedCaliforniaHeader;
+  this.productdata = data;
+  this.restrictedCaliforniaHeader = this.productdata.restrictedCaliforniaHeader;
   console.log(this.restrictedCaliforniaHeader);
 }, err => {
   console.error(err);
 });
 // restrictedCaliforniaData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.restrictedCaliforniaData = this.product_Data.restrictedCaliforniaData;
+  this.productdata = data;
+  this.restrictedCaliforniaData = this.productdata.restrictedCaliforniaData;
   console.log(this.restrictedCaliforniaData);
 }, err => {
   console.error(err);
 });
 // pc_NotificationHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.pc_NotificationHeader = this.product_Data.pc_NotificationHeader;
+  this.productdata = data;
+  this.pc_NotificationHeader = this.productdata.pc_NotificationHeader;
   console.log(this.pc_NotificationHeader);
 }, err => {
   console.error(err);
@@ -699,8 +710,8 @@ export class HomeComponent implements OnInit {
 
 // pc_NotificationData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.pc_NotificationData = this.product_Data.pc_NotificationData;
+  this.productdata = data;
+  this.pc_NotificationData = this.productdata.pc_NotificationData;
   console.log(this.pc_NotificationData);
 }, err => {
   console.error(err);
@@ -708,40 +719,40 @@ export class HomeComponent implements OnInit {
 
 // complianceRegistrationEUHeader
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationEUHeader = this.product_Data.complianceRegistrationEUHeader;
+  this.productdata = data;
+  this.complianceRegistrationEUHeader = this.productdata.complianceRegistrationEUHeader;
   console.log(this.complianceRegistrationEUHeader);
 }, err => {
   console.error(err);
 });
 //complianceRegistrationEUData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationEUData = this.product_Data.complianceRegistrationEUData;
+  this.productdata = data;
+  this.complianceRegistrationEUData = this.productdata.complianceRegistrationEUData;
   console.log(this.complianceRegistrationEUData);
 }, err => {
   console.error(err);
 });
 // complianceRegistrationCanada_Header
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationCanada_Header = this.product_Data.complianceRegistrationCanada_Header;
+  this.productdata = data;
+  this.complianceRegistrationCanada_Header = this.productdata.complianceRegistrationCanada_Header;
   console.log(this.complianceRegistrationCanada_Header);
 }, err => {
   console.error(err);
 });
 // complianceRegistrationCanada_Data
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationCanada_Data = this.product_Data.complianceRegistrationCanada_Data;
+  this.productdata = data;
+  this.complianceRegistrationCanada_Data = this.productdata.complianceRegistrationCanada_Data;
   console.log(this.complianceRegistrationCanada_Data);
 }, err => {
   console.error(err);
 });
 // complianceRegistrationLatin_Header
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationLatin_Header = this.product_Data.complianceRegistrationLatin_Header;
+  this.productdata = data;
+  this.complianceRegistrationLatin_Header = this.productdata.complianceRegistrationLatin_Header;
   console.log(this.complianceRegistrationLatin_Header);
 }, err => {
   console.error(err);
@@ -749,16 +760,16 @@ export class HomeComponent implements OnInit {
 
 // complianceRegistrationLatin_Data
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.complianceRegistrationLatin_Data = this.product_Data.complianceRegistrationLatin_Data;
+  this.productdata = data;
+  this.complianceRegistrationLatin_Data = this.productdata.complianceRegistrationLatin_Data;
   console.log(this.complianceRegistrationLatin_Data);
 }, err => {
   console.error(err);
 });
 // ccHeavyMetals_Data
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.ccHeavyMetals_Data = this.product_Data.ccHeavyMetals_Data;
+  this.productdata = data;
+  this.ccHeavyMetals_Data = this.productdata.ccHeavyMetals_Data;
   console.log(this.ccHeavyMetals_Data);
 }, err => {
   console.error(err);
@@ -766,8 +777,8 @@ export class HomeComponent implements OnInit {
 
 // legalCompositionHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.legalCompositionHead = this.product_Data.legalCompositionHead;
+  this.productdata = data;
+  this.legalCompositionHead = this.productdata.legalCompositionHead;
   console.log(this.legalCompositionHead);
 }, err => {
   console.error(err);
@@ -775,8 +786,8 @@ export class HomeComponent implements OnInit {
 
 // legalCompositionData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.legalCompositionData = this.product_Data.legalCompositionData;
+  this.productdata = data;
+  this.legalCompositionData = this.productdata.legalCompositionData;
   console.log(this.legalCompositionData);
 }, err => {
   console.error(err);
@@ -785,8 +796,8 @@ export class HomeComponent implements OnInit {
 
 // hunderedCompositionHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.hunderedCompositionHead = this.product_Data.hunderedCompositionHead;
+  this.productdata = data;
+  this.hunderedCompositionHead = this.productdata.hunderedCompositionHead;
   console.log(this.hunderedCompositionHead);
 }, err => {
   console.error(err);
@@ -794,8 +805,8 @@ export class HomeComponent implements OnInit {
 
 // hunderedCompositionData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.hunderedCompositionData = this.product_Data.hunderedCompositionData;
+  this.productdata = data;
+  this.hunderedCompositionData = this.productdata.hunderedCompositionData;
   console.log(this.hunderedCompositionData);
 }, err => {
   console.error(err);
@@ -804,8 +815,8 @@ export class HomeComponent implements OnInit {
 
 // standardCompositionHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.standardCompositionHead = this.product_Data.standardCompositionHead;
+  this.productdata = data;
+  this.standardCompositionHead = this.productdata.standardCompositionHead;
   console.log(this.standardCompositionHead);
 }, err => {
   console.error(err);
@@ -813,8 +824,8 @@ export class HomeComponent implements OnInit {
 
 // standardCompositionData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.standardCompositionData = this.product_Data.standardCompositionData;
+  this.productdata = data;
+  this.standardCompositionData = this.productdata.standardCompositionData;
   console.log(this.standardCompositionData);
 
      /* Excel Report for Standard Composition */
@@ -839,16 +850,16 @@ export class HomeComponent implements OnInit {
 });
 // CommunicationHistoryHead
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.CommunicationHistoryHead = this.product_Data.CommunicationHistoryHead;
+  this.productdata = data;
+  this.CommunicationHistoryHead = this.productdata.CommunicationHistoryHead;
   console.log(this.CommunicationHistoryHead);
 }, err => {
   console.error(err);
 });
 // CommunicationHistoryData
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.CommunicationHistoryData = this.product_Data.CommunicationHistoryData;
+  this.productdata = data;
+  this.CommunicationHistoryData = this.productdata.CommunicationHistoryData;
   console.log(this.CommunicationHistoryData);
   this.CommunicationHistoryData.forEach(obj => {
   this.ExcelCommunicationHistoryData.push({
@@ -870,533 +881,26 @@ export class HomeComponent implements OnInit {
 });
 // intialDataDetails
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.intialDataDetails = this.product_Data.intialDataDetails;
+  this.productdata = data;
+  this.intialDataDetails = this.productdata.intialDataDetails;
   console.log(this.intialDataDetails);
 }, err => {
   console.error(err);
 });
 // HomeDataDetails
     this.momentiveService.getSearchData().subscribe(data => {
-  this.product_Data = data;
-  this.HomeDataDetails = this.product_Data.HomeDataDetails;
+  this.productdata = data;
+  this.HomeDataDetails = this.productdata.HomeDataDetails;
   console.log(this.HomeDataDetails);
 }, err => {
   console.error(err);
 });
 
-    this.dropdownList = [
-      { item_id: 1, item_text: 'CAS Number' },
-      { item_id: 2, item_text: 'YES Number' },
-      { item_id: 3, item_text: 'Material Name' },
-      { item_id: 4, item_text: 'Material Number' },
-      { item_id: 5, item_text: 'Product Name' },
-      { item_id: 6, item_text: 'Product Id' },
-      { item_id: 7, item_text: 'Categories' }
-    ];
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
-      selectAllText: 'Select All',
-      unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 1,
-      allowSearchFilter: true
-    };
+
+ 
     this.placeholder = 'Enter the Details';
     this.keyword = 'name';
     this.historyHeading = 'Recently selected';
-
-    this.copyproduct_type = [
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name : 'Product Attributes',
-             image : 'https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg',
-             modal_id: 'composition',
-             tab_modal: 'compositionModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name: 'Product Complaince',
-             image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT',
-             modal_id: 'product_Compliance',
-             tab_modal: 'complianceModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name : 'Customer Communication',
-             image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL',
-             modal_id: 'customerCommunication',
-             tab_modal: 'communicationModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name : 'Restricted Substance',
-             image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-',
-             modal_id: 'restrictedSubstance',
-             tab_modal: 'restrictedSubstanceModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name : 'Toxicology',
-             image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR',
-             modal_id: 'toxicology',
-             tab_modal: 'toxicologyModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name : 'Sales Information',
-             image : 'https://flaptics.io/images/yu.png',
-             modal_id: 'sales_Information',
-             tab_modal: 'salesModal'
-           },
-          {
-             product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-             id: 'LSR 2680FC A',
-             Name: 'Report Data',
-             image: 'https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt',
-             modal_id: 'report_Data',
-             tab_modal: 'reportModal'
-          },
-          {
-            product_name: '000000069023 LSR 2680FC B-C3',
-             id: 'LSR 2680FC A',
-             Name : 'Self Service Report',
-             image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSReXGibHOlD7Z5nNqD4d4V52CVMmi-fGUEKMH2HE7srV_SzNn_g',
-             modal_id: 'serviceReport',
-             tab_modal: 'serviceReportModal'
-          }];
-
-    this.copysidebarData = [
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Product Attributes',
-                 image : 'https://5.imimg.com/data5/CS/BR/MY-3222221/pharmaceuticals-chemicals-500x500.jpg',
-                 sales_tab: 'product_attribute',
-                 modal_id: 'composition',
-                 tab_modal: 'compositionModal',
-                 tab_content: [
-                  {
-                    name: 'Basic Information', id: 1,
-                  },
-                    {
-                      name: 'GHS Labeling', id: 2,
-                    },
-                    {
-                      name: 'Structures and Formulas', id: 3,
-                    },
-                    {
-                      name: 'Composition', id: 4,
-                    },
-                    {
-                    name: 'Flow Diagrams', id: 5,
-                    }],
-              },
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Product Complaince',
-                 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT',
-                 sales_tab: 'product_Compliance',
-                 modal_id: 'product_Compliance',
-                 tab_modal: 'complianceModal',
-                 tab_content: [
-                  {
-                    name: 'Notification Status', id: 1,
-                  },
-                  {
-                    name: 'AG Registration Status', id: 2,
-                  }],
-              },
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Customer Communication',
-                 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzuuf2CXVDH2fVLuKJRbIqd14LsQSAGaKb7_hgs9HAOtSsQsCL',
-                sales_tab: 'customerCommunication',
-                 modal_id: 'customerCommunication',
-                 tab_modal: 'communicationModal',
-                 customer_name: 'OU EUROBIO LAB',
-                 tab_content: [
-                  {
-                    name: 'US FDA Letter', id: 1,
-                  },
-                  {
-                    name: 'EU Food Contact', id: 2,
-                  },
-                  {
-                    name: 'Heavy Metals Composition', id: 3,
-                  },
-                  {
-                    name: 'Communication History', id: 4,
-                  }],
-              },
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Toxicology',
-                 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnge4Y9lv59WO3hYGJRSerUUSTG1FUWE4MNlFPaLu2CFOc0rsR',
-                 sales_tab : 'toxicology',
-                 modal_id: 'toxicology',
-                 tab_modal: 'toxicologyModal' ,
-                 tab_content: [
-                  {
-                    name: 'Study Title and Date', id: 1,
-                  },
-                  {
-                    name: 'Monthly Toxicology Study List', id: 2,
-                  },
-                  {
-                    name: 'Toxicology Summary', id: 2,
-                  },
-                  {
-                    name: 'Toxicology Registration Tracker', id: 2,
-                  }],
-              },
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Restricted Substance',
-                 image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnJXf4wky23vgRlLzdkExEFrkakubrov2OWcG9DTmDA1zA2-U-',
-                 sales_tab: 'restrictedSubstance',
-                 modal_id: 'restrictedSubstance',
-                 tab_modal: 'restrictedSubstanceModal' ,
-                 tab_content: [
-                  {
-                    name: 'GADSL', id: 1,
-                  },
-                  {
-                    name: 'California Pro 65', id: 2,
-                  }],
-              },
-              {
-                product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name : 'Sales Information',
-                 image : 'https://flaptics.io/images/yu.png',
-                 sales_tab: 'sales_Information',
-                 modal_id: 'sales_Information',
-                 tab_modal: 'salesModal',
-                 tab_content: [
-                  {
-                    name: 'Sales Volume', id: 1,
-                  },
-                  {
-                    name: 'Location Details', id: 2,
-                  }],
-              },
-              {
-                 product_name: '000000069023 LSR 2680FC B-C3 	Liquid Silicone Rubber - Component B',
-                 id: 'LSR 2680FC A',
-                 Name: 'Report Data',
-                 image: 'https://medschool.duke.edu/sites/medschool.duke.edu/files/styles/interior_image/public/field/image/reports.jpg?itok=F7UK-zyt',
-                 sales_tab: 'report_Data',
-                 modal_id: 'report_Data',
-                 tab_modal: 'reportModal',
-                 tab_content: [
-                  {
-                    name: 'Relesed Documents', id: 1,
-                  }],
-              }
-             ];
-
-    this.copylegalCompositionData = [
-    {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002925',
-      CAS_Number: '68083-19-2',
-      Component_Name: [
-        {cas_name: 'Decamethylcyclopentasiloxane',
-        iupac_name: 'Cyclopentasiloxane, decamethyl-',
-        INCI_Name: ['CYCLOPENTASILOXANE'],
-      }],
-        Value: '86%'
-    },
-    {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002670',
-      CAS_Number: '556-67-2',
-      Component_Name: [
-        {cas_name: 'Octamethylcyclotetrasiloxane',
-         iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-        INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-      }],
-        Value: '14%'
-    }
- ];
-    this.copyhunderedCompositionData = [
-    {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002766',
-      CAS_Number: '68083-19-2',
-      Component_Name: [
-        {cas_name: 'Slica',
-        iupac_name: 'Slica',
-        INCI_Name: ['slica', 'SOLUM DIATOMEAE'],
-      }],
-        Value: '29.85%'
-    },
-    {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002652',
-      CAS_Number: '999-97-3',
-      Component_Name: [
-        {cas_name: 'Hexamethyldisilazane',
-         iupac_name: 'Silanamine 1,1,1-trimethyl-N-(trimethylsilyl)-',
-      }],
-        Value: '6.62%'
-    }, {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002932',
-      CAS_Number: '7691-02-3',
-      Component_Name: [
-        {cas_name: 'Divinyltetramethyldisilazane',
-        iupac_name: '1,3-Divinyltetramethyldisilazane',
-      }],
-      Value: '1.24%'
-    }, {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002670',
-      CAS_Number: '556-67-2',
-      Component_Name: [
-        {cas_name: 'Octamethylcyclotetrasiloxane',
-        iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-        INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-      }],
-      Value: '0.12%'
-    }, {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000003091',
-      CAS_Number: '2627-95-4',
-      Component_Name: [
-        {cas_name: 'Divinyltetramethyldisiloxane',
-         iupac_name: 'DISILOXANE, 1,3-DIETHINYL-1,1,3,3-TETRAMETHYL-',
-      }],
-      Value: '0.12%'
-    }, {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002678',
-      CAS_Number: '2554-06-5',
-      Component_Name: [
-        {cas_name: 'Cyclotetrasiloxane, 2,4,6,8-tetraethenyl-2,4,6,8-tetramethyl-',
-         iupac_name: 'CYCLOTETRASILOXANE, 2,4,6,8-TETRAETHYLENE-2,4,6,8-TETRAMETHYL-',
-      }],
-      Value: '0.53%'
-    }
- ];
-
-    this.copystandardCompositionData = [
-    {
-      ComponentType: 'Active ingredient',
-      Component_Id: '000000002925',
-      CAS_Number: '68083-19-2',
-      Component_Name: [
-        { cas_name: 'Decamethylcyclopentasiloxane',
-         iupac_name: 'Cyclopentasiloxane decamethyl-',
-        INCI_Name: ['CYCLOPENTASILOXANE'],
-      }],
-        Value: '84.06%'
-    },
-    {
-      ComponentType: 'Impurity',
-      Component_Id: '000000002681',
-      CAS_Number: '70131-67-8',
-      Component_Name: [
-        { cas_name: 'Siloxanes and Silicones, di-Me hydroxy terminated',
-         iupac_name: 'Dimethylpolysiloxane',
-      }],
-        Value: '15%'
-    }, {
-      ComponentType: 'Impurity',
-      Component_Id: '000000003060',
-      CAS_Number: '540-97-6',
-      Component_Name: [
-        {cas_name: 'Dodecamethylcyclohexasiloxane',
-        iupac_name: 'Cyclohexasiloxane Dodecamethyl-',
-        INCI_Name: ['CYCLOHEXASILOXANE'],
-      }],
-      Value: '2.1%'
-    }, {
-      ComponentType: 'Impurity',
-      Component_Id: '000000002932',
-      CAS_Number: '556-67-2',
-      Component_Name: [
-        {cas_name: 'Octamethylcyclotetrasiloxane',
-        iupac_name: 'Cyclotetrasiloxane, octamethyl-',
-        INCI_Name: ['CYCLOTETRASILOXANE', 'CYCLOMETHICONE'],
-      }],
-      Value: '0.704 %'
-    }
-   ];
-
-
-
-    this.CopycommunicationHistoryData = [
-  {
-    case_number: '68083-19-2',
-    first_level: 'Product/Material Information',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'OU EUROBIO LAB',
-    bu: 'Specialty Fluids.',
-    product_name: 'LSR2050A - US Made',
-    topic: 'Customer Product Quality Questionnaires',
-    email_Content: [
-      {
-        contact_email: 'dmitri.zagorski@eurobiolab.ee',
-        case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-       iupac_name: 'Slica8',
-       attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-       // tslint:disable-next-line: max-line-length
-       text_body: 'Dear Sender, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-      },
-    {
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-  },
-  {
-  contact_email: 'dmitri.zagorski@eurobiolab.ee',
-  case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-  attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
- // tslint:disable-next-line: max-line-length
-  text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-   }],
-  },
-  {
-    case_number: '140641',
-    first_level: 'Product/Material Information',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'Bang & Bonsomer LLC Moscow',
-    bu: 'Elastomers',
-    product_name: 'LSR2003A',
-    topic: 'Regulatory Information - National or Regional Inventories',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'Dear Dmitri, In addition to the CIDP for Silsoft AX, please also find the requested Vegan Declaration completed attached. I understand that this form is related to the manufacturing of the product and raw materials.',
-    }]
-  },
-  {
-    case_number: '140643',
-    first_level: 'Product/Material Information',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'ART COSMETICS SRL VIA E.',
-    bu: 'Electronic Materials.',
-    product_name: 'LSR2003B',
-    topic: 'Regulatory Information - Sustainability',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      attached_docs: 'Silsoft 840 Manufacturing flow diagram',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'This is perfect newtexts. Please fill Vegan declaration that was attached in previous email Lugupidamisega / Best regards / С уважением, Dmitri Zagorski Head of Purchasing Department Tel: +3726120121 Mob:+372 58 181807 Skype ost.eurobiolab',
-    }]
-  },
-  {
-    case_number: '140644',
-    first_level: 'Product/Material Information',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'Azelis Australia Pty LTd.',
-    bu: 'Basics.',
-    product_name: 'LSR2050B - US Made',
-    topic: 'Regulatory Information - Sustainability',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      attached_docs: 'LSR2560 - FDA compliance letter to DARMSTÄDTER GmbH',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'striving to improve service to its customers. In order to do this, we would like to ask you to always contact the Commercial Services Center first in case of a request/inquiry.',
-    }]
-  },
-  {
-    case_number: '140645',
-    first_level: 'Product/Material Information',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'AZELIS CANADA INC.',
-    bu: 'Urethane Additives.',
-    product_name: 'LSR2060A - US Made',
-    topic: 'Regulatory Information - National or Regional Inventories',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      attached_docs: '05-2358-G6_INTRACUTANEOUS INJECTON TEST_LSR 885',
-     // tslint:disable-next-line: max-line-length
-      text_body: 'Momentive routinely screens incoming and outgoing mail messages for viruses, addressees should scan this e-mail and any attachments for viruses themselves.',
-    }]
-  },
-  {
-    case_number: '00116026',
-    first_level: '	Regulatory Information - Animal Testing',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'Bang & Bonsomer PJC.',
-    bu: 'Sealants.',
-    product_name: 'Silsoft* ETS',
-    topic: 'Regulatory Information - National or Regional Inventories',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-      attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-    }]
-  },
-  {
-    case_number: '00116027',
-    first_level: '	Regulatory Information - Animal Testing',
-    second_level: 'Customer Product Quality Questionnaires',
-    manufacturing_plant: '-',
-    material_description: '-',
-    material_number: '-',
-    tier_owner: '-',
-    customer_name: 'Bang & Bonsomer PJC.',
-    bu: 'Sealants.',
-    product_name: 'Silsoft* A-843 conditioning agent',
-    topic: 'Regulatory Information - National or Regional Inventories',
-    email_Content: [{
-      contact_email: 'dmitri.zagorski@eurobiolab.ee',
-      attached_docs: 'TIR Silwet 408 lot 17ESVX180',
-      case_subject: 'RE: [External]Vegan, Silsoft AX [ ref:_00Di0JCXZ._5000Z1FPZxB:ref ]',
-      // tslint:disable-next-line: max-line-length
-      text_body: 'Hi Sunny, Please kindly find the attached documents, Our customer would like to know why the INCI name of Silsoft 860 are different in Composition breakdown and PDS. Also, Polyalkyleneoxide cannot be found on China INCI list (2015 version),.',
-    }]
-  },
-];
-
 
 }
 
@@ -1450,7 +954,7 @@ groupByFn = (item) => item.product;
 
       this.basicDetails = false;
       this.submitDetails = true;
-      this.sidebarData = this.copysidebarData.filter((element) => (element.customer_name == customerName)); 
+      this.sidebarData = this.copysidebarData.filter((element) => (element.customer_name === customerName)); 
     } else {
       this.basicDetails = false;
       this.submitDetails = true;
@@ -1486,239 +990,14 @@ CompositionTypes(value) {
  }
 selectItem(index, data, radiodata): void {
   this.selectedId = index;
+  console.log(this.selectedId);
   this.value = data;
-  this.radiovalue = radiodata;  
-  this.productRadioBox(index, this.value, this.radiovalue);
+  this.radiovalue = radiodata;
+   this.productRadioBox(index, this.value, this.radiovalue);
 }
-/*Product Attribute*/
-
-onChangeProductAttribute(item) {
-    console.log(item);
-    this.productAttributesCheck = item;
-    if ( this.productAttributesCheck === 'Basic Information') {
-      this.primaryInformtionTypes = true;
-      this.ghsLabeling = false;
-      this.structureAndFormulaTypes = false;
-      this.compositionTypes = false;
-      this.flowDiagrams = false;
-    } else if ( this.productAttributesCheck === 'GHS Labeling') {
-      this.primaryInformtionTypes = false;
-      this.ghsLabeling = true;
-      this.structureAndFormulaTypes = false;
-      this.compositionTypes = false;
-      this.flowDiagrams = false;
-
-    } else if (this.productAttributesCheck === 'Structures and Formulas') {
-      this.primaryInformtionTypes = false;
-      this.ghsLabeling = false;
-      this.structureAndFormulaTypes = true;
-      this.compositionTypes = false;
-      this.flowDiagrams = false;
-    } else if (this.productAttributesCheck === 'Composition') {
-      this.primaryInformtionTypes = false;
-      this.ghsLabeling = false;
-      this.structureAndFormulaTypes = false;
-      this.compositionTypes = true;
-      this.flowDiagrams = false;
-    } else if (this.productAttributesCheck === 'Flow Diagrams') {
-      this.primaryInformtionTypes = false;
-      this.ghsLabeling = false;
-      this.structureAndFormulaTypes = false;
-      this.compositionTypes = false;
-      this.flowDiagrams = true;
-    }
-  }
-
-
-  compositionProcess(value) {
-     this.compostionCheck = value;
-     if (this.compostionCheck === 'legal') {
-      this.compositionLegalTypes = true;
-      this.compositionHunderdTypes = false;
-      this.compositionStandardTypes = false;
-    } else if (this.compostionCheck === 'hundered') {
-      this.compositionLegalTypes = false;
-      this.compositionHunderdTypes = true;
-      this.compositionStandardTypes = false;
-    } else if (this.compostionCheck === 'standard') {
-      this.compositionLegalTypes = false;
-      this.compositionHunderdTypes = false;
-      this.compositionStandardTypes = true;
-    }
-  }
- 
-  /*Product compliance*/
-  onChangeProductCompliance(item) {
-    this.productComplianceCheck = item;
-     // tslint:disable-next-line: align
-     if (this.productComplianceCheck === 'Notification Status') {
-      this.complianceNotification = true;
-      this.complianceRegistration = false;
-    } else if (this.productComplianceCheck === 'AG Registration Status') {
-      this.complianceNotification = false;
-      this.complianceRegistration = true;
-    }
-  }
-  selectRegionProcess(value) {
-    this.regionValueCheck = value;
-    if ( this.regionValueCheck === 'eu') {
-      this.complaint_EU = true;
-      this.complaint_canada = false;
-      this.complaint_latin = false;
-    } else if (this.regionValueCheck === 'us canada') {
-      this.complaint_EU = false;
-      this.complaint_canada = true;
-      this.complaint_latin = false;
-    } else if (this.regionValueCheck === 'latin america') {
-      this.complaint_EU = false;
-      this.complaint_canada = false;
-      this.complaint_latin = true;
-    }
-  }
-  onChangeCommunication(item) {
-    this.customerCommunicationTab = item;
-    if (this.customerCommunicationTab === 'US FDA Letter') {
-      this.usFDA = true;
-      this.EuFoodContact = false;
-      this.heavyMetals = false;
-      this.communicationHistory = false;
-    } else if (this.customerCommunicationTab === 'EU Food Contact') {
-      this.usFDA = false;
-      this.EuFoodContact = true;
-      this.heavyMetals = false;
-      this.communicationHistory = false;
-    } else if ( this.customerCommunicationTab === 'Heavy Metals Composition') {
-      this.heavyMetals = true;
-      this.communicationHistory = false;
-      this.usFDA = false;
-      this.EuFoodContact = false;
-    } else if (this.customerCommunicationTab === 'Communication History') {
-      this.heavyMetals = false;
-      this.communicationHistory = true;
-      this.usFDA = false;
-      this.EuFoodContact = false;
-    }
-  }
-  onChangeRestricted(item) {
-    this.restrictedSubstanceTab = item;
-    if ( this.restrictedSubstanceTab === 'GADSL') {
-      this.gadslCheck = true;
-      this.californiaCheck = false;
-    } else if (this.restrictedSubstanceTab === 'California Prop 65') {
-      this.gadslCheck = false;
-      this.californiaCheck = true;
-    }
-  }
-  onChangeToxicology(item) {
-    this.toxicologyTab = item;
-    if ( this.toxicologyTab === 'Study Title and Date') {
-      this.studyCheck = true;
-      this.monthlyCheck = false;
-      this.summaryCheck = false;
-      this.dataCheck = false;
-
-    // tslint:disable-next-line: align
-    }if (this.toxicologyTab === 'Monthly Toxicology Study List') {
-      this.studyCheck = false;
-      this.monthlyCheck = true;
-      this.summaryCheck = false;
-      this.dataCheck = false;
-    }
-    if (this.toxicologyTab === 'Toxicology Summary') {
-      this.studyCheck = false;
-      this.monthlyCheck = false;
-      this.summaryCheck = true;
-      this.dataCheck = false;
-    }
-    if (this.toxicologyTab === 'Toxicology Registration Tracker') {
-      this.studyCheck = false;
-      this.monthlyCheck = false;
-      this.summaryCheck = false;
-      this.dataCheck = true;
-    }
-  }
-  toxicologyProcess(value) {
-    this.toxicologyValueCheck = value;
-
-    if ( this.toxicologyValueCheck === 'sealant') {
-      this.toxicology_sealant = true;
-      this.toxicology_silane = false;
-
-    }
-    if ( this.toxicologyValueCheck === 'silane') {
-      this.toxicology_sealant = false;
-      this.toxicology_silane = true;
-
-    }
-  }
-  onChangeSales(item) {
-    this.saleTab = item;
-    if ( this.saleTab === 'Location Details') {
-      this.locationCheck = true;
-      this.volumeCheck = false;
-    // tslint:disable-next-line: align
-    }if (this.saleTab === 'Sales Volume') {
-      this.locationCheck = false;
-      this.volumeCheck = true;
-    }
-  }
-
-  productBox(index, value) {
-    this.selectedboxId = index;
-    console.log(this.selectedboxId);
-    console.log(value);
-    this.selectedId = index;
-    this.modalValue = value;
-    console.log(this.selectedId);
-    console.log(this.modalValue);
-    console.log(this.radioItem);
-    this.firstModal = false;
-    this.secondModal = false;
-    this.thirdModal = false;
-    this.fourthModal = false;
-    this.fifthModal = false;
-    this.sixthModal = false;
-    this.seventhModal = false;
-    this.eightModal = false;
-    if ( this.modalValue === 'compositionModal') {
-    this.productTitle = 'Product Attributes';
-    this.firstModal = true;
-    this.onChangeProductAttribute(this.radioItem);
-  } else if ( this.modalValue === 'complianceModal') {
-    this.productTitle = 'Product Complaince';
-    this.secondModal = true;
-    this. onChangeProductCompliance(this.radioItem);
-  } else if ( this.modalValue === 'communicationModal') {
-    this.productTitle = 'Customer Communication';
-    this.thirdModal = true;
-    this.onChangeCommunication(this.radioItem);
-  } else if ( this.modalValue === 'restrictedSubstanceModal') {
-    this.productTitle = 'Restricted Substance';
-    this.fourthModal = true;
-    this.onChangeRestricted(this.radioItem);
-  } else if ( this.modalValue === 'toxicologyModal') {
-    this.productTitle = 'Toxicology';
-    this.fifthModal = true;
-    this.onChangeToxicology(this.radioItem);
-  } else if ( this.modalValue === 'salesModal') {
-    this.productTitle = 'Sales Information';
-    this.sixthModal = true;
-    this.onChangeSales(this.radioItem);
-  }
-    if ( this.modalValue === 'reportModal') {
-    this.productTitle = 'Report Data';
-    this.seventhModal = true;
-  }
-    if ( this.modalValue === 'serviceReportModal') {
-    this.productTitle = 'Self Service Report';
-    this.eightModal = true;
-  }
-  }
-
 
   productRadioBox(index, value, Item) {
-    this.selectedboxId = index;
-    console.log(this.selectedboxId);
+    console.log(index);
     console.log(value);
     console.log(Item);
     this.selectedId = index;
@@ -1738,27 +1017,55 @@ onChangeProductAttribute(item) {
     if ( this.modalValue === 'compositionModal') {
     this.productTitle = 'Product Attributes';
     this.firstModal = true;
-    this.onChangeProductAttribute(this.radioItem);
+    // this.onChangeProductAttribute(this.radioItem);
+    // this.momentiveService.setSelectedTab(this.radioItem);
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
+
   } else if ( this.modalValue === 'complianceModal') {
     this.productTitle = 'Product Complaince';
     this.secondModal = true;
-    this. onChangeProductCompliance(this.radioItem);
+    // this.onChangeProductCompliance(this.radioItem);
+    
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
   } else if ( this.modalValue === 'communicationModal') {
     this.productTitle = 'Customer Communication';
     this.thirdModal = true;
-    this.onChangeCommunication(this.radioItem);
+    // this.onChangeCommunication(this.radioItem);
+    
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
   } else if ( this.modalValue === 'restrictedSubstanceModal') {
     this.productTitle = 'Restricted Substance';
     this.fourthModal = true;
-    this.onChangeRestricted(this.radioItem);
+    // this.onChangeRestricted(this.radioItem);
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
   } else if ( this.modalValue === 'toxicologyModal') {
     this.productTitle = 'Toxicology';
     this.fifthModal = true;
-    this.onChangeToxicology(this.radioItem);
+    // this.onChangeToxicology(this.radioItem);
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
   } else if ( this.modalValue === 'salesModal') {
     this.productTitle = 'Sales Information';
     this.sixthModal = true;
-    this.onChangeSales(this.radioItem);
+    // this.onChangeSales(this.radioItem);
+    this.momentiveService.notifyObservable$.subscribe(value => console.log(value));
+    setTimeout(() => {
+      this.momentiveService.callMethodOfSecondComponent(this.radioItem);
+    }, 0);
   }
     if ( this.modalValue === 'reportModal') {
     this.productTitle = 'Report Data';
@@ -1769,23 +1076,14 @@ onChangeProductAttribute(item) {
     this.eightModal = true;
   }
   }
+
   setMyStyles() {
     const styles = {
       position: this.product_type.length > 16 ? 'absolute' : 'none',
     };
     return styles;
   }
- 
-  communicationProcess(data) {
-    this.commuicationDataCheck = data;
-    console.log(this.commuicationDataCheck);
-    // tslint:disable-next-line: max-line-length
-    this.CommunicationHistoryData = this.CopycommunicationHistoryData.filter((communication) => ( communication.customer_name  === this.commuicationDataCheck 
-    || communication.product_name === this.commuicationDataCheck
-    || communication.bu === this.commuicationDataCheck
-    || communication.topic === this.commuicationDataCheck));
-    console.log(this.CommunicationHistoryData);
-    }
+
   addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
     this.events = event.value;
     console.log(this.events);
@@ -2041,7 +1339,7 @@ getAddressData() {
   });
 }
 MouseOut() {
-  alert('check');
+
 }
 
 MouseModalBox(id: any, data: any) {
@@ -2060,84 +1358,5 @@ MouseModalBox(id: any, data: any) {
       this.selectItem(index, ModalBoxId, Item);
     }});
 }
-viewReport() {
-  this.viewReportPage = true;
-  this.submitDetails = false;
-  this.basicDetails = false;
-}
-homepage() {
-  this.submitDetails = true;
-  this.viewReportPage = false;
-  this.basicDetails = false;
-}
-topCheckBox(checkStatus, data) {
-  if (checkStatus) {
-    this.pdfIcon = true;
-    data.tab_content.forEach(element => {element.checkValue = true;
-                                         if (element.sub.length > 0) {
-                                         element.sub.forEach(childelement => {childelement.checkValue = true;
-    });
-  }
-    });
-  } else {
-    this.pdfIcon = false;
-    this.viewReportPage = false;
-    this.submitDetails = true;
-    data.tab_content.forEach(element => {element.checkValue = false;
-                                         if (element.sub.length > 0) {
-                                         element.sub.forEach(childelement => {childelement.checkValue = false;
-      });
-    }
-  });
-}
-}
-subCheckBox(checkStatus,data,id) {
-  console.log(id);
-  this.parentObject = this.sidebarCategoriesData[id];
-  console.log(this.parentObject);
-  if (checkStatus) {
-      this.pdfIcon = true;
-      data.checkValue = true;
-      let i = 0;
-      this.parentObject.tab_content.forEach(element => {
-     if (element.checkValue) {
-       element.sub.forEach(childelement => { childelement.checkValue = true;
-       });
-       i++;
-     }
-     console.log(i, this.parentObject.tab_content.length);
-     if (i === this.parentObject.tab_content.length) {
-      this.parentObject.checkValue = true;
-    }
-     console.log(this.parentObject);
-   });
-   } else {
-    this.pdfIcon = false;
-    this.viewReportPage = false;
-    this.submitDetails = true;
-    data.checkValue = false;
-    this.parentObject.checkValue = false;
-    data.sub.forEach(element => { element.checkValue = false;
-    });
-   }
-}
-nextsubCheckBox(checkStatus, data, id) {
-  console.log(checkStatus);
-  console.log(data);
-  console.log(id);
-  this.parentObject = this.sidebarCategoriesData[id];
-  console.log(this.parentObject);
-  if (checkStatus) {
-    this.pdfIcon = true;
-    this.parentObject.tab_content[id].checkValue = true;
-  } else if (this.parentObject.tab_content[id].name) {
-      console.log(this.parentObject.tab_content[id].name);
-      this.parentObject.tab_content[id].checkValue = false;
-  } else {
-    this.parentObject.tab_content[id].checkValue = true;
-  }
-  this.pdfIcon = false;
-  this.viewReportPage = false;
-  this.submitDetails = true;
-  }
+
 }
