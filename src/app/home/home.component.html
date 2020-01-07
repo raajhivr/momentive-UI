@@ -1,1799 +1,231 @@
-<div class="header-section">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-3">
-                <a  (click)="homepage()" class="navbar-brand logo" role="button">
-                    <img src="../../assets/images/momentive/momentivelogo.png" alt="" class="img-responsive">
-                    
-                </a>
-                <!-- <small class="nav-logo">Product Information Hub</small> -->
-            </div>
-            <div class="col-md-5">
-                <div class="forms">
-                    <div class="reactive-form">   
-                        <form autocomplete="off" novalidate [formGroup]="reactiveForm" (ngSubmit)="submitProduct(Searchname)">
-                           <div class="row">
-                                 
-                                <div class="col-md-12">
-                                <div class="new-search">
-                                <ng-select #code class="custom" [items]="items$ | async"
-                                      placeholder="Enter the details"
-                                        bindLabel="name"
-                                        bindValue="name"
-                                        formControlName="Searchname"
-                                        [(ngModel)]="Searchname"
-                                        [closeOnSelect]="true"
-                                        [multiple]="true"
-                                        [hideSelected]="false"
-                                        [typeahead]="input$"
-                                        [dropdownPosition]="'bottom'"
-                                        [searchable]="true"
-                                        [selectableGroupAsModel]="false"
-                                        groupBy="product"
-                                        (change)="onChangeData($event)"
-                                        [closeOnSelect]="false"
-                                        (remove)="clearCheck($event)"
-                                        [markFirst]="true">
-                                </ng-select></div>   </div>
-                                <!-- <div class="col-md-2">
-                                    <button class="btn product-btn" type="submit" [disabled]="reactiveForm.invalid">Search</button>
-                                </div> -->
-                           
+<div class="page-content">
+    
+    <!-- <app-sidebar></app-sidebar> -->
 
-                           </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class ="col-md-4">
-                  
-                    <button class="btn search-btn text-right" type="submit"  *ngIf="basicBtn" (mouseover)="fireEvent('productDetails')">Basic Properties</button>
-                    <button class="btn search-btn text-right" type="submit" >Ontology</button>
-                </div>
-            <!-- <div class ="col-md-2">
-               
-            </div> -->
-          
-        </div>
-    </div>
-</div>
+		<!-- Secondary sidebar -->
+		<div class="sidebar sidebar-light sidebar-right sidebar-expand-md align-self-start">
+
+			<!-- Sidebar mobile toggler -->
+			<div class="sidebar-mobile-toggler text-center">
+				<a href="#" class="sidebar-mobile-secondary-toggle">
+					<i class="icon-arrow-left8"></i>
+				</a>
+				<span class="font-weight-semibold">Secondary sidebar</span>
+				<a href="#" class="sidebar-mobile-expand">
+					<i class="icon-screen-full"></i>
+					<i class="icon-screen-normal"></i>
+				</a>
+			</div>
+			<!-- /sidebar mobile toggler -->
 
 
-<!--FIND YOUR PRODUCT SECTION-->
+			<!-- Sidebar content -->
+			<div class="sidebar-content">
 
+				  <div class="card card-sidebar-mobile">
+            <ul class="nav nav-sidebar" data-nav-type="accordion">
 
-<div class="wrapper">    
+                <!-- Sidebar search -->
+				<div class="">
+					<div class="card-header bg-transparent header-elements-inline">
+						<span class="text-uppercase font-size-sm font-weight-semibold">Categories</span>
+				
+					</div></div>
 
-       
-       <div class="side-bar"  id="sidebarCollapse"><span *ngIf="basicBtn"><i class="fa fa-align-justify side-nav-btn"></i></span></div>
-        <nav id="sidebar" class="active" *ngIf=!basicDetails>
-                <div class="dir-alp-con-left">
-                        <div class="dir-alp-con-left-1">
-                                <h3 class="sideleft-head">Categories <span *ngIf ="pdfIcon"class="report-pdf" title="View Report" (click)="viewReport()"><i class="fa fa-file-pdf-o"></i></span> </h3></div>
-                                <div class="dir-hom-pre dir-alp-left-ner-notb cat-scroll">
-                                        <ul>
-                                            <li *ngFor="let product of sidebarCategoriesData ;let i = index" role="button">
-                                                <a>
-                                                    <div class="list-left-near lln1"><div class="form-group"><input type="checkbox" [(ngModel)]="product.checkValue" (change)="topCheckBox(product.checkValue,product)"  id="{{product.Name}}">
-                                                        <label class="top-check" for="{{product.Name}}"></label></div> </div>
-                                                    <div class="list-left-near lln2">
-                                                        <h5 class="cursor-tab" (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" 
-                                                        [attr.data-target]="'#'+product.tab_modal"><small class="text-bold truncate" title="{{product.Name}}">{{product.Name}}</small></h5> 
-                                                        <span>{{product.id}}</span>
-                                                     </div>
-                                                    <div class="list-left-near lln3" data-toggle="collapse" [attr.href]="'#'+product.sales_tab"  aria-expanded="true" aria-controls="collapseOne"> <span><i class="fa fa-angle-down new-icon"></i></span> </div>
-                                                    <div id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                                                        <ul>
-                                                            <li class="sidebar-drop" style="cursor:pointer" *ngFor="let data of product.tab_content;"> <div class="form-group">
-                                                                <input type="checkbox" [(ngModel)]="data.checkValue" (change)="subCheckBox(data.checkValue,data,i)"  id="{{data.name}}">
-                                                                    <label for="{{data.name}}"> <small class="truncate" (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">{{data.name}}</small> </label>
-                                                                  </div>   <span *ngIf="data.sub.length > 0" class="list-left-near lln3" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-angle-down sub-icon"></i>
-                                                                
-                                                                    <div id="{{data.id}}" class="collapse sidebar-subtop" role="tabpanel" aria-labelledby="headingOne">
-                                                                            <ul>
-                                                                                <li class="sidebar-subdrop" style="cursor:pointer" *ngFor="let subdata of data.sub;let index = i"> <div class="form-group">
-                                                                                        <input type="checkbox" [(ngModel)]="subdata.checkValue" (change)="nextsubCheckBox(subdata.checkValue,data.sub,i)"  id="{{subdata.name}}">
-                                                                                        <label for="{{subdata.name}}"> <small class="truncate-sub" title="{{subdata.name}}">{{subdata.name}}</small> </label>
-                                                                                      </div></li> </ul></div>
-                                                                
-                                                                
-                                                                </span></li>
-                                                            
-                                                        </ul>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </div>  
-                               </div> 
-         </nav>
-
-
-       <div id="content">
-            <div  *ngIf="basicDetails">
-                    <div class="">
-                            
-                                    <div class="row w-100">
-                                            <div class="col-md-3" *ngFor="let product of sidebarData ;let i = index">
-                                                <div class="card-new card border-info mx-sm-1 p-3">
-                                                    <div class="card border-info shadow p-3 my-card" ><span><img class="media-object img-circle profile-img" src="{{product.image}}"></span> </div>
-                                                    <div class="mt-3"><h6>{{product.Name}}</h6></div>
-                                                    <div class="" *ngFor="let data of product.tab_content"><small><i class="fa fa-circle icon-size"></i> {{data.name}} </small></div>
-                                                </div>
-                                            </div>
-                                    </div>
-                                </div> 
-             </div>
-              <div *ngIf="submitDetails">
-                <div class="row" *ngIf="basicBoxDetails">
-                                    <div class="col-md-6" *ngFor="let product of intialDataDetails|keyvalue:intialSort; let i = index">
-                                      <div class="row home-list-pop list-spac inbox-detail-new" *ngIf="i<4">
-                                                         <!-- <div class="col-xs-3 col-sm-3 col-md-2 mr-3">
-                                                              
-                                                        </div>  -->
-                                                        <div class="col-xs-12 col-sm-9 col-md-12">
-                                                                
-                                                                <h4 class="cursor-tab" (click)="MouseModalBox(i,product)"><span *ngFor="let each of product.value">
-                                                                        <img class="cat-img" src={{each.image}} alt=""/>
-                                                                </span>  {{product.key}}</h4>
-                                                                <div *ngFor="let each of product.value">
-                                                                    <div class="cat-data" *ngFor="let data of each | keyvalue">   
-                                                                            <p [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b> {{data.value}}</p>
-                                                                    </div> 
-                                                                </div>
-                                                         </div>
-                                                    </div> 
-                                    </div> 
-                 </div>
-              </div>  
-              <div *ngIf="viewReportPage">
-                  <app-view-report></app-view-report>
-              </div>
-
-              <div *ngIf="searchRelatedMessage">
-                    <!-- <div class="profile-card">
-                           
-                    </div> -->
-                <div class="row">
-                    <div class="col-md-2">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="alertmsg-card">
-                         <h5>No result data for this search combinations.Please try a different combinations</h5>
-                    </div></div>
-                    <div class="col-md-2">
-                        </div>
-            </div>
-        </div>
-      </div>
-</div>
-<!--BASIC Modal Details-->
-        <div class="modal fade" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                            <div class="modal-header">
-                                    <h4 class="modal-title custom_align" id="Heading">Basic Properties</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="fa fa-times mom-close" aria-hidden="true"></span></button>
-                             
-                            </div>
-                    
-
-                                <div class="basic-scrl">
-                                            <div *ngFor="let product of LsrproductLevel;let i = index">
-                                                  <div class="row inbox-details">
-                                                      <div class="col-md-12">
-                                                              <h5 (click)="productBox(i,product.tab_modal)">Product Level Details </h5><br>
-                                                              <h6 class="cursor-tab">{{product.productName}}</h6>
-                                                      </div>
-                                                     </div>
-                                                      <div class="row inbox-details">
-                                                          <div class="col-md-6">
-                                                              <p><b>Spec ID:</b>{{product.spec_id}}</p>
-                                                              <p><b>All Nam Prod Identifiers:</b> {{product.ProdIdentifiers}} </p>
-                                                              <p><b>Synonyms:</b> {{product.Synonyms}} </p>
-                  
-                                                          </div>
-                                                          <div class="col-md-6">
-                                                     
-                                                              <p><b>No. of Active Materials:</b>{{product.No_Active_Materials}} </p>
-                                                              <p><b>Sales Volume:</b> {{product.Sales_Volume}} </p>
-                                                              <p><b>GHS Information-</b>{{product.GHS_Information}}</p>
-                                                          </div>
-                                                     
-                                                      </div>
-                                                      
-                  
-                                            </div>                       
-                            
-                                                      <div *ngFor="let product of LsrMaterialLevel;let i = index">
-                                                            <div class="row inbox-details">
-                                                                <div class="col-md-12">
-                                                                      <h5>Material Level Details </h5><br>
-                                                                      <h6 class="cursor-tab">{{product.Material_id}}</h6>
-                                                                     
-                                                                </div>
-                                                                   </div>
-                                                              <div class="container">
-                                                                <div class="row">
-                                                                      <div class="col-md-12">
-                                                                      <table class="table table-bordered">
-                                                                              <thead>
-                                                                                <tr>
-                                                                                  <th><b>Material Number</b></th>
-                                                                                  <th><b>Description</b></th>
-                                                                                  <th><b>BDT</b></th>
-                                                                                  <th><b>Sales Vol 2018</b></th>
-                                                                                </tr>
-                                                                              </thead>
-                                                                              <tbody>
-                                                                                <tr *ngFor="let data of product.table">
-                                                                                  <td>{{data.Material_Number}}</td>
-                                                                                  <td>{{data.Description}}</td>
-                                                                                  <td>{{data.BDT}}</td>
-                                                                                  <td>{{data.Sales_Vol}}</td>
-                                                                                </tr>
-                                                                              </tbody>
-                                                                            </table>
-                                                                          </div>
-                                                                </div></div>
-                                                    </div>     
-                                      
-                                       
-                                              <div  *ngFor="let product of LsrcomponentLevel;let i = index">
-                                                    <div class="row inbox-details">
-                                                        <div class="col-md-12">
-                                                              <h5>Composition Level Details</h5><br>
-                                                              <h6 class="cursor-tab">68083-19-2</h6>
-                                                              
-                                                        </div>
-                                                        
-                                                      </div>
-                                                      <div class="container">
-                                                        <div class="row">
-                  <div class="col-md-12">
-                                                              <table class="table table-bordered">
-                                                                      <thead>
-                                                                        <tr>
-                                                                          <th><b>Spec Id</b></th>
-                                                                          <th><b>Component Type</b></th>
-                                                                          <th><b>Chemical Name</b></th>
-                                                                          <th><b>CAS#</b></th>
-                                                                          <th><b>Percentage</b></th>
-                                                                          
-                                                                        </tr>
-                                                                      </thead>
-                                                                      <tbody>
-                                                                        <tr *ngFor="let data of product.table">
-                                                                          <td>{{data.spec_id}}</td>
-                                                                          <td>{{data.component_Type}}</td>
-                                                                          <td>{{data.chemical_Name}}</td>
-                                                                          <td>{{data.CAS}}</td>
-                                                                          <td>{{data.Percentage}}</td>
-                                                                        </tr>
-                                                                        
-                                                                        
-                                                                      </tbody>
-                                                                    </table>
-                                                                      
-                                                                     
-                                                                 
-                                                                  </div>
-                                                       
-                                                        </div></div>
-                        
-                                             </div>     </div>                   
-                                        
-                       
-
-             
-            </div></div>
-                     
-        </div>
-              
-
-<div class="modal fade" id="{{modalValue}}" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                    <h4 class="modal-title custom_align" id="Heading">LSR 2680FC A - {{productTitle}}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="fa fa-times mom-close" aria-hidden="true"></span></button>
-             
-            </div>
-            
-         <div class="board-inner">
-                    <div class="slide-nav">
-                        <div class="slide-left-outsize" *ngIf="sidebarTopIcon">
-                            <span class="fa fa-backward"></span>
-                        </div>
-                        <div class="slide-left" *ngIf="sidebarTopIcon">
-                            <span class="fa fa-chevron-left"></span>
-                        </div>
-                        <div class="slide-center">
-                            <div class="list-cat" [ngStyle]="setMyStyles()">
-                                <div class="box-cat" *ngFor="let product of sidebarData; let i = index" [ngClass]="{'active': selectedId == i}">
-                                    <a [attr.href]="'#' + product.modal_id" aria-controls="dustin" (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab" data-toggle="tab" title="{{product.Name}}">
-                                        <img class="img-circle" src="{{product.image}}" /></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="slide-right" *ngIf="sidebarTopIcon">
-                            <span class="fa fa-chevron-right"></span>
-                        </div>
-                        <div class="slide-right-outsize" *ngIf="sidebarTopIcon">
-                            <span class="fa fa-forward"></span>
-                        </div>
-                    </div>
-               
-
-         </div>
-
-            <!--Product Attributes-->
-            <div *ngIf="firstModal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                        <div class="board-inner radio-check-mbv">
-                            <div class="slide-nav">
-                                <div class="slide-center">
-                                    <div class="list-check">
-                                        <mat-radio-group aria-label="Select an option">
-                                            <mat-radio-button  *ngFor="let item of productAttributeCheck;let i = index" 
-                                            [value]="i" [checked]="item.name === productAttributesCheck" 
-                                             (change)="onChangeProductAttribute(item.name)"> {{item.name}}</mat-radio-button>
-                                        </mat-radio-group>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content">
-                             
-                                <div *ngIf="primaryInformtionTypes">
-                                        <div class="card-body">
-                                            <div class="row card-inner-body">
-                                                <div class="col-md-4">
-                                                       
-                                                    
-                                                    <h6 class="card-subtitle mb-2 ">Product Identification: <i class="fa fa-info-circle" title="This data from SAP"></i><span class="product-identifiation">LSR2680FC,
- LSR2680,NLR160-80,NLR160-80,T6227</span></h6>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <h6 class="card-subtitle mb-2 ">Relabels: <i class="fa fa-info-circle" title="This data from SAP"></i><span> N/A</span></h6>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <h6 class="card-subtitle mb-2 ">Chemical Name: <i class="fa fa-info-circle" title="This data from SAP"></i><span> N/A</span></h6>
-                                                </div>
-                                            </div>
-                                            <div class="row card-innerProduct-body">
-                                                <div class="col-md-12">
-                                                    <h6 class="card-subtitle mb-2 ">Product Application: <i class="fa fa-info-circle" title="This data from Momentive website"></i></h6>
-                                                    
-                                                    <div class="row">
-                                                        <div class="col-md-5">
-                                                            <ol class="ordered-list">
-
-                                                                <li> <i class="fa fa-circle product-icon"> <span>Dental / surgical devices</span> </i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span>Diagnostics / imaging</span> </i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span>Fluid and drug delivery devices</span></i></li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Orthopedics / prosthetics</span></i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Advanced Wound Care & Scar Management </span></i></li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Septa / stoppers / laboratory accessories </span></i> </li>
-                                                            </ol>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <ol class="ordered-list">
-
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Medical tubing</span> </i></li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Wound drains and bulbs</span></i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Sterilization mats</span> </i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Pharmaceutical closures </span></i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Instrument grips</span> </i> </li>
-
-                                                            </ol>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <ol class="ordered-list">
-
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Positioning devices </span></i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span>Catheters</span> </i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Seals / dialysis o-rings / valves</span> </i> </li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span> Respiratory / anesthesia</span> </i></li>
-                                                                <li> <i class="fa fa-circle product-icon"> <span>Medical equipment keypads </span></i></li>
-                                                            </ol>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row card-inner-body">
-                                                <div class="col-md-12">
-                                                    <h6 class="card-subtitle mb-2 ">Registered Quantity Per Legal Entity: <i class="fa fa-info-circle" role="button" title="This data from SAP"></i></h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                </div>
-                                <div *ngIf="ghsLabeling">
-                                        <div class="card-body">
-                                            <h6 class="mod-head">GHS Labeling: <i class="fa fa-info-circle" role="button" title="This data from SAP"></i></h6>
-                                    <p-table #dt [columns]="ghsLabelingHeader" [value]="ghsLabelingData" (sortFunction)="customSort($event)" [paginator]="legalpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedLabelingProducts" [reorderableColumns]="true" >
-                                        <ng-template pTemplate="caption">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div style="text-align: left">
-                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ng-template>
-                                        <br>
-                                  
-                                        <ng-template pTemplate="header" let-columns>
-                                            <tr>
-                                                <th style="width:2.5em"></th>
-                                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                    {{col.header}}
-                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                </th>
-                                            </tr>
-                                        </ng-template>  
-
-                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                            <tr [pReorderableRow]="index">
-                                                <td>
-                                                    <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                </td>
-                                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                    {{rowData[col.field]}}
-                                                </td>
-                                            </tr>
-                                        </ng-template>
-                                    </p-table>
-                                    </div>
-                                </div>
-                                <div *ngIf="structureAndFormulaTypes">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <h6 class="card-subtitle mb-2 mh-2">Chemical Structure: <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i></h6>
-                                                    <br>
-                                                    <h6>CAS Number: 68083-19-2 </h6>
-                                                    <img src="../../assets/images/momentive/chemicalStructure.png" />
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <h6 class="card-subtitle mb-2 mh-2">Molecular Formula: <i class="fa fa-info-circle" role="button" title="This data from TIR & SIP SP"></i></h6>
-                                                    <br>
-                                                    <ol class="structure">
-                                                        <li> M1.99 D10.01 D”0.98 T20.01:
-                                                            where D”= -(CH3)Si-CH2CH2CH2O(EO)7.3-OH</li>
-                                                        </ol>
-                                                </div>
-
-                                                <div class="col-md-4">
-                                                    <h6 class="card-subtitle mb-2 mh-2">Molecular Weight:<i class="fa fa-info-circle" role="button" title="This data from TIR & SIP SP"></i></h6>
-                                                    <br>
-                                                    <ol class="structure">
-                                                        <li>Monoisotopic Molecular Weight: 548.19/788.20 Da</li>
-                                                        
-                                                        <li> Average Molecular Weight: 548.92/789.43 Da </li>
-                                                    </ol>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                                <div *ngIf="compositionTypes">
-                                        <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                            <h6 class="head"><span class="head-sub" *ngIf="compositionLegalTypes">Legal Composition: <i class="fa fa-info-circle" role="button" title="This data from SAP"></i></span>
-                                            <span class="head-sub" *ngIf="compositionHunderdTypes">100% Composition:<i class="fa fa-info-circle" role="button" title="This data from SAP"></i></span>
-                                          <span class="head-sub" *ngIf="compositionStandardTypes">Standard Composition:<i class="fa fa-info-circle" role="button" title="This data from SAP"></i></span></h6>
-                                        </div>
-                                        <div class="col-md-4">
-
-                                            <mat-form-field>
-                                                <mat-label>Composition Types</mat-label>
-                                                <mat-select placeholder="Composition" #ref (selectionChange)="compositionProcess(ref.value)">
-                                                    <mat-option *ngFor="let composition of compositionPart" [value]="composition.value">
-                                                        {{composition.type}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                           
-                                            <div class="row" *ngIf="compositionStandardTypes">
-                                                <div class="col-md-12" >
-                                                        <!-- Standard Composition -->                                                         
-                                                        <p-table #dt [columns]="standardCompositionHead" [value]="standardCompositionData" (sortFunction)="customSort($event)" [paginator]="false" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedStandardCompositionProducts" [reorderableColumns]="true">
-                                                                <ng-template pTemplate="caption">
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div style="text-align: left">
-                                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                                                <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                                <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                                <!-- <button class="btb pg-button" (click)="exportStandardXLSX()"><i class="fa fa-file-excel-o">  Export CSV</i></button> -->
-                                                                                 <button class="btb pg-button"><i class="fa fa-file-excel-o">  Export CSV</i></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </ng-template>
-                                                                <br>
-                                                                <ng-template pTemplate="header" let-columns>
-                                                                    <tr>
-                                                                       <th style="width:2.5em"></th>              
-                                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                                {{col.header}}
-                                                                                <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                            </th>
-                                                                    </tr>
-                                                                </ng-template>
-                                                                <ng-template pTemplate="body" let-rowData let-legalData let-index="rowIndex">
-                                                                    <tr [pReorderableRow]="index">
-                                                                        <td>
-                                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                        </td>
-                                                                        <td>
-                                                                            {{legalData.ComponentType}}
-                                                                        </td>
-                                                                        <td>
-                                                                                {{legalData.Component_Id}}
-                                                                            </td>
-                                                                            <td>
-                                                                                    {{legalData.CAS_Number}}
-                                                                                </td>
-                                                                                <td>
-                                                                                       <div *ngFor="let each of legalData.Component_Name">
-                                                                                           <b>CAS NAME:</b>{{each.cas_name}}<br>
-                                                                                           <b>IUPAC NAME:</b>{{each.iupac_name}}<br>
-                                                                                           <b>INCI NAME:</b>
-                                                                                           <span *ngFor="let eachINCI of each.INCI_Name ,let i=index">
-                                                                                         {{i+1}}.{{eachINCI}}
-                                                                                           </span>
-                                                                                       </div>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                            {{legalData.Value}}
-                                                                            </td>
-                                                                    </tr>
-                                                                </ng-template>
-                                                        </p-table>  
-                                                        
-                                                    </div>
-                                                </div>
-                                               
-                                        <div class="row" *ngIf="compositionLegalTypes">
-                                            <!-- Legal Composition -->
-                                         <div class="co-md-12">
-                                                <p-table #dt [columns]="legalCompositionHead" [value]="legalCompositionData" (sortFunction)="customSort($event)" [paginator]="false" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedlegalCompositionProducts" [reorderableColumns]="true">
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div style="text-align: left">
-                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                        <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                        <!-- <button class="btb pg-button" (click)="exportLegalXLSX()"><i class="fa fa-file-excel-o">  Export CSV</i></button> -->
-                                                                        <button class="btb pg-button"><i class="fa fa-file-excel-o">  Export CSV</i></button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                                        <br>
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                               <th style="width:2.5em"></th>              
-                                                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                        {{col.header}}
-                                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                    </th>
-                                                            </tr>
-                                                        </ng-template>
-                                                        <ng-template pTemplate="body" let-rowData let-legalData let-index="rowIndex">
-                                                            <tr [pReorderableRow]="index">
-                                                                <td>
-                                                                    <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                </td>
-                                                                <td>
-                                                                    {{legalData.ComponentType}}
-                                                                </td>
-                                                                <td>
-                                                                        {{legalData.Component_Id}}
-                                                                    </td>
-                                                                    <td>
-                                                                            {{legalData.CAS_Number}}
-                                                                        </td>
-                                                                        <td>
-                                                                               <div *ngFor="let each of legalData.Component_Name">
-                                                                                   <b>CAS NAME:</b>{{each.cas_name}}<br>
-                                                                                   <b>IUPAC NAME:</b>{{each.iupac_name}}<br>
-                                                                                   <b>INCI NAME:</b>
-                                                                                   <span *ngFor="let eachINCI of each.INCI_Name ,let i=index">
-                                                                                 {{i+1}}.{{eachINCI}}
-                                                                                   </span>
-                                                                               </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                    {{legalData.Value}}
-                                                                    </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                </p-table>
-                                         </div>
-                                        </div>
-                                        <div class="row" *ngIf="compositionHunderdTypes">
-                                            <div class="col-md-12" >
-                                                    <p-table #dt [columns]="hunderedCompositionHead" [value]="hunderedCompositionData" (sortFunction)="customSort($event)" [paginator]="false" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedhunderedCompositionProducts" [reorderableColumns]="true">
-                                                            <ng-template pTemplate="caption">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div style="text-align: left">
-                                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                  </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                                            <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                            <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                            <!-- <button class="btb pg-button" (click)="exportHunderedXLSX()"><i class="fa fa-file-excel-o">  Export CSV</i></button> -->
-                                                                            <button class="btb pg-button"><i class="fa fa-file-excel-o">  Export CSV</i></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </ng-template>
-                                                            <br>
-                                                            <ng-template pTemplate="header" let-columns>
-                                                                <tr>
-                                                                   <th style="width:2.5em"></th>              
-                                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                            {{col.header}}
-                                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                        </th>
-                                                                </tr>
-                                                            </ng-template>
-                                                            <ng-template pTemplate="body" let-rowData let-legalData let-index="rowIndex">
-                                                                <tr [pReorderableRow]="index">
-                                                                    <td>
-                                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                    </td>
-                                                                    <td>
-                                                                        {{legalData.ComponentType}}
-                                                                    </td>
-                                                                    <td>
-                                                                            {{legalData.Component_Id}}
-                                                                        </td>
-                                                                        <td>
-                                                                                {{legalData.CAS_Number}}
-                                                                            </td>
-                                                                            <td>
-                                                                                   <div *ngFor="let each of legalData.Component_Name">
-                                                                                       <b>CAS NAME:</b>{{each.cas_name}}<br>
-                                                                                       <b>IUPAC NAME:</b>{{each.iupac_name}}<br>
-                                                                                       <b>INCI NAME:</b>
-                                                                                       <span *ngFor="let eachINCI of each.INCI_Name ,let i=index">
-                                                                                     {{i+1}}.{{eachINCI}}
-                                                                                       </span>
-                                                                                   </div>
-                                                                                </td>
-                                                                                <td>
-                                                                                        {{legalData.Value}}
-                                                                        </td>
-                                                                </tr>
-                                                            </ng-template>
-                                                    </p-table>
-                                            </div>
-                                        </div>
-                                     
-                                    
-                                </div></div>
-                                <div *ngIf="flowDiagrams">
-                                        <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h6 class="card-subtitle mb-2 ">Manufacturing Flow Diagram: <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i> <span class="img-down"><a href="../../assets/images/momentive/ManufracturingFlowDiagram.png" class="btn btn-primary btn-sm"
-                                                        target="_self" download>Download</a></span></h6>
-                                                    <div class="img-content">
-                                                        <img src="../../assets/images/momentive/ManufracturingFlowDiagram.png" width="80%">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h6 class="card-subtitle mb-2 ">Synthesis Diagram: <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i><span class="img-down"><a href="../../assets/images/momentive/SynthesisDiagram.png" class="btn btn-primary btn-sm"
-                                                        target="_self" download>Download</a></span></h6>
-                                                    <div class="img-content">
-                                                        <img src="../../assets/images/momentive/SynthesisDiagram.png"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                 </div> 
-                                <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Product Complaince-->
-            <div *ngIf="secondModal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                            <div class="board-inner radio-check-mbv">
-                                <div class="slide-nav">
-                                    <div class="slide-center">
-                                        <div class="list-check">
-                                            <mat-radio-group aria-label="Select an option">
-                                                <mat-radio-button  *ngFor="let item of ProductComplianceCheck;let i = index" [value]="i" [checked]="item.name === productComplianceCheck" (change)="onChangeProductCompliance(item.name)"> {{item.name}}</mat-radio-button>
-                                            </mat-radio-group>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-content">
-                             
-                                    <div *ngIf="complianceNotification">
-                                        <div class="card-body">
-                                                <h6 class="mod-head">Notification Status: <i class="fa fa-info-circle" role="button" title="This data from SAP"></i></h6>
-                                                <p-table #dt [columns]="pc_NotificationHeader" [value]="pc_NotificationData" (sortFunction)="customSort($event)" [paginator]="Notificationpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedNotificationProducts" [reorderableColumns]="true" >
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div style="text-align: left">
-                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                                        <br>
-                                                  
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                                <th style="width:2.5em"></th>
-                                                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                    {{col.header}}
-                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                </th>
-                                                            </tr>
-                                                        </ng-template>  
-                        
-                                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                            <tr [pReorderableRow]="index">
-                                                                <td>
-                                                                    <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                </td>
-                                                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                                    {{rowData[col.field]}}
-                                                                </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                </p-table> 
-                                    </div>
-                                    </div>
-                                    <div *ngIf="complianceRegistration">
-                                     <div class="card-body"> 
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <h6 class="head"><span class="head-sub" *ngIf="complaint_EU">EU: <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i></span>
-                                                <span class="head-sub" *ngIf="complaint_canada">US Canada: <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i> </span>
-                                                <span class="head-sub" *ngIf="complaint_latin">Latin America : <i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i></span></h6>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <mat-form-field>
-                                                    <mat-label>Region</mat-label>
-                                                    <mat-select #ref (selectionChange)="selectRegionProcess(ref.value)" [(ngModel)]="modeselect">
-                                                        <mat-option *ngFor="let composition of regionPart" [value]="composition.value">
-                                                            {{composition.type}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                        </div>
-                                        
-                                            <div class="row"  *ngIf="complaint_EU"  >
-                                                <!-- EU Composition -->
-                                                <p-table #dt [columns]="complianceRegistrationEUHeader" [value]="complianceRegistrationEUData" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationEUpaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationEUProducts" [reorderableColumns]="true" >
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div style="text-align: left">
-                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                                        <br>
-                                                  
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                                <th style="width:2.5em"></th>
-                                                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                    {{col.header}}
-                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                </th>
-                                                            </tr>
-                                                        </ng-template>  
-                        
-                                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                            <tr [pReorderableRow]="index">
-                                                                <td>
-                                                                    <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                </td>
-                                                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                                    {{rowData[col.field]}}
-                                                                </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                </p-table> 
-                                               
-                                            </div>
-
-                                            <div class="row" *ngIf="complaint_canada">
-                                                    <p-table #dt [columns]="complianceRegistrationCanada_Header" [value]="complianceRegistrationCanada_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationCanada_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationCanada_Products" [reorderableColumns]="true" >
-                                                            <ng-template pTemplate="caption">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div style="text-align: left">
-                                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </ng-template>
-                                                            <br>
-                                                      
-                                                            <ng-template pTemplate="header" let-columns>
-                                                                <tr>
-                                                                    <th style="width:2.5em"></th>
-                                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                        {{col.header}}
-                                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                    </th>
-                                                                </tr>
-                                                            </ng-template>  
-                            
-                                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                                <tr [pReorderableRow]="index">
-                                                                    <td>
-                                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                    </td>
-                                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                                        {{rowData[col.field]}}
-                                                                    </td>
-                                                                </tr>
-                                                            </ng-template>
-                                                    </p-table>    
-                                                
-                                                
-                                                
-                                            </div>
-                                            <div class="row" *ngIf="complaint_latin">
-                                                    <p-table #dt [columns]="complianceRegistrationLatin_Header" [value]="complianceRegistrationLatin_Data" (sortFunction)="customSort($event)" [paginator]="complianceRegistrationLatin_paginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedcomplianceRegistrationLatin_Products" [reorderableColumns]="true" >
-                                                            <ng-template pTemplate="caption">
-                                                                <div class="row">
-                                                                    <div class="col-md-6">
-                                                                        <div style="text-align: left">
-                                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-md-6">
-                                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </ng-template>
-                                                            <br>
-                                                      
-                                                            <ng-template pTemplate="header" let-columns>
-                                                                <tr>
-                                                                    <th style="width:2.5em"></th>
-                                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                        {{col.header}}
-                                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                    </th>
-                                                                </tr>
-                                                            </ng-template>  
-                            
-                                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                                <tr [pReorderableRow]="index">
-                                                                    <td>
-                                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                                    </td>
-                                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                                        {{rowData[col.field]}}
-                                                                    </td>
-                                                                </tr>
-                                                            </ng-template>
-                                                    </p-table> 
-                                              
-                                                </div>
-                                        </div>
-                                    </div>
-                                    <div class="clearfix"></div>
-                            </div>
-                    </div>
-                </div>
-            </div>
-            <!--Customer Communication-->
-            <div *ngIf="thirdModal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                        <div class="board-inner radio-check-mbv">
-                            <div class="slide-nav">
-                                <div class="slide-center">
-                                    <div class="list-check">
-                                        <mat-radio-group aria-label="Select an option">
-                                            <mat-radio-button  *ngFor="let item of customerCommunicationChecks;let i = index" [value]="i" [checked]="item.name === customerCommunicationTab"   (change)="onChangeCommunication(item.name)" > {{item.name}}</mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content">
-
-                                <div *ngIf="usFDA">
-                                        <div class="card-body">
-                                                <h6 class="mod-head">US FDA Letter: <i class="fa fa-info-circle" role="button" title="This data from MPM 2018, 2019 Sharepoint"></i></h6>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label>Document Panel</label>
-                                                    <div>
-                                                        <embed class="food-document" alt="Thumbnail [200x250]" src="../.././assets/images/momentive/LSR2560 - FDA.pdf" type="application/pdf" style="width:550px; height:600px;">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label>Result Panel</label>
-                                                    <div class=" result-box text-center">
-                                                        <div class="box">
-                                                            <div class="box-title">
-                                                                <h3>LSR 2680FC A with 21 CFR 177.2600-Rubber Articles</h3>
-                                                            </div>
-                                                            <div class="box-text">With regards to your query on the compliance of LSR 2680FC A with U.S Food and Drug Administartion (FDA) regulations.we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600(c)- substance employed in the preparation of rubber articles intended for repeated use.
-                                                                <span>
-                                      </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <br>
-                                                   <h5>Other Matched Documents</h5>
-                                                            <div class="box">
-                                                                    <table class="table table-bordered">
-                                                                            <thead>
-                                                                              <tr>
-                                                                                <th><b>Date of Issue</b></th>
-                                                                                <th><b>Document Name</b></th>
-                                                                          
-                                                                              </tr>
-                                                                            </thead>
-                                                                            <tbody>
-                                                                              <tr>
-                                                                                <td>1st January 2018</td>
-                                                                                <td><a href=""  target="_blank">LSR2680 FCA - FDA compliance letter to DARMSTÄDTER GmbH </a> </td>
-                                                                                
-                                                                              </tr>
-                                                                              <tr>
-                                                                                    <td>1st June 2018</td>
-                                                                                    <td><a href=""  target="_blank">LSR2680 FCA, 2030,- FDA Compliance Letter to Philips - 2019</a> </td>
-                                                                                    
-                                                                                  </tr>
-                                                                              
-                                                                              
-                                                                            </tbody>
-                                                                          </table>
-                                                            
-                                                        </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    
-                                </div>
-                                <div *ngIf="EuFoodContact">
-                                        <div class="card-body">
-                                                <h6 class="mod-head">Eu Food Contact: <i class="fa fa-info-circle" role="button" title="This data from MPM 2018, 2019 Sharepoint"></i></h6>
-                                            <!-- <div class="row card-inner-body">
-                                                <h4 class="text-center">EU- Food Contact</h4>
-                                            </div> -->
-                                         </div>
-                                </div>
-                                <div *ngIf="heavyMetals">
-                                     
-                                        <div class="card-body">
-                                                <h6 class="mod-head">Heavy Metals:<i class="fa fa-info-circle" role="button" title="This data from Document on Shared Drive - P"></i></h6>
-                                     <div class="col-md-12">
-                                        <div class="">
-                                                <div class="metal-table">
-                                                    
-                                                        <div class="metal-list">
-                                                         
-                                                            <table class="table" >
-                                                                  <tbody>
-                                                                    
-                                                                        <tr>
-                                                                                <td><b>Product</b></td>
-                                                                                <td>LSR 2680FC A</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>AKA</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Batch #</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Sample #</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>System</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Date</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Aluminum(Al)</b></td>
-                                                                                <td>0.2 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Antimony(sb)</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Arsenic(As)</b></td>
-                                                                                <td>
-                                                                                    < 0.12 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Barium(Ba)</b></td>
-                                                                                <td>
-                                                                                    < 0.12 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Beryillum(Be)</b></td>
-                                                                                <td>
-                                                                                    < 0.12 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Boron(B)</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Cadmium(cd)</b></td>
-                                                                                <td>
-                                                                                    < 0.12 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Calcium(ca)</b></td>
-                                                                                <td>1.36 PPM</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td><b>Carbon</b></td>
-                                                                                <td>-</td>
-                                                                            </tr>
-                                                               
-                                                                </tbody>
-                                                            </table>
-                                            
-                                                        </div>
-                                                    </div>
-                                    
-                                    </div></div> 
-                          
-                           
-                            
-                            </div>
-
-                                </div>
-                                
-                                <div  *ngIf="communicationHistory">
-                                 <div class="card-body">
-                                        <h6 class="mod-head">Communication History:<i class="fa fa-info-circle" role="button" title="This data from SFDC"></i></h6>
-                                    <div class="row drop-sec">
-                                      
-                                        <div class="col-md-3">
-                                            <mat-form-field>
-                                                <mat-label>BU</mat-label>
-                                                <mat-select placeholder="BU" #ref [(ngModel)]="selectedBUValue" (selectionChange)="communicationProcess(selectedBUValue)">
-                                                    <mat-option *ngFor="let composition of communicationBU" [value]="composition.type">
-                                                        {{composition.type}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <mat-form-field>
-                                                <mat-label>Product Name</mat-label>
-                                                <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedProductValue" (selectionChange)="communicationProcess(selectedProductValue)">
-                                                    <mat-option *ngFor="let composition of productCommunication" [value]="composition.type">
-                                                        {{composition.type}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                        <div class="col-md-3">
-                                                <mat-form-field>
-                                                    <mat-label>Customer Name</mat-label>
-                                                    <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedCustomerValue" (selectionChange)="communicationProcess(selectedCustomerValue)">
-                                                        <mat-option *ngFor="let composition of communicationPart" [value]="composition.type">
-                                                            {{composition.type}}
-                                                        </mat-option>
-                                                    </mat-select>
-                                                </mat-form-field>
-                                            </div>
-                                    
-                                        <div class="col-md-3">
-                                                <button class="btn btn-primary btn-sm"  (click)="unselect()">&nbsp; Clear</button> 
-                                            <button class="btn btn-primary btn-sm" (click)="chooseDate()"><i class="fa fa-calendar">&nbsp; Select Date</i></button> 
-
-                                            
-                                        </div>
-
-            </div> 
-                                    <div  *ngIf="showDatefield">
-                                           
-                                        
-                                            <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
-                                                 <div class="row">
-                                        <div class="col-md-4">
-                                                        <mat-form-field>
-                                                                <input matInput [matDatepicker]="startDate" placeholder="Start Date" name="start_Date" formControlName="start_Date" id="start_Date"
-                                                                          (dateChange)="addEvent('change', $event)">
-                                                                    <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                                                                    <mat-datepicker #startDate></mat-datepicker>
-                                                                    </mat-form-field>
-                                                                </div>
-                                        <div class="col-md-4">
-                                                        <mat-form-field>
-                                                        <input matInput [matDatepicker]="endDate" placeholder="End Date"  name="end_Date" formControlName="end_Date" id="end_Date"
-                                                                    (dateChange)="addEvent('change', $event)">
-                                                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                                                            <mat-datepicker #endDate></mat-datepicker>
-                                                            </mat-form-field>
-
-                                        </div>
-                                    <div class="col-md-4">
-                                     
-                                                    <button class="btn btn-primary btn-sm"  [disabled]="!dateForm.valid">Submit</button>
-                                                    <button class="btn btn-primary btn-sm" type="button" (click)="onCancel()">Cancel</button>
-                                                
-                                    </div>
-                                </div> 
-                                    </form>
-                                              
-                                        </div>                                   
-                              
-                                    <p-table #dt [columns]="CommunicationHistoryHead" [value]="CommunicationHistoryData" dataKey="case_number"  (sortFunction)="customSort($event)" [customSort]="true"  [paginator]="true" [rows]="5">
-                                          
-                                        <ng-template pTemplate="caption">
-                                            <div class="row">
-                                            <div class="col-md-6" style="text-align: left">
-                                                    
-                                                            <i class="fa fa-search" style="margin:4px 4px 0 0"></i>
-                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value,'contains')">
-                                                        </div>
-                                                        <div class="col-md-6" style="text-align: right">
-                                                                
-                                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                                                <!-- <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp; -->
-                                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                                <!-- <button class="btb pg-button" (click)="exportAsXLSX()"><i class="fa fa-file-excel-o">&nbsp;Export CSV Data</i></button> -->
-                                                                                <button class="btb pg-button"><i class="fa fa-file-excel-o">&nbsp;Export CSV Data</i></button>
-                                                                    </div>
-                                                        </div></div>
-                                                </ng-template> 
-
-                                        
-                                        <ng-template pTemplate="header" let-columns>
-                                             
-                                                <tr>
-                                                    <th style="width: 3em"></th>
-                                                    <th *ngFor="let col of columns" [pSortableColumn]="col.field">
-                                                        {{col.header}} <p-sortIcon [field]="col.field"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-
-                                                
-                                            </ng-template>
-                                            <ng-template pTemplate="body" let-rowData let-expanded="expanded" let-columns="columns">
-                                                <tr>
-                                                    <td>
-                                                        <a href="#" [pRowToggler]="rowData">
-                                                            <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
-                                                        </a>
-                                                    </td>
-                                                    <td *ngFor="let col of columns">
-                                                        {{rowData[col.field]}}
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                            <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
-                                                <tr *ngFor="let each of rowData.email_Content">
-                                                    <td [attr.colspan]="columns.length + 1">
-                                                        <div class="ui-g ui-fluid" style="font-size:16px;padding:20px">
-                                                         
-                                                            <div class="ui-g-12 ui-md-9">
-                                                                <div class="ui-g">
-                                                                    <div class="ui-g-12">
-                                                                        <b>Contact Email:</b> {{each.contact_email}}
-                                                                    </div>
-                                                                    <div class="ui-g-12">
-                                                                        <b>Case Subject:</b> {{each.case_subject}}
-                                                                    </div>
-                                                                    <div class="ui-g-12">
-                                                                        <b>Text Body:</b> {{each.text_body}}
-                                                                    </div>
-                                                                    <div class="ui-g-12">
-                                                                        <b>Attached Documents:</b><a href=""  target="_blank">{{each.attached_docs}}</a> 
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                                        
-                                
-
-                                </div>
-                                <div class="clearfix"></div>
-                            </div></div>
-                        </div>
-                    </div>
-            </div>
-            
-            <!--Restricted Substance-->
-            <div *ngIf="fourthModal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                        <div class="board-inner radio-check-mbv">
-                            <div class="slide-nav">
-                                <div class="slide-center">
-                                    <div class="list-check">
-                                        <mat-radio-group aria-label="Select an option">
-                                            <mat-radio-button  *ngFor="let item of restrictedSubstanceChecks;let i = index" [value]="i" [checked]="item.name === restrictedSubstanceTab"  (change)="onChangeRestricted(item.name)"> {{item.name}}</mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content">
-                            <div class="card-body">
-                                  
-                                <div *ngIf="gadslCheck">
-                                      <h6 class="mod-head">GADSL:<i class="fa fa-info-circle" role="button" title="This data from GADSL/External Website"></i></h6>
-                                        <p-table #dt [columns]="restrictedGASDLHeader" [value]="restrictedGASDLData" (sortFunction)="customSort($event)" [paginator]="restrictedGASDLDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedrestrictedGASDLProducts" [reorderableColumns]="true" >
-                                                <ng-template pTemplate="caption">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div style="text-align: left">
-                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                                <br>
-                                          
-                                                <ng-template pTemplate="header" let-columns>
-                                                    <tr>
-                                                        <th style="width:2.5em"></th>
-                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                            {{col.header}}
-                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                        </th>
-                                                    </tr>
-                                                </ng-template>  
-                
-                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                    <tr [pReorderableRow]="index">
-                                                        <td>
-                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                        </td>
-                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                            {{rowData[col.field]}}
-                                                        </td>
-                                                    </tr>
-                                                </ng-template>
-                                        </p-table> 
-                                </div>
-                                <div *ngIf="californiaCheck">
-                                        <h6 class="mod-head">California Prop 65:<i class="fa fa-info-circle" role="button" title="This data from Cal Porp 65 website/External Website"></i></h6>
-                                        <p-table #dt [columns]="restrictedCaliforniaHeader" [value]="restrictedCaliforniaData" (sortFunction)="customSort($event)" [paginator]="restrictedCaliforniapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedrestrictedCaliforniaProducts" [reorderableColumns]="true" >
-                                                <ng-template pTemplate="caption">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div style="text-align: left">
-                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                                <br>
-                                          
-                                                <ng-template pTemplate="header" let-columns>
-                                                    <tr>
-                                                        <th style="width:2.5em"></th>
-                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                            {{col.header}}
-                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                        </th>
-                                                    </tr>
-                                                </ng-template>  
-                
-                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                    <tr [pReorderableRow]="index">
-                                                        <td>
-                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                        </td>
-                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                            {{rowData[col.field]}}
-                                                        </td>
-                                                    </tr>
-                                                </ng-template>
-                                        </p-table> 
-                                    
-                                </div>
-                                <div class="clearfix"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--Toxicology-->
-            <div *ngIf="fifthModal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                        <div class="board-inner radio-check-mbv">
-                            <div class="slide-nav">
-                                <div class="slide-center">
-                                    <div class="list-check">
-                                        <mat-radio-group aria-label="Select an option">
-                                            <mat-radio-button value="1" *ngFor="let item of toxicologyChecks;let i = index" [value]="i" [checked]="item.name === toxicologyTab" (change)="onChangeToxicology(item.name)" value="{{item.value}}"> {{item.name}}</mat-radio-button>
-                                        </mat-radio-group>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-content">
-                            <div class="card-body">
-                                <div *ngIf="studyCheck">
-                                        <h6 class="mod-head">Study Title and Date:<i class="fa fa-info-circle" role="button" title="This data from Sharepoint"></i></h6>
-                                        <p-table #dt [columns]="toxicologyStudyHead" [value]="toxicologyStudyData" (sortFunction)="customSort($event)" [paginator]="toxicologyStudyDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
-                                                <ng-template pTemplate="caption">
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <div style="text-align: left">
-                                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </ng-template>
-                                                <br>
-                                          
-                                                <ng-template pTemplate="header" let-columns>
-                                                    <tr>
-                                                        <th style="width:2.5em"></th>
-                                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                            {{col.header}}
-                                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                        </th>
-                                                    </tr>
-                                                </ng-template>  
-                
-                                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                    <tr [pReorderableRow]="index">
-                                                        <td>
-                                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                        </td>
-                                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                            {{rowData[col.field]}}
-                                                        </td>
-                                                    </tr>
-                                                </ng-template>
-                                        </p-table>  
-                                </div>
-                                <div *ngIf="monthlyCheck">
-                                        <h6 class="mod-head">Monthly Toxicology Study Title List:<i class="fa fa-info-circle" role="button" title="This data from Sharepoint"></i></h6>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <h3 class="head"><span class="head-sub" *ngIf="toxicology_sealant">Sealant</span>
-                              <span class="head-sub" *ngIf="toxicology_silane">Silane </span>
-                                        </h3>
-                                        </div>
-                                        <div class="col-md-6">
-
-                                            <mat-form-field>
-                                                <mat-label>Product Category</mat-label>
-                                                <mat-select #ref (selectionChange)="toxicologyProcess(ref.value)">
-                                                    <mat-option *ngFor="let composition of toxicologydropData" [value]="composition.value">
-                                                        {{composition.type}}
-                                                    </mat-option>
-                                                </mat-select>
-                                            </mat-form-field>
-                                        </div>
-                                    </div>
-                                   
-                                        <div class="row" *ngIf="toxicology_sealant">
-                                                <p-table #dt [columns]="toxicologyMonthlyHeader" [value]="toxicologyMonthlyData" (sortFunction)="customSort($event)" [paginator]="selectedtoxicologyMonthlyProducts" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
-                                                        <ng-template pTemplate="caption">
-                                                            <div class="row">
-                                                                <div class="col-md-6">
-                                                                    <div style="text-align: left">
-                                                                        <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                                        <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="ui-helper-clearfix" style="text-align: right">
-                                                                        <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                                        <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </ng-template>
-                                                        <br>
-                                                  
-                                                        <ng-template pTemplate="header" let-columns>
-                                                            <tr>
-                                                               
-                                                                <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                                    {{col.header}}
-                                                                    <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                                </th>
-                                                            </tr>
-                                                        </ng-template>  
-                        
-                                                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                            <tr [pReorderableRow]="index">
-                                                                
-                                                                <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                                    {{rowData[col.field]}}
-                                                                </td>
-                                                            </tr>
-                                                        </ng-template>
-                                                </p-table> 
-                                           
-                                            
-                                        </div>
-                                        <div class="row" *ngIf="toxicology_silane">
-                                            <div class="col-md-12">
-                                               
-                                                    <div class="card-body">
-                                                        <div class="row card-inner-body">
-                                                            <br>
-                                                            <h4 class="text-center">Toxicology Silane Details</h4>
-                                                        </div>
-                                                    </div>
-                                                
-                                            </div>
-                                        </div>
-                                
-                            </div>
-                            <div *ngIf="summaryCheck">
-                                    <h6 class="mod-head">Toxicology Summary:<i class="fa fa-info-circle" role="button" title="This data from Sharepoint"></i></h6>
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <!-- <h4>Toxicology Summary Details</h4> -->
-                                            <div class="col-md-12">
-                                            <div class="box">
-                                                    <table class="table table-bordered">
-                                                            <thead>
-                                                              <tr>
-                                                                <th><b>Date of Issue</b></th>
-                                                                <th><b>Document Name</b></th>
-                                                          
-                                                              </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                              <tr>
-                                                                <td>1st January 2018</td>
-                                                                <td><a href=""  target="_blank">LSR2680 FCA - FDA compliance letter to DARMSTÄDTER GmbH </a> </td>
-                                                                
-                                                              </tr>
-                                                              <tr>
-                                                                    <td>1st June 2018</td>
-                                                                    <td><a href=""  target="_blank">LSR2680 FCA, 2030,- FDA Compliance Letter to Philips - 2019</a> </td>
-                                                                    
-                                                                  </tr>
-                                                              
-                                                              
-                                                            </tbody>
-                                                          </table>
-                                            
-                                        </div></div>
-                                        
-                                        </div>
-                                    </div>
-                                
-                            </div>
-                            <div *ngIf="dataCheck">
-                                    <h6 class="mod-head">Toxicology Registration Tracker:<i class="fa fa-info-circle" role="button" title="This data from SQL DB"></i></h6>
-                                    <div class="card-body">
-                                        <div class="row card-inner-body">
-                                            <h4 class="text-center  ">Toxicology Registration Tracker</h4>
-                                        </div>
-                                    </div>
-                                
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        <!--Sales-->
-        <div *ngIf="sixthModal">
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12" role="tabpanel">
-                    <div class="board-inner radio-check-mbv">
-                        <div class="slide-nav">
-                            <div class="slide-center">
-                                <div class="list-check">
-                                    <mat-radio-group aria-label="Select an option">
-                                        <mat-radio-button  *ngFor="let item of salesCheckData;let i = index" [value]="i" [checked]="item.name === saleTab" (change)="onChangeSales(item.name)" > {{item.name}}</mat-radio-button>
-                                    </mat-radio-group>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content">
-                        <div class="card-body">
-                            <div *ngIf="locationCheck">
-                                 <h6 class="mod-head">Location Details:<i class="fa fa-info-circle" role="button" title="This data from SAP BW"></i></h6>
-                               
-                                    <div class="card-body">
-                                        <div class="row card-inner-body">
-                                            <h6>Manufacturing Location and Address :
-
-                            </h6>
-                                            <br>
-                                            <h6>Production Sites :</h6>
-                                        </div>
-                                    </div>
-                                
-                            </div>
-                            <div *ngIf="volumeCheck">
-                                    <h6 class="mod-head">Sales Volume:<i class="fa fa-info-circle" role="button" title="This data from SAP BW"></i></h6>
-                                    <p-table #dt [columns]="saleDataHead" [value]="saleDataProducts" (sortFunction)="customSort($event)" [paginator]="salesDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedSalesVolumeDataProducts" [reorderableColumns]="true" >
-                                            <ng-template pTemplate="caption">
-                                                <div class="row">
-                                                    <div class="col-md-6">
-                                                        <div style="text-align: left">
-                                                            <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                            <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="ui-helper-clearfix" style="text-align: right">
-                                                            <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                            <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </ng-template>
-                                            <br>
-                                      
-                                            <ng-template pTemplate="header" let-columns>
-                                                <tr>
-                                                    <th style="width:2.5em"></th>
-                                                    <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                                        {{col.header}}
-                                                        <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                                    </th>
-                                                </tr>
-                                            </ng-template>  
-            
-                                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                                <tr [pReorderableRow]="index">
-                                                    <td>
-                                                        <i class="fa fa-bars" pReorderableRowHandle></i>
-                                                    </td>
-                                                    <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                                        {{rowData[col.field]}}
-                                                    </td>
-                                                </tr>
-                                            </ng-template>
-                                        </p-table>
-                              
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--Report-->
-        <div  *ngIf="seventhModal">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="head"><span class="head-sub"><b>Relesed Documents <i class="fa fa-info-circle" role="button" title="This data from SAP"></i></b></span>
-         </h2>
-                </div>
-            </div>
-            <div class="tab-content">
-                <div class="card-body">
-
-                        <p-table #dt [columns]="reportDataHead" [value]="reportDataproducts" (sortFunction)="customSort($event)" [paginator]="ReportDatapaginator" [rows]="5" [customSort]="true" selectionMode="multiple" [(selection)]="selectedReportDataProducts" [reorderableColumns]="true" >
-                                <ng-template pTemplate="caption">
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div style="text-align: left">
-                                                <!-- <i class="fa fa-search" style="margin:4px 4px 0 0"></i> -->
-                                                <input type="text" class="pg-search" pInputText size="50" placeholder="Search" (input)="dt.filterGlobal($event.target.value, 'contains')">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="ui-helper-clearfix" style="text-align: right">
-                                                <button class="btb pg-button" type="button" label="All Data" (click)="dt.exportCSV()">Export CSV Data</button>&nbsp;
-                                                <!-- <button class="btb pg-button" type="button" label="Selection Only" (click)="dt.exportCSV({selectionOnly:true})">Selected Only</button> -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-template>
-                                <br>
-                          
-                                <ng-template pTemplate="header" let-columns>
-                                    <tr>
-                                        <th style="width:2.5em"></th>
-                                        <th class="pg-head" *ngFor="let col of columns" [pSortableColumn]="col.field" pReorderableColumn [ngStyle]="{'width': col.width}">
-                                            {{col.header}}
-                                            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
-                                        </th>
-                                    </tr>
-                                </ng-template>  
-
-                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex">
-                                    <tr [pReorderableRow]="index">
-                                        <td>
-                                            <i class="fa fa-bars" pReorderableRowHandle></i>
-                                        </td>
-                                        <td [style]="{'width':'300px'}" *ngFor="let col of columns">
-                                            {{rowData[col.field]}}
-                                        </td>
-                                    </tr>
-                                </ng-template>
-                            </p-table>
-                  
-                </div>
-            </div>
-        </div>
-
-        <div  *ngIf="eightModal">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2 class="head"><span class="head-sub"><b>Self Service Report</b></span>
-         </h2>
-                </div>
-            </div>
-            <div class="tab-content">
-                <div class="card-body">
-        <div class="row">
-              <div class="col-md-4 col-xs-12" *ngFor="let product of salesReport ;let i = index">
-                <div id="accordion" role="tablist" aria-multiselectable="true">
-                  <div class="card-table">
-                    <div class="card-header-table" role="tab" id="headingOne">
-                      <h5 class="mb-0">
-                        <a data-toggle="collapse" data-parent="#accordion" [attr.href]="'#'+product.sales_tab"  aria-expanded="true" aria-controls="collapseOne">
-                            <img class="product-img" src={{product.image}} alt=""> {{product.Name}}
+                <li class="nav-item sidebar-nav" *ngFor="let product of sidebarCategoriesData ;let i = index">
+                    <a class="nav-link">
+                        <img class="media-object img-circle profile-img img-side" src="{{product.image}}">
+                        <span  (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" 
+                        [attr.data-target]="'#'+product.tab_modal">{{product.Name}}
+                       </span> 
+                         <h6  data-toggle="collapse" [attr.href]="'#'+product.sales_tab"  aria-expanded="true" aria-controls="collapseOne">
+                             <i class="fa fa-angle-down sub-icon"></i>  
+                         </h6>
                         </a>
-                      </h5>
-                    </div>
-                </div>
-            </div>
-       
-                    <div id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
-                      <!-- <div class="card-block-table">
+                    <ul class="nav nav-group-sub" id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                        <li class="nav-item sub-sidebar-nav" *ngFor="let data of product.tab_content;">
+                            <i class="fa fa-square" ></i> <span (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}"> {{data.name}}</span>  
+                            <!-- <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne" >
+                                <i class="fa fa-angle-down side-sub-icon"></i>
+                            </span> -->
+                    
+                            <!-- <ul class="nav" id="{{data.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                                <li class="nav-item side-nav-back"  *ngFor="let subdata of data.sub;let index = i">
+                                   <a class="nav-link"> <i class="fa fa-square"></i> {{subdata.name}}</a></li>
+                                
+                            </ul> -->
+                        </li>
+                 
+                        <li class="nav-item-divider"></li>
+                       
+                    </ul>
+                </li>
+              
+                <!-- /main -->
 
-
-                            <div class="new">
-                                 <h4 class="panel-title title" *ngFor="let data of product.tab_content">
-                                      <a class="collapsed" data-toggle="collapse" data-parent="#nested" href="#nested-collapseOne">
-                                                    {{data.name}}
-                                                    </a>
-                                                 </h4>
-                              
-                                  </div>
-                      </div> -->
-                  
-                      <div class="card-block-table">
-                             <div class="panel-body">
-                               <div class="panel-group" id="nested">
-                                  <div class="panel panel-default" *ngFor="let data of product.tab_content">
-                                     <div class="panel-heading">
-                                        <h4 class="panel-title title">
-                                           <a class="collapsed" data-toggle="collapse" data-parent="#nested" [attr.href]="'#nested'+data.id">
-                                              <span class="tab_text"> <i class="fa fa-circle product-icon"></i> {{data.name}} </span> 
-                                           </a>
-                                        </h4>
-                                     </div>
-
-                                     <div id=nested{{data.id}} class="panel-collapse collapse">
-                                        <div class="panel-body nested-menu">
-                                                        <div class="form-group" *ngFor="let newdata of product.table_column">
-                                                            <div *ngFor="let coldata of newdata[data.id]">
-                                                            <input type="checkbox" id="{{coldata}}">
-                                                            <label for="{{coldata}}">{{coldata}}<br></label>
-                                                            </div>
-                                                          </div>   
-                                                          
-                                                    
-                                        </div>
-                                     </div>
-                                  </div>
-                                  </div>
-                               </div>
-                            </div>
-                    </div>
-                </div>
-                    </div>
-                </div>
-            </div>
+                    
+            </ul>
         </div>
-    </div>
-</div>
+			</div>
+			<!-- /sidebar content -->
+
+		</div>
+		<!-- /secondary sidebar -->
+
+   <div class="content-wrapper">
+                    <div class="content">
+
+                        <div class="row">
+                                <div class="col-xl-6" *ngFor="let product of intialDataDetails|keyvalue:intialSort; let i = index">
+                                        <div class="card-home">
+                                        <div class="media flex-column flex-sm-row mt-0">
+                                            <div class="mr-sm-3 mb-2 mb-sm-0">
+                                                <div class="card-img-actions" *ngFor="let each of product.value">
+                                                    <a>
+                                                        <img src="{{each.image}}" class="img-fluid img-preview rounded" alt="">
+                                                        
+                                                    </a>
+                                                </div>
+                                            </div>
+                
+                                            <div class="media-body">
+                                                <h6 class="media-title" (click)="MouseModalBox(i,product)"><b>{{product.key}}</b></h6>
+                                                <ul class="list-inline list-inline-dotted text-muted mb-2" *ngFor="let each of product.value">
+                                                    <li class="list-inline-item"  *ngFor="let data of each | keyvalue"  [hidden]="data.key =='image'|| data.key=='tab_modal'"><b>{{data.key}}:</b> {{data.value}}</li>
+                                                </ul>
+                                              
+                                            </div>
+                                        </div>
+                
+                                    </div>
+                                </div>
+                            </div>
+                  
+                    </div>
+   </div> 
+ 
 </div>
 
-<app-footer></app-footer>
+
+
+
+   <div class="modal fade" id="{{modalValue}}" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                    <h4 class="modal-title custom_align" id="Heading">LSR 2680FC A - {{productTitle}}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times"></i></button>
+                             
+                            </div>
+                            
+                         <div class="board-inner">
+                                    <div class="slide-nav">
+                                        <div class="slide-left-outsize" *ngIf="sidebarTopIcon">
+                                            <span class="fa fa-backward"></span>
+                                        </div>
+                                        <div class="slide-left" *ngIf="sidebarTopIcon">
+                                            <span class="fa fa-chevron-left"></span>
+                                        </div>
+                                        <div class="slide-center">
+                                            <div class="list-cat" [ngStyle]="setMyStyles()">
+                                                <div class="box-cat" *ngFor="let product of sidebarData; let i = index" [ngClass]="{'active': selectedId == i}">
+                                                    <a [attr.href]="'#' + product.modal_id" aria-controls="dustin" (click)="selectItem(i,product.tab_modal,product.tab_content[0].name)" role="tab" data-toggle="tab" title="{{product.Name}}">
+                                                        <img class="img-circle" src="{{product.image}}" /></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="slide-right" *ngIf="sidebarTopIcon">
+                                            <span class="fa fa-chevron-right"></span>
+                                        </div>
+                                        <div class="slide-right-outsize" *ngIf="sidebarTopIcon">
+                                            <span class="fa fa-forward"></span>
+                                        </div>
+                                    </div>
+                         </div>
+                
+                            <!--Product Attributes-->
+                            <div *ngIf="firstModal">
+                           <app-product-attributes></app-product-attributes> 
+
+                            </div>
+                
+                            <!--Product Complaince-->
+                            <div *ngIf="secondModal">
+                                <app-product-compliance></app-product-compliance>
+                            </div>
+                            <!--Customer Communication-->
+                            <div *ngIf="thirdModal">
+                               <app-customer-communication></app-customer-communication>
+                            </div>
+                            
+                            <!--Restricted Substance-->
+                            <div *ngIf="fourthModal">
+                            <app-restricted-substance></app-restricted-substance>
+                            </div>
+                            <!--Toxicology-->
+                            <div *ngIf="fifthModal">
+                             <app-toxicology></app-toxicology>
+                            </div>
+                        <!--Sales-->
+                        <div *ngIf="sixthModal">
+                        <app-sales-volume></app-sales-volume>
+                        </div>
+                        <!--Report-->
+                        <div  *ngIf="seventhModal">
+                          <app-report-data></app-report-data>
+                        </div>
+                
+                    </div>
+                </div>
+  </div>
+
+        
+
+
+                <!-- <li class="col-md-3 dropdown-item" *ngFor="let product of sidebarCategoriesData ;let i = index">
+                        <ul>                
+                            <li class="" role="button">
+                                <div class="row">
+                                        <div class="col-md-10">
+                                                <div class="form-group"><input type="checkbox" [(ngModel)]="product.checkValue" (change)="topCheckBox(product.checkValue,product)"  id="{{product.Name}}">
+                                                    <label  for="{{product.Name}}">{{product.Name}} </label><h5  (click)="productRadioBox(i,product.tab_modal,product.tab_content[0].name)" data-toggle="modal" data-title="Edit" 
+                                                        [attr.data-target]="'#'+product.tab_modal"><small  title="{{product.Name}}"></small></h5> </div>
+                                            </div>
+                                            <div class="col-md-2">
+                                                    <div  data-toggle="collapse" [attr.href]="'#'+product.sales_tab"  aria-expanded="true" aria-controls="collapseOne"> <span><i class="fa fa-angle-down new-icon"></i></span> </div>
+                                            </div>
+                                </div>
+                                   
+                                    <div id="{{product.sales_tab}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                                        <ul>
+                                            <li  style="cursor:pointer" *ngFor="let data of product.tab_content;">
+                                                <div class="row">
+                                                    <div class="col-md-10">
+                                                            <div class="form-group">
+                                                                    <input type="checkbox" [(ngModel)]="data.checkValue" (change)="subCheckBox(data.checkValue,data,i)"  id="{{data.name}}">
+                                                                        <label for="{{data.name}}"> <small class="truncate" (click)="productRadioBox(i,product.tab_modal,data.name)" data-toggle="modal" data-title="Edit" [attr.data-target]="'#'+product.tab_modal" title="{{data.name}}">{{data.name}}</small> </label>
+                                                                      </div>
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                            <span *ngIf="data.sub.length > 0" data-toggle="collapse" [attr.href]="'#'+data.id"  aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-angle-down sub-icon"></i></span>
+                                                    </div>
+                                                </div>
+                                                 
+                                                
+                                                    <div id="{{data.id}}" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+                                                            <ul>
+                                                                <li  style="cursor:pointer" *ngFor="let subdata of data.sub;let index = i"> <div class="form-group">
+                                                                        <input type="checkbox" [(ngModel)]="subdata.checkValue" (change)="nextsubCheckBox(subdata.checkValue,data.sub,i)"  id="{{subdata.name}}">
+                                                                        <label for="{{subdata.name}}"> <small  title="{{subdata.name}}">{{subdata.name}}</small> </label>
+                                                                      </div></li> </ul></div>
+                                                
+                                                
+                                                </li>
+                                            
+                                        </ul>
+                                    </div>
+                                
+                            </li> 
+                          
+                        </ul>
+                    </li> -->

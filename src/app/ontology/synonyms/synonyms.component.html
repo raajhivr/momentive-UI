@@ -1,0 +1,325 @@
+
+        <div id="content" *ngIf="documentCategorySection">
+            <div class="row">
+                <div class="col-md-12">
+                       <h5 class="msg-data">No Synonyms for the Selected Product</h5>
+                </div></div>
+        </div>
+        <div id="content" *ngIf="!documentCategorySection">
+                <div class="tabs">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <ul class="nav nav-pills nav-stacked flex-column">
+                                    <li class="active"><a href="#tab_a" data-toggle="pill"> {{documentCategory}}</a></li>
+                                    <!-- <li><a href="#tab_b" data-toggle="pill"><i class="fa fa-plus-square  new-close" title="Add New Synonyms" (click)="synonymsFields()" aria-hidden="true"></i> 121856 LSR2680 TH/Drum kit/400Kg </a></li>
+                                    <li><a href="#tab_c" data-toggle="pill"> <i class="fa fa-plus-square  new-close" title="Add New Synonyms" (click)="synonymsFields()" aria-hidden="true"></i> 68083-19-2</a></li> -->
+                                </ul>
+                            </div>
+                            <div class="col-md-9 synonym-content">
+                                <div class="tab-content">
+                                    <h5><b>Add New Synonyms of {{documentCategory}}</b></h5>
+                                        <div class="widget-header">
+                                                <form [formGroup]="synonymsFieldsForm">
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                            <input class="form-control" type="text" placeholder="Add new synonyms" formControlName="synonymsFieldName" name="synonymsFieldName">
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <button class="btn momentive-btn" (click)="addSynonyms()">Add Synonyms</button> &nbsp;
+                                                            <!-- <button class="btn momentive-btn" (click)="closeSynonyms()">close</button> -->
+                                                        </div>
+                                                    </div>
+                                                    </form>
+                                        </div> 
+                                    <div class="tab-pane active" id="tab_a">
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                
+                                                            <div class="widget stacked widget-table action-table">
+                                                                    <div class="">
+                                                                        
+                                                                        <table class="table table-striped table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                        <th>#ELA</th>
+                                                                                        <th>Created Date</th>
+                                                                                        <th>Created By</th>
+                                                                                        
+                                                                                    <th class="td-actions">Actions</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr *ngFor="let data of Ontologysynonyms">
+                                                                                        <td>{{data.synonyms}}</td>
+                                                                                        <td>{{data.createdDate}}</td>
+                                                                                        <td>{{data.CreatedBy}}</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>										
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                            <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+
+                                                                                </tbody>
+                                                                            </table>
+                                                                        
+                                                                    </div> <!-- /widget-content -->
+                                                                
+                                                                </div> <!-- /widget -->
+                  
+                                                            <!-- <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> LSR 2680FC B <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-2">  LSR 2680-BC C2 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-3">  LSR 2680FC B-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-4">LSR 2680FC A-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> LSR2680FC-A-BLK <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by- User-1"> LSR2680 B <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-2">  LSR2680FC-W A  <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-3">  LSR 2680FC B-C4 <i class="fa fa-times"></i> </span> -->
+                                                            
+                                                    </div>
+                                                </div> 
+                                    </div>
+                                    <div class="tab-pane" id="tab_b">
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                                                            <div class="widget stacked widget-table action-table">
+                                                                    <div class="widget-content">
+                                                                        
+                                                                        <table class="table table-striped table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                        <th>Synonyms</th>
+                                                                                        <th>Created Date</th>
+                                                                                        <th>Created By</th>
+                                                                                        
+                                                                                    <th class="td-actions">Actions</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                        <td>121856 LSR2680 TH/Drum kit/400Kg</td>
+                                                                                        <td>12 Oct 2019</td>
+                                                                                        <td>User-1</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>										
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                            <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>131438 NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                                        <td>19 Oct 2019</td>
+                                                                                        <td>User-2</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>131438 NLR160-80/PAILKIT/88LB-40KG</td>
+                                                                                        <td>23 Oct 2019</td>
+                                                                                        <td>User-3</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>131439 NLR160-80-DRUMKIT(882LB-400KG)</td>
+                                                                                        <td>1 sep 2019</td>
+                                                                                        <td>User-4</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>135599 T6227/PAIL/40KG</td>
+                                                                                        <td>10 sep 2019</td>
+                                                                                        <td>User-5</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>85195 Remix LSR2680(A)</td>
+                                                                                        <td>12 Sep 2019</td>
+                                                                                        <td>User-6</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>										
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        
+                                                                    </div> <!-- /widget-content -->
+                                                                
+                                                                </div>
+                                                            <!-- <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> MAT LSR 2680FC B <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-2">  MAT LSR 2680-BC C2 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-3">  MAT LSR 2680FC B-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-4">MAT LSR 2680FC A-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> MAT LSR2680FC-A-BLK <i class="fa fa-times"></i> </span> -->
+                                                            
+                                                    </div>
+                                                </div> 
+                                    </div>
+                                    <div class="tab-pane" id="tab_c">
+                                            <div class="row">
+                                                    <div class="col-md-12">
+                                                            <div class="widget stacked widget-table action-table">
+                                                                    <div class="widget-content">
+                                                                        
+                                                                        <table class="table table-striped table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                        <th>Synonyms</th>
+                                                                                        <th>Created Date</th>
+                                                                                        <th>Created By</th>
+                                                                                        
+                                                                                    <th class="td-actions">Actions</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <tr>
+                                                                                        <td>556-67-2</td>
+                                                                                        <td>12 Oct 2019</td>
+                                                                                        <td>User-1</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>										
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                            <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>541-02-6</td>
+                                                                                        <td>19 Oct 2019</td>
+                                                                                        <td>User-2</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>68083-19-2</td>
+                                                                                        <td>23 Oct 2019</td>
+                                                                                        <td>User-3</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>68909-20-6</td>
+                                                                                        <td>1 sep 2019</td>
+                                                                                        <td>User-4</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>68083-18-1</td>
+                                                                                        <td>10 sep 2019</td>
+                                                                                        <td>User-5</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>									
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>									
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                        <td>554-06-5</td>
+                                                                                        <td>12 Sep 2019</td>
+                                                                                        <td>User-6</td>
+                                                                                    <td class="td-actions">
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-pencil-square-o"></i>										
+                                                                                        </a>
+                                                                                        
+                                                                                        <a href="javascript:;" class="icon-color">
+                                                                                                <i class="fa fa-times"></i>										
+                                                                                        </a>
+                                                                                    </td>
+                                                                                </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        
+                                                                    </div> <!-- /widget-content -->
+                                                                
+                                                                </div>
+                                                            <!-- <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> CAS LSR 2680FC B <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-2">  CAS LSR 2680-BC C2 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-3">  CAS LSR 2680FC B-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-4"> CAS LSR 2680FC A-C3 <i class="fa fa-times"></i> </span>
+                                                            <span class="ontology-synonyms new-close" data-toggle="tooltip" data-placement="top" title="Created by - User-1"> CAS LSR2680FC-A-BLK <i class="fa fa-times"></i> </span> -->
+                                                            
+                                                    </div>
+                                                </div> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                </div>
+
+    
+    

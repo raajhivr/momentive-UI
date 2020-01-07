@@ -1,26 +1,285 @@
-<section>
-    <div class="v3-top-menu">
-        <div class="container">
-            <div class="row">
-                <div class="v3-menu">
-                    <div class="v3-m-1">
-                        <!-- <a  href="index.html"><img  src="https://www.momentive.com/images/default-source/momentivelogo/momentivelogo.png?sfvrsn=3348b1ca_22" alt=""> </a> -->
-                        <h3 class="product-text">Product Information Hub</h3>
-                    </div>
-                    <div class="v3-m-2">
+<!-- Main navbar -->
+	<div class="navbar navbar-expand-md navbar-dark">
+		<div class="navbar-brand wmin-200">
+			<a href="index.html" class="d-inline-block">
+				<img src="../../assets/images/momentive/momentivelogo.png" alt="">
+			</a>
+		</div>
 
-                    </div>
-                    <div class="v3-m-3">
-                        <div class="v3-top-ri">
-                             <ul>
-								 <li><a class="v3-menu-sign"></a> </li>
-								
-							</ul> 
-                        </div>
-                    </div>
+		<!-- <div class="d-md-none">
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
+				<i class="icon-tree5"></i>
+			</button>
+			<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
+				<i class="icon-paragraph-justify3"></i>
+			</button>
+		</div> -->
+
+		<div class="collapse navbar-collapse" id="navbar-mobile">
+		 <!-- <ul class="navbar-nav">
+		
+        <li class="nav-item">
+					<a href="#" class="navbar-nav-link sidebar-control sidebar-secondary-toggle d-none d-md-block" data-popup="tooltip-demo" title="Show secondary" data-placement="bottom" data-container="body" data-trigger="hover">
+						<i class="icon-transmission">View-2</i>
+					</a>
+        </li>
+        
+      
+			</ul>  -->
+
+			<span class="navbar-text mr-md-auto mr-md-3 form-width">
+        <div class="">
+              <div class="forms">
+                  <div class="reactive-form">   
+                      <form autocomplete="off" novalidate [formGroup]="reactiveForm" (ngSubmit)="submitProduct(Searchname)">
+                         <div class="row">
+                              <div class="col-md-12">
+                              <div class="new-search">
+                              <ng-select #code class="custom" [items]="items$ | async"
+                                    placeholder="Enter the details"
+                                      bindLabel="name"
+                                      bindValue="name"
+                                      formControlName="Searchname"
+                                      [(ngModel)]="Searchname"
+                                      [closeOnSelect]="true"
+                                      [multiple]="true"
+                                      [hideSelected]="false"
+                                      [typeahead]="input$"
+                                      [dropdownPosition]="'bottom'"
+                                      [searchable]="true"
+                                      [selectableGroupAsModel]="false"
+                                      groupBy="product"
+                                      (change)="onChangeData($event)"
+                                      [closeOnSelect]="false"
+                                      (remove)="clearCheck($event)"
+                                      [markFirst]="true">
+                              </ng-select></div>   </div>
+                         
+                         </div>
+                      </form>
+                  </div>
+              </div>
+        </div>
+        
+			</span>
+
+			<ul class="navbar-nav">
+		
+
+				<li class="nav-item dropdown dropdown-user">
+					<a href="#" class="navbar-nav-link" data-toggle="dropdown">
+						<img src="https://www.pngfind.com/pngs/m/470-4703547_icon-user-icon-hd-png-download.png" class="rounded-circle" alt="">
+						<span>Welcome, John &nbsp; <i class="fa fa-angle-down"></i></span>
+					</a>
+
+			 <div class="dropdown-menu dropdown-menu-right">
+						<a href="#" class="dropdown-item"><i class="icon-user-plus"></i> My profile</a>
+						<!-- <a href="#" class="dropdown-item"><i class="icon-coins"></i> My balance</a>
+						<a href="#" class="dropdown-item"><i class="icon-comment-discussion"></i> Messages <span class="badge badge-pill bg-blue ml-auto">58</span></a> -->
+						<div class="dropdown-divider"></div>
+						<!-- <a href="#" class="dropdown-item"><i class="icon-cog5"></i> Account settings</a> -->
+						<a href="#" class="dropdown-item"><i class="icon-switch2"></i> Logout</a>
+					</div> 
+				</li>
+			</ul>
+		</div>
+	</div> 
+	<!-- /main navbar -->
+
+  <div class="navbar navbar-expand-md navbar-light" *ngIf="secondaryNavBar">
+
+    <ul class="navbar-nav">
+		
+      <li class="nav-item"> 
+        <a  *ngIf="sidebarIcon" class="navbar-nav-link sidebar-control sidebar-right-main-hide d-none d-md-block">
+         <i class="fa fa-align-justify" aria-hidden="true"></i>
+        </a>
+      </li>
+  
+    </ul>
+      <div class="text-center d-md-none w-100">
+        <button type="button" class="navbar-toggler dropdown-toggle" data-toggle="collapse" data-target="#navbar-navigation">
+          <i class="icon-unfold mr-2"></i>
+          Navigation
+        </button>
+      </div>
+  
+      <div class="navbar-collapse collapse" id="navbar-navigation">
+        <ul class="navbar-nav">
+
+     
+          <li class="nav-item font-weight-semibold">
+            <a (click)="changePage('app-home', true)" class="navbar-nav-link">
+              <i class="fa fa-home mr-2"></i>
+              Home
+            </a>
+          </li>
+  
+          <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+            <a (click)="fireEvent('productDetails')" class="navbar-nav-link" >
+              <i class="fa fa-th-large mr-2"></i>
+              Basic Properties
+            </a>
+          </li>
+
+          <li class="nav-item nav-item-levels mega-menu-full font-weight-semibold">
+            <a (click)="changePage('app-view-report', false)" class="navbar-nav-link" >
+              <i class="fa fa-stack-exchange mr-2"></i>
+               Self Service
+            </a>
+          </li>
+  
+  
+          <li class="nav-item dropdown font-weight-semibold">
+            <a (click)="changePage('ontology', false)"  class="navbar-nav-link">
+              <i class="fa fa-file-pdf-o mr-2"></i>
+              Ontology Documents
+            </a>
+          </li>
+          <li class="nav-item dropdown font-weight-semibold">
+              <a (click)="changePage('ontology/synonyms', false)" class="navbar-nav-link">
+                <i class="fa fa-random mr-2"></i>
+                Ontology Management
+              </a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- /secondary navbar -->
+  
+	<!-- Page header -->
+	<div class="page-header">
+		<div class="page-header-content header-elements-md-inline">
+			<div class="">
+		
+			</div>
+
+	
+		</div>
+	</div>
+	<!-- /page header -->
+		
+ 
+ <!--BASIC Modal Details-->
+ <div class="modal fade" id="basicDetails" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+                <div class="modal-header">
+                        <h4 class="modal-title custom_align" id="Heading">Basic Properties</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="fa fa-times mom-close" aria-hidden="true"></span></button>
+                 
                 </div>
         
-            </div>
-        </div>
-    </div>
-</section>
+
+                    <div class="basic-scrl tab-content">
+                                <div *ngFor="let product of LsrproductLevel;let i = index">
+                                      <div class="row inbox-details">
+                                          <div class="col-md-12">
+                                                  <h5 (click)="productBox(i,product.tab_modal)"><b>Product Level Details</b></h5><br>
+                                                  <h6 class="cursor-tab">{{product.productName}}</h6>
+                                          </div>
+                                         </div>
+                                          <div class="row inbox-details">
+                                              <div class="col-md-6">
+                                                  <p><b>Spec ID:</b>{{product.spec_id}}</p>
+                                                  <p><b>All Nam Prod Identifiers:</b> {{product.ProdIdentifiers}} </p>
+                                                  <p><b>Synonyms:</b> {{product.Synonyms}} </p>
+      
+                                              </div>
+                                              <div class="col-md-6">
+                                         
+                                                  <p><b>No. of Active Materials:</b>{{product.No_Active_Materials}} </p>
+                                                  <p><b>Sales Volume:</b> {{product.Sales_Volume}} </p>
+                                                  <p><b>GHS Information-</b>{{product.GHS_Information}}</p>
+                                              </div>
+                                         
+                                          </div>
+                                          
+      
+                                </div>                       
+                
+                                          <div *ngFor="let product of LsrMaterialLevel;let i = index">
+                                                <div class="row inbox-details">
+                                                    <div class="col-md-12">
+                                                          <h5><b>Material Level Details</b></h5><br>
+                                                          <h6 class="cursor-tab">{{product.Material_id}}</h6>
+                                                         
+                                                    </div>
+                                                       </div>
+                                                  <div class="container">
+                                                    <div class="row">
+                                                          <div class="col-md-12">
+                                                          <table class="table table-bordered">
+                                                                  <thead>
+                                                                    <tr>
+                                                                      <th><b>Material Number</b></th>
+                                                                      <th><b>Description</b></th>
+                                                                      <th><b>BDT</b></th>
+                                                                      <th><b>Sales Vol 2018</b></th>
+                                                                    </tr>
+                                                                  </thead>
+                                                                  <tbody>
+                                                                    <tr *ngFor="let data of product.table">
+                                                                      <td>{{data.Material_Number}}</td>
+                                                                      <td>{{data.Description}}</td>
+                                                                      <td>{{data.BDT}}</td>
+                                                                      <td>{{data.Sales_Vol}}</td>
+                                                                    </tr>
+                                                                  </tbody>
+                                                                </table>
+                                                              </div>
+                                                    </div></div>
+                                        </div>     
+                          
+                           
+                                  <div  *ngFor="let product of LsrcomponentLevel;let i = index">
+                                        <div class="row inbox-details">
+                                            <div class="col-md-12">
+                                                  <h5><b>Composition Level Details</b></h5><br>
+                                                  <h6 class="cursor-tab">68083-19-2</h6>
+                                                  
+                                            </div>
+                                            
+                                          </div>
+                                          <div class="container">
+                                            <div class="row">
+      <div class="col-md-12">
+                                                  <table class="table table-bordered">
+                                                          <thead>
+                                                            <tr>
+                                                              <th><b>Spec Id</b></th>
+                                                              <th><b>Component Type</b></th>
+                                                              <th><b>Chemical Name</b></th>
+                                                              <th><b>CAS#</b></th>
+                                                              <th><b>Percentage</b></th>
+                                                              
+                                                            </tr>
+                                                          </thead>
+                                                          <tbody>
+                                                            <tr *ngFor="let data of product.table">
+                                                              <td>{{data.spec_id}}</td>
+                                                              <td>{{data.component_Type}}</td>
+                                                              <td>{{data.chemical_Name}}</td>
+                                                              <td>{{data.CAS}}</td>
+                                                              <td>{{data.Percentage}}</td>
+                                                            </tr>
+                                                            
+                                                            
+                                                          </tbody>
+                                                        </table>
+                                                          
+                                                         
+                                                     
+                                                      </div>
+                                           
+                                            </div></div>
+            
+                                 </div>     </div>                   
+                            
+           
+
+ 
+</div></div>
+         
+</div>
+  
