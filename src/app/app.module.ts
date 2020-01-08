@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TableModule} from 'primeng/table';
 import { NgbDatepickerModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgDatepickerModule } from 'ng2-datepicker';
-// import { TreeTableModule } from 'primeng/components/treetable/treetable';
 import { DropdownModule} from 'primeng/primeng';
 import { MultiSelectModule} from 'primeng/primeng';
 import {CommonModule} from '@angular/common';
@@ -34,7 +33,6 @@ import { RestrictedSubstanceComponent } from './restricted-substance/restricted-
 import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
 import { ReportDataComponent } from './report-data/report-data.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
-import {SharedService } from './service/shared.service';
 
 @NgModule({
   declarations: [
@@ -79,7 +77,7 @@ import {SharedService } from './service/shared.service';
     NgMultiSelectDropDownModule.forRoot(),
     NgSelectModule
     ],
-  providers: [HomeService, MomentiveService,SharedService],
+  providers: [HomeService, MomentiveService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -8,9 +8,7 @@ import { map } from 'rxjs/operators';
 import { NgSelectModule, NgOption} from '@ng-select/ng-select';
 import { MomentiveService} from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import {SharedService} from '../service/shared.service';
 declare var $: any;
-
 
 @Component({
   selector: 'app-product-attributes',
@@ -22,20 +20,10 @@ export class ProductAttributesComponent implements OnInit {
   @Input()data: string;
   selecteditem: any;
   selectednav: 'active';
-  placeholder: string;
-  keyword: string;
-  historyHeading: string ;
-  // tslint:disable-next-line: variable-name
   product_Name: any = [];
-  // tslint:disable-next-line: variable-name
   product_type: any = [];
-  // tslint:disable-next-line: variable-name
-  copyproduct_type: any = [];
   compositionPart: any = [];
-
   emptyProduct: string;
-  // tslint:disable-next-line: variable-name
-  products_Empty  = false;
   compostionCheck: string;
   compositionLegalTypes = false;
   compositionHunderdTypes = false;
@@ -44,7 +32,6 @@ export class ProductAttributesComponent implements OnInit {
   value: string;
   type: string;
   modeselect = 'Legal Composition';
-  toxiselected = 'Sealant';
   items: string[];
   selectedIndex: number;
   selectedId: any;
@@ -57,178 +44,28 @@ export class ProductAttributesComponent implements OnInit {
   structureAndFormulaTypes = false;
   compositionTypes = false;
   flowDiagrams = false;
-  /*Product compliance */
-  ProductComplianceCheck: any = [];
-  productComplianceCheck = 'Notification Status';
-  complianceNotification = true;
-  complianceRegistration = false;
-   regionParts: any = [];
-  regionValueCheck: any;
-  // tslint:disable-next-line: variable-name
-  complaint_EU = true;
-  // tslint:disable-next-line: variable-name
-  complaint_us = false;
-  // tslint:disable-next-line: variable-name
-  complaint_canada = false;
-  // tslint:disable-next-line: variable-name
-  complaint_latin = false;
-  // tslint:disable-next-line: variable-name
-  complaint_america = false;
-  regionPart: any = [];
-  customerCommunicationChecks: any = [];
-  customerCommunicationTab = 'US FDA Letter';
-  usFDA = true;
-  EuFoodContact = false;
-  heavyMetals = false;
-  communicationHistory = false;
-  restrictedSubstanceChecks: any = [];
-  restrictedSubstanceTab = 'GADSL';
-  gadslCheck = true;
-  californiaCheck = false;
-  toxicologyChecks: any = [];
-  toxicologyTab = 'Study Title and Date';
-  studyCheck = true;
-  monthlyCheck = false;
-  summaryCheck = false;
-  dataCheck = false;
-  toxicologydropData: any = [];
-  toxicologyValueCheck: any;
-  // tslint:disable-next-line: variable-name
-  toxicology_sealant = true;
-  // tslint:disable-next-line: variable-name
-  toxicology_silane = false;
-  salesCheckData: any = [];
-  saleTab = 'Location Details';
-  locationCheck = false;
-  volumeCheck = true;
-  communicationPart: any = [];
-  communicationBU: any = [];
-  topicCommunication: any = [];
-  productCommunication: any = [];
-  productTitle: any;
-  salesReport: any;
-
-  modalValue: string;
-  firstModal  = false;
-  secondModal = false;
-  thirdModal = false;
-  fourthModal = false;
-  fifthModal = false;
-  sixthModal = false;
-  seventhModal = false;
-  eightModal = false;
   cols: any[];
   legalProducts: any[];
   selectedlegalProducts: any[];
   selectedColumns: any[];
 
-  // GHS Labeling
-  ghsLabelingData: any[];
-  ghsLabelingHeader: any[];
-  selectedLabelingProducts: any[];
-  selectedLabelingColumns: any[];
-  legalpaginator = false;
-  private colsTempor: any[] = [];
-  public columnOptions: any[];
+      // GHS Labeling
+      ghsLabelingData: any[];
+      ghsLabelingHeader: any[];
+      selectedLabelingProducts: any[];
+      selectedLabelingColumns: any[];
+      legalpaginator = false;
+      private colsTempor: any[] = [];
+      public columnOptions: any[];
 
-// Report Data
-   reportDataproducts: any[];
-  reportDataHead: any[];
-  selectedReportDataProducts: any[];
-  selectedReportDataColumns: any[];
-  ReportDatapaginator = false;
-
-  // Sales Volume
-  saleDataHead: any[];
-  saleDataProducts: any[];
-  selectedSalesVolumeDataProducts: any[];
-  selectedSalesVolumeDataColumns: any[];
-  salesDatapaginator = false;
-
- // Toxicology Study
-  toxicologyStudyData: any[];
-  toxicologyStudyHead: any[];
-  selectedtoxicologyStudyDataProducts: any[];
-  selectedtoxicologyStudyColumns: any[];
-  toxicologyStudyDatapaginator = false;
-
-  // Toxicolgy Monthly
-  toxicologyMonthlyHeader: any[];
-  toxicologyMonthlyData: any[];
-  selectedtoxicologyMonthlyProducts: any[];
-  selectedtoxicologyMonthlyColumns: any[];
-
-  // Restricted GASDL
-  restrictedGASDLHeader: any[];
-  restrictedGASDLData: any[];
-  selectedrestrictedGASDLProducts: any[];
-  selectedrestrictedGASDLColumns: any[];
-  restrictedGASDLDatapaginator = false;
-
-  // Restricted Calofornia
-  restrictedCaliforniaHeader: any[];
-  restrictedCaliforniaData: any[];
-  selectedrestrictedCaliforniaProducts: any[];
-  selectedrestrictedCaliforniaColumns: any[];
-  restrictedCaliforniapaginator = false;
-
-  // Product Compliance Notification
-    // tslint:disable-next-line: variable-name
-  pc_NotificationData: any[];
-      // tslint:disable-next-line: variable-name
-  pc_NotificationHeader: any[];
-  selectedNotificationProducts: any[];
-  selectedNotificationColumns: any[];
-  Notificationpaginator = false;
-
-  // Product Compliance RegistrationEU
-  // tslint:disable-next-line: variable-name
-  complianceRegistrationEUHeader: any[];
-  complianceRegistrationEUData: any[];
-  selectedcomplianceRegistrationEUProducts: any[];
-  selectedcomplianceRegistrationEUColumns: any[];
-  complianceRegistrationEUpaginator = false;
-
-  // Product Compliance RegistrationCanada
-    // tslint:disable-next-line: variable-name
-  complianceRegistrationCanada_Header: any[];
-    // tslint:disable-next-line: variable-name
-  complianceRegistrationCanada_Data: any[];
-    // tslint:disable-next-line: variable-name
-  selectedcomplianceRegistrationCanada_Products: any[];
-    // tslint:disable-next-line: variable-name
-  selectedcomplianceRegistrationCanada_Columns: any[];
-    // tslint:disable-next-line: variable-name
-  complianceRegistrationCanada_paginator = false;
-
-  // roduct Compliance RegistrationLatin
-    // tslint:disable-next-line: variable-name
-  complianceRegistrationLatin_Header: any[];
-  // tslint:disable-next-line: variable-name
-  complianceRegistrationLatin_Data: any[];
-    // tslint:disable-next-line: variable-name
-  selectedcomplianceRegistrationLatin_Products: any[];
-    // tslint:disable-next-line: variable-name
-  selectedcomplianceRegistrationLatin_Columns: any[];
-    // tslint:disable-next-line: variable-name
-  complianceRegistrationLatin_paginator = false;
-
-// customer Communication Heavy metals
-// tslint:disable-next-line: variable-name
-  ccHeavyMetals_Data: any[];
-  // tslint:disable-next-line: variable-name
-  ccHeavyMetals_Header: any[];
-
-  // Composition Data
+ // Composition Data
   legalCompositionData: any[];
   legalCompositionHead: any[];
   selectedlegalCompositionProducts: any[];
-
   hunderedCompositionHead: any[];
   hunderedCompositionData: any[];
   copyhunderedCompositionData: any[];
   selectedhunderedCompositionProducts: any[];
-
   standardCompositionHead: any[];
   standardCompositionData: any[];
   copystandardCompositionData: any[];
@@ -237,74 +74,14 @@ export class ProductAttributesComponent implements OnInit {
   ExcelStandardData = [];
   ExcelStandardSubData = [];
   newStandardData = [];
-
-
-
-// Communication History
-  CommunicationHistoryData: any[];
-  CommunicationHistoryHead: any[];
-  commuicationDataCheck: any;
-  CopycommunicationHistoryData: any[];
-  events: any;
-  showDatefield = false;
-  ExcelCommunicationHistoryData = [];
-
-  dropdownList = [];
-
-  dropdownSettings = {};
-  // tslint:disable-next-line: variable-name
-  product_NameData: any[];
-  sidebarData: any;
-  copysidebarData: any = [];
-  sidebarCategoriesData: any = [];
-  basicData = false;
-  // tslint:disable-next-line: variable-name
-  productLsr_Name: any = [];
-  // tslint:disable-next-line: variable-name
-  productSilsoft_Name: any = [];
-  Searchname: any;
-  // tslint:disable-next-line: variable-name
-  productCAS_Number: any;
-  basicDetails = true;
-  submitDetails = false;
-  // tslint:disable-next-line: variable-name
-  intialData_Details: any = [];
-  productLevel: any = [];
-  MaterialLevel: any = [];
-  componentLevel: any = [];
-  LsrproductLevel: any = [];
-  LsrMaterialLevel: any = [];
-  LsrcomponentLevel: any = [];
-  HomeDataDetails: any = [];
-  intialDataDetails: any;
-  intialDispalyDetails: any = [];
-  intialPageDetails: any;
-  radioItem: any;
-  basicBoxDetails = false;
-  basicMouseoverDetails = false;
-  otherMouseoverDetails = false;
-  radiobuttonchecked = false;
   radiovalue: any;
-  selectedBUValue: any;
-  selectedProductValue: any;
-  selectedCustomerValue: any;
-  sidebarTopIcon = false;
-  sidebarNav = false;
-  openId: any;
-  basicBtn = false;
-  viewReportPage = false;
-  sidenavDetails: any;
-  parentObject: any;
-  pdfIcon = false;
-  searchRelatedMessage = false;
-  // New Data;
   productData: any = [];
   productApplication: any = [];
   objectKeys = Object.keys;
   constructor(private route: ActivatedRoute,
               private router: Router,
               private momentiveService: MomentiveService,
-              private sharedService: SharedService) {
+               ) {
 
     }
     ngOnInit() {
@@ -318,16 +95,9 @@ export class ProductAttributesComponent implements OnInit {
        }
       });
 
-    // componentLevel
-      this.momentiveService.getSearchData().subscribe(data => {
-      this.productData = data;
-      this.componentLevel = this.productData.componentLevel;
-      console.log(this.componentLevel);
-    }, err => {
-      console.error(err);
-    });
+ 
     // product_type
-      this.momentiveService.getSearchData().subscribe(data => {
+      this.momentiveService.getSearchData().subscribe(data => {      
       this.productData = data;
       this.product_type = this.productData.product_type;
       console.log(this.product_type);
@@ -367,6 +137,7 @@ export class ProductAttributesComponent implements OnInit {
   }, err => {
     console.error(err);
   });
+
   // ghsLabelingHeader
       this.momentiveService.getSearchData().subscribe(data => {
     this.productData = data;
@@ -383,6 +154,7 @@ export class ProductAttributesComponent implements OnInit {
   }, err => {
     console.error(err);
   });
+
   // legalCompositionHead
       this.momentiveService.getSearchData().subscribe(data => {
     this.productData = data;
@@ -434,7 +206,6 @@ export class ProductAttributesComponent implements OnInit {
     this.standardCompositionData.forEach(obj => {
         tempExcelStandardSubData = '';
         obj.Component_Name.forEach(componentNew => {
-              // tslint:disable-next-line: max-line-length
               tempExcelStandardSubData += ' CAS Name:' + componentNew.cas_name + ' IUPAC Name:' + componentNew.iupac_name + ' INCI Name:' + componentNew.INCI_Name;
             });
         this.ExcelStandardData.push({
@@ -576,7 +347,6 @@ export class ProductAttributesComponent implements OnInit {
         Value: '0.704 %'
       }
      ];
-    // tslint:disable-next-line: align
     this.productApplication = [
       { app_id: 1, app_text: 'Dental / surgical devices' },
       { app_id: 2, app_text: 'Diagnostics / imaging' },
@@ -593,8 +363,6 @@ export class ProductAttributesComponent implements OnInit {
       { app_id: 13, app_text: 'Respiratory / anesthesia' },
       { app_id: 14, app_text: 'Medical equipment keypads' },
     ];
-
- 
 }
     CompositionTypes(value) {
       this.compostionCheck = value;
@@ -604,7 +372,6 @@ export class ProductAttributesComponent implements OnInit {
     this.value = data;
     this.radiovalue = radiodata;
   }
-
 onChangeProductAttribute(item) {
   this.productAttributesCheck = item;
   if ( this.productAttributesCheck === 'Basic Information') {
@@ -663,7 +430,6 @@ compositionProcess(value) {
       this.compositionINCI = true;
     }
   }
-
 customSort(event) {
     event.data.sort((data1, data2) => {
         const value1 = data1[event.field];
@@ -684,20 +450,11 @@ customSort(event) {
         return (event.order * result);
     });
 }
-
-
 setMyStyles() {
     const styles = {
       position: this.product_type.length > 16 ? 'absolute' : 'none',
     };
     return styles;
-  }
-
-createOwner(value) {
-console.log(value);
-  }
-onCancel() {
-    this.showDatefield = false;
   }
 
 onItemSelect(item: any) {
@@ -711,13 +468,6 @@ onSelectAll(items: any) {
 }
 onDeSelectAll(items: any) {
     console.log(items);
-}
-
-
-unselect(): void {
-   this.selectedBUValue = undefined;
-   this.selectedProductValue = undefined;
-   this.selectedCustomerValue = undefined;
 }
 
 getAddressData() {

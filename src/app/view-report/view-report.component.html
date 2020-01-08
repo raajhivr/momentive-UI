@@ -129,7 +129,7 @@
                 <div *ngIf="viewReportPage">
                     <div class="row">
                         <div class="col-md-12">
-                            <button class="btn mom-btn text-right"> <i class="fa fa-file-pdf-o"></i> Download Report</button>
+                            <button class="btn mom-btn text-right" (click)="downloadAsPDF()"> <i class="fa fa-file-pdf-o"></i> Download Report</button>
                         </div>
                     </div>
                     <div id="pdfTable" #pdfTable >
@@ -205,7 +205,7 @@
                                                                                 <h6 class="card-subtitle mb-2 mh-2">Chemical Structure</h6>
                                                                                 <br>
                                                                                 <h6>CAS Number: 68083-19-2 </h6>
-                                                                                <img src="../../assets/images/momentive/chemicalStructure.png" />
+                                                                                <img class="img-responsive" src="../../assets/images/momentive/chemicalStructure.png" />
                                                                             </div>
                                                                             <div class="col-md-4">
                                                                                 <h6 class="card-subtitle mb-2 mh-2">Molecular Formula</h6>
@@ -497,7 +497,7 @@
                                                                             <div class="col-md-12">
                                                                                 <h6 class="card-subtitle mb-2 text-muted">Manufacturing Flow Diagram<span class="img-down"></span></h6>
                                                                                 <div class="img-content">
-                                                                                    <img src="../../assets/images/momentive/ManufracturingFlowDiagram.png" width="80%">
+                                                                                    <img  class="img-responsive" src="../../assets/images/momentive/ManufracturingFlowDiagram.png" width="80%">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -505,7 +505,7 @@
                                                                             <div class="col-md-12">
                                                                                 <h6 class="card-subtitle mb-2 text-muted">Synthesis Diagram<span class="img-down"></span></h6>
                                                                                 <div class="img-content">
-                                                                                    <img src="../../assets/images/momentive/SynthesisDiagram.png"></div>
+                                                                                    <img  class="img-responsive" src="../../assets/images/momentive/SynthesisDiagram.png"></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

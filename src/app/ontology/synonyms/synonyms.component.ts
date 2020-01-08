@@ -18,9 +18,7 @@ export class SynonymsComponent implements OnInit {
   PDfOntology: any = [];
   documentCategory: any;
   documentCategorySection = false;
-
   constructor(private formBuilder: FormBuilder, private momentiveService: MomentiveService) {
-
   this.synonymsFieldsForm = new FormGroup({
     synonymsFieldName: new FormControl()
  });
