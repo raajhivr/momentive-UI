@@ -97,6 +97,7 @@ export class HeaderComponent implements OnInit {
   url: any;
   currentURL: any;
   sidebarIcon = true;
+  newEvents:any = [];
 
   objectKeys = Object.keys;
   public items$: Observable<product_Name[]>;
@@ -119,7 +120,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
- 
+    localStorage.clear();
     this.url = window.location.href.includes('home');
     console.log(this.url);
 
@@ -205,7 +206,14 @@ export class HeaderComponent implements OnInit {
     console.error(err);
   });
 
-  
+  this.momentiveService.getAllEvents().subscribe(data => {
+    if (data) {
+        this.newEvents = data;
+        console.log(data);
+    }
+}, err => {
+    console.log(err);
+})
 
 
     this.placeholder = 'Enter the Details';
@@ -784,7 +792,7 @@ onDeSelectAll(items: any) {
 }
 private searchProduct(term: string | null, arr): product_Name[] {
   const searchTerm = term ? term : '';
-  if (searchTerm.length > 0) {
+  if (searchTerm.length > 2) {
   if (searchTerm === 'CUST' || searchTerm === 'MAT' || searchTerm === 'SPEC' || searchTerm === 'CAS') {
   console.log(searchTerm);
   return arr.filter((product_Name) => {
@@ -802,6 +810,7 @@ private searchProduct(term: string | null, arr): product_Name[] {
 onChangeData(data) {
   console.log(data);
   localStorage.clear();
+  localStorage.setItem('synonymsOntology', JSON.stringify(data))
   this.sideSearchData = true;
   console.log(this.sideSearchData);
   this.submitDetails = true;
@@ -830,6 +839,10 @@ onChangeData(data) {
   this.LsrMaterialLevel = [];
   this.LsrproductLevel = this.productLevel;
 
+ } else if (selctedSearchDataProduct === '68083-19-2') {
+  localStorage.setItem('ontologyCASDocumets', '68083-19-2');
+  // this.LsrproductLevel = this.productLevel;
+  this.router.navigate(['/app-home']);
  } else if (selctedSearchDataProduct === 'LSR2050') {
   localStorage.setItem('ontologyDocumets', 'LSR2050');
   // this.LsrproductLevel = this.productLevel;
@@ -984,6 +997,7 @@ fireEvent(event) {
   }
   }
   clearCheck(data) {
+    localStorage.clear();
     console.log(data);
  }
 
@@ -997,6 +1011,15 @@ fireEvent(event) {
       this.sidebarIcon = false;
      }
     this.router.navigate(['/'+ url]);
+   }
+   UnassignedDocuments() {
+    this.router.navigate(['/ontology'])
+   }
+   OntologyMasterManagement() {
+    this.router.navigate(['/ontology/synonyms']);
+   }
+   home() {
+    this.router.navigate(['/app-pageindex']);
    }
   
 }

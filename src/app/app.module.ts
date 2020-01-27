@@ -34,6 +34,8 @@ import { SalesVolumeComponent } from './sales-volume/sales-volume.component';
 import { ReportDataComponent } from './report-data/report-data.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +52,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     SalesVolumeComponent,
     ReportDataComponent,
     SidebarComponent,
+
   ],
   imports: [
     BrowserModule,

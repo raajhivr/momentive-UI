@@ -15,11 +15,11 @@ interface product_Name {
 }
 
 @Component({
-  selector: 'app-ontology-documents',
-  templateUrl: './ontology-documents.component.html',
-  styleUrls: ['./ontology-documents.component.css']
+  selector: 'app-unassigned-details-documents',
+  templateUrl: './unassigned-details-documents.component.html',
+  styleUrls: ['./unassigned-details-documents.component.css']
 })
-export class OntologyDocumentsComponent implements OnInit {
+export class UnassignedDetailsDocumentsComponent implements OnInit {
 
   sideSearchData: any;
   dateForm: FormGroup;
@@ -108,7 +108,7 @@ export class OntologyDocumentsComponent implements OnInit {
     });
     this.momentiveService.getOntologyDocuments().subscribe(data => {
       this.ontologyFileDocuments = data;
-      this.ontologyProductsName = this.ontologyFileDocuments.ontology_documents;
+      this.ontologyProductsName = this.ontologyFileDocuments.ontology_Unassigneddocuments;
       console.log(this.ontologyProductsName);
       this.PDfOntology = this.ontologyProductsName.filter((element) => (element.productName === this.Product_Id));
       console.log(this.PDfOntology);

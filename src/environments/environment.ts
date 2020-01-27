@@ -1,9 +1,14 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
 export const environment = {
   production: false
+  //Production URl
+  //apiUrl: 'http://40.114.45.9:1337/', -- Azure API URL
+  //Staging URl
+  //apiUrl: 'http://40.114.45.9/', -- Azure Staging URL
+  //Local URl
+ // apiUrl: 'http://localhost:4200/' 
 };
 
 /*

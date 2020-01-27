@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule} from 'primeng/table';
 import { NgbDatepickerModule, NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgDatepickerModule } from 'ng2-datepicker';
+import { Ng2FilterPipeModule } from 'ng2-filter-pipe';
 import { DropdownModule} from 'primeng/primeng';
 import { MultiSelectModule} from 'primeng/primeng';
 import { EditorModule, SharedModule, ButtonModule} from 'primeng/primeng';
@@ -14,16 +15,23 @@ import { OntologyComponent } from './ontology.component';
 import { OntologyHomeComponent } from '../ontology/ontology-home/ontology-home.component';
 import { OntologyDocumentsComponent } from '../ontology/ontology-documents/ontology-documents.component';
 import { SynonymsComponent } from '../ontology/synonyms/synonyms.component';
+import { WholeOntologyManagementComponent } from './whole-ontology-management/whole-ontology-management.component';
+import { UnassignedDocumentsComponent } from './unassigned-documents/unassigned-documents.component';
+import { UnassignedDetailsDocumentsComponent } from './unassigned-details-documents/unassigned-details-documents.component';
 
 
 const routes: Routes = [
       { path: '', component: OntologyHomeComponent},
       { path: 'ontology-documents', component: OntologyDocumentsComponent },
-      { path: 'synonyms', component: SynonymsComponent }
+      { path: 'synonyms', component: SynonymsComponent },
+      { path: 'whole-ontology-management', component: WholeOntologyManagementComponent },
+      { path: 'unassigned-documents', component: UnassignedDocumentsComponent },
+      { path: 'unassigned-details-documents', component: UnassignedDetailsDocumentsComponent }
+
 ];
 
 @NgModule({
-  declarations: [OntologyHomeComponent, OntologyComponent, SynonymsComponent, OntologyDocumentsComponent],
+  declarations: [OntologyHomeComponent, OntologyComponent, SynonymsComponent, OntologyDocumentsComponent, WholeOntologyManagementComponent,UnassignedDocumentsComponent, UnassignedDetailsDocumentsComponent],
   imports: [FormsModule, ReactiveFormsModule,
     NgbDatepickerModule,
     NgbTimepickerModule,
@@ -34,6 +42,7 @@ const routes: Routes = [
     EditorModule,
     DropdownModule,
     MultiSelectModule,
+    Ng2FilterPipeModule,
     SliderModule,
     InputTextModule,
     NgSelectModule,

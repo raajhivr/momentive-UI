@@ -207,3 +207,11 @@ a.article, a.article:hover {
   float: right;
   border-radius: 0px;
 }
+.custabs-head {
+  border-bottom: 1px solid #d0d0d0;
+  background-color: #fff;
+}
+
+table.print-friendly tr td, table.print-friendly tr th {
+  page-break-inside: avoid;
+}   

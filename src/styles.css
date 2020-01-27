@@ -5,3 +5,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;}
 .cdk-global-overlay-wrapper, .cdk-overlay-container {
     z-index: 9999!important;
 }
+/* html.modal-open {
+    -ms-overflow-style: scrollbar;
+    overflow: hidden;
+    height: 100%;
+}
+
+body.modal-open {
+  overflow: auto !important;
+  height: 100%;
+} */

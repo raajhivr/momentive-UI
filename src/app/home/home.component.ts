@@ -66,7 +66,6 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-
   // intialData_Details
     this.momentiveService.getSearchData().subscribe(data => {
     this.productdata = data;
@@ -275,5 +274,7 @@ MouseModalBox(id: any, data: any) {
       this.selectItem(index, ModalBoxId, Item);
     }});
 }
+
+
 
 }

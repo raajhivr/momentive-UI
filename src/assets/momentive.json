@@ -128,10 +128,10 @@
      ],
      
     "productCAS_Number" : [
-           { "name":"LSR 2680FC A",  "product": "product Name"},
+           { "name": "LSR 2680FC A",  "product": "product Name"},
            { "name": "Silsoft* ETS", "product":"product Name"},
            { "name": "17861-60-8",  "product":"product Name"},
-           { "name":"Y-14877",  "product": "Y Number"},
+           { "name": "Y-14877",  "product": "Y Number"},
            { "name": "17861-60-8",  "product":"CAS Number"},
            { "name":"541-02-6",  "product":"CAS Number"},
            { "name":"Heptamethyl ethyl trisiloxane", "product":"Chemical Name"},
@@ -183,7 +183,7 @@
              {
                "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                 "id":"LSR 2680FC A",
-                "Name" : "Product Complaince",
+                "Name" : "Product compliance",
                 "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                 "US FDA Compliance" :"No", 
                 "EU Food Contact Compliance": "Yes",
@@ -296,7 +296,7 @@
                {
                  "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                   "id":"LSR 2680FC A",
-                  "Name" : "Product Complaince",
+                  "Name" : "Product compliance",
                   "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                   "modal_id": "product_Compliance",
                   "tab_modal": "complianceModal"
@@ -369,7 +369,7 @@
                {
                  "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                   "id":"LSR 2680FC A",
-                  "Name" : "Product Complaince",
+                  "Name" : "Product compliance",
                   "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                   "modal_id": "product_Compliance",
                   "tab_modal": "complianceModal"
@@ -460,7 +460,7 @@
                  {
                    "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                     "id":"LSR 2680FC A",
-                    "Name" : "Product Complaince",
+                    "Name" : "Product compliance",
                     "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                     "sales_tab": "product_Compliance",
                     "modal_id": "product_Compliance",
@@ -620,7 +620,7 @@
                             {
                               "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                                 "id":"LSR 2680FC A",
-                                "Name" : "Product Complaince",
+                                "Name" : "Product compliance",
                                 "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                                 "sales_tab": "product_Compliance",
                                 "modal_id": "product_Compliance",
@@ -788,7 +788,7 @@
             {
               "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
               "id":"LSR 2680FC A",
-              "Name" : "Product Complaince",
+              "Name" : "Product compliance",
               "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
               "sales_tab": "product_Compliance",
               "modal_id": "product_Compliance",
@@ -964,7 +964,7 @@
                    {
                      "product_name": "000000069023 LSR 2680FC B-C3 Liquid Silicone Rubber - Component B",
                       "id":"LSR 2680FC A",
-                      "Name" : "Product Complaince",
+                      "Name" : "Product compliance",
                       "image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT",
                       "sales_tab": "product_Compliance",
                       "modal_id": "product_Compliance",
@@ -2453,7 +2453,7 @@
         {"Product Application":"Dental / surgical devices, Diagnostics / imaging, Fluid and drug delivery devices, Orthopedics / prosthetics, Advanced Wound Care & Scar Management, Septa / stoppers / laboratory accessories"},
         {"tab_modal": "compositionModal"}
       ],
-    "Product Complaince":[ 
+    "Product compliance":[ 
        {"image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT"},
        {"Negative Regulatory Notification Lists":"ENCS (JP) - Japan (ENCS) List , NDSL - Canada NDSL Inventory "},
        {"AG Registration Status":"Active: USA Canada, Latin America ; Not Active: EU region"},
@@ -2501,7 +2501,7 @@
         {"product Identification": "LSR 2680FC A,NLR160-80,NLR160-80,T6227" },
         {"product Application":"Dental / surgical devices, Diagnostics / imaging, Fluid and drug delivery devices, Orthopedics / prosthetics, Advanced Wound Care & Scar Management, Septa / stoppers / laboratory accessories"}
        ],
-    "product Complaince":[ 
+    "product compliance":[ 
        {"image":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3WDKemmPJYhXsoGknA6nJwlRZTQzuYBY4xmpWAbInraPIJfAT"},
        {"US FDA Compliance" : "No"},
        {"EU Food Contact ": "Compliance: Yes"},
@@ -2752,7 +2752,6 @@
         { "name":  "LSR2680FC-A-BLK",  "product":"Nam Prod"},
         { "name": "LSR2680FC-W A " ,  "product":"Nam Prod"}
     ]
-
 
 } 
 

@@ -12,11 +12,11 @@ declare var $: any;
 
 
 @Component({
-  selector: 'app-ontology-home',
-  templateUrl: './ontology-home.component.html',
-  styleUrls: ['./ontology-home.component.css']
+  selector: 'app-unassigned-documents',
+  templateUrl: './unassigned-documents.component.html',
+  styleUrls: ['./unassigned-documents.component.css']
 })
-export class OntologyHomeComponent implements OnInit {
+export class UnassignedDocumentsComponent implements OnInit {
 
   ontologyFileDocuments: any = [];
   ontologyNewDocuments: any = [];
@@ -24,9 +24,6 @@ export class OntologyHomeComponent implements OnInit {
   documentCategory: any;
   documentCategorySection = false;
   productIdFilter: any
-  unassignedDocument: any;
-  keyDocuments: any =[];
-  alertText: any;
 
 
 
@@ -35,39 +32,17 @@ export class OntologyHomeComponent implements OnInit {
                }
 
   ngOnInit() {
-    // this.documentCategory = localStorage.getItem('ontologyDocumets');
-    // console.log(this.documentCategory);
 
-    
-    var retrievedData = localStorage.getItem("synonymsOntology");
-    this.keyDocuments =  JSON.parse(retrievedData);
-    console.log(this.keyDocuments);
-
-    if(this.keyDocuments === null){
-      this.unassignedDocument = true;
-      this.alertText = "Please select the products";
-    } else if (this.keyDocuments.length > 0) {
-      this.unassignedDocument= false;
-      this.documentCategory = this.keyDocuments[0].name;  
-      console.log(this.documentCategory);
-
-      if ((this.documentCategory === 'LSR2050')||(this.documentCategory === 'LSR2650')) {
-        this.unassignedDocument= false;
+      // tslint:disable-next-line: align
         this.momentiveService.getOntologyDocuments().subscribe(data => {
         this.ontologyFileDocuments = data;
-        this.PDfOntology = this.ontologyFileDocuments.ontology_documents;
-        this.PDfOntology = this.PDfOntology.filter((element: { productName: any; }) => (element.productName === this.documentCategory));
+        this.PDfOntology = this.ontologyFileDocuments.ontology_Unassigneddocuments;
+        this.PDfOntology = this.PDfOntology.filter((element: { productName: any; }) => (element.productName === 'Unassigned'));
         console.log(this.PDfOntology);
+        // tslint:disable-next-line: max-line-length
       }, err => {
         console.error(err);
       });
-    } else if ((this.documentCategory != 'LSR2050')||(this.documentCategory != 'LSR2650')) {
-      this.unassignedDocument= true;
-       this.alertText = "No documents for the Selected Product";
-    }
-    }
-
-    
 
       $("a.collapsed").click(function(){
         $(this).find(".btn:contains('answer')").toggleClass("collapsed");
@@ -82,16 +57,13 @@ export class OntologyHomeComponent implements OnInit {
     queryParams: {
       'document_id' : id,
       'category_Name': categeory,
-      'Product_Name': localStorage.getItem('ontologyDocumets')
+      'Product_Name': 'Unassigned'
     }
   };
-   this.router.navigate(['ontology/ontology-documents'], navigationExtras);
+   this.router.navigate(['ontology/unassigned-details-documents'], navigationExtras);
  }
 
 
- unassigned() {
-  this.router.navigate(['ontology/unassigned-documents'])
- }
  expand() {
     $('.collapse').collapse('show');
     }

@@ -266,4 +266,6 @@ selectedcomplianceRegistrationLatin_Columns: any[];
   onDeSelectAll(items: any) {
       console.log(items);
   }
+
+
   }

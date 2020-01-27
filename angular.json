@@ -33,7 +33,10 @@
               "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
          
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/jspdf/dist/jspdf.min.js",
+              "./node_modules/jspdf-autotable/dist/jspdf.plugin.autotable.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -55,8 +58,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "6mb",
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -29,6 +29,7 @@ const routes: Routes = [
   {path: 'app-sales-volume', component: SalesVolumeComponent},
   {path: 'app-report-data', component: ReportDataComponent},
 
+
   {
     path: 'ontology',
     loadChildren: 'src/app/ontology/ontology.module#OntologyModule'

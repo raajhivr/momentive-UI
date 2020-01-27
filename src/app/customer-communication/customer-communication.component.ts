@@ -77,6 +77,8 @@ export class CustomerCommunicationComponent implements OnInit {
       });
     }
     ngOnInit() {
+
+
       this.momentiveService.notifyObservable$.subscribe(value => {
         this.selecteditem = value;
         console.log(this.selecteditem);
@@ -86,6 +88,10 @@ export class CustomerCommunicationComponent implements OnInit {
          }, 0);
        }
       });
+
+
+ 
+
       this.CopycommunicationHistoryData = [
         {
           case_number: '68083-19-2',

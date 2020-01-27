@@ -100,7 +100,8 @@
 
 
 
-   <div class="modal fade" id="{{modalValue}}" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+
+   <div class="modal modal-wide fade" id="{{modalValue}}" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -133,9 +134,11 @@
                                         </div>
                                     </div>
                          </div>
-                
+
+                    
+            
                             <!--Product Attributes-->
-                            <div *ngIf="firstModal">
+                            <div  *ngIf="firstModal">
                            <app-product-attributes></app-product-attributes> 
 
                             </div>
@@ -165,9 +168,12 @@
                         <div  *ngIf="seventhModal">
                           <app-report-data></app-report-data>
                         </div>
-                
-                    </div>
-                </div>
+                        <div class="modal-footer">
+                            
+                          </div>
+                          <!-- footer -->
+                    </div></div>
+                  
   </div>
 
         

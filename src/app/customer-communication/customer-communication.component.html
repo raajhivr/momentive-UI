@@ -159,12 +159,9 @@
                          
                             <div class="card-body">
                                     <h6 class="text-default font-weight-semibold">Heavy Metals: <i class="fa fa-info-circle" role="button" title="This data is from Document on Shared Drive - P"></i></h6>
-                         <div class="col-md-12">
-                            <div class="">
-                                    <div class="metal-table">
-                                        
-                                            <div class="metal-list">
-                                             
+                     <div class="row">
+                                    <div class="col-md-12">
+                                          <div class="box">
                                                 <table class="table" >
                                                       <tbody>
                                                         
@@ -236,11 +233,10 @@
                                                     </tbody>
                                                 </table>
                                 
-                                            </div>
-                                        </div>
+                                         
                         
                         </div></div> 
-              
+                    </div>
                
                 
                 </div>
@@ -252,7 +248,7 @@
                             <h6 class="text-default font-weight-semibold">Communication History:<i class="fa fa-info-circle" role="button" title="This data is from SFDC"></i></h6>
                         <div class="row drop-sec">
                           
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <mat-form-field>
                                     <mat-label>BU</mat-label>
                                     <mat-select placeholder="BU" #ref [(ngModel)]="selectedBUValue" (selectionChange)="communicationProcess(selectedBUValue)">
@@ -262,7 +258,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <mat-form-field>
                                     <mat-label>Product Name</mat-label>
                                     <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedProductValue" (selectionChange)="communicationProcess(selectedProductValue)">
@@ -272,7 +268,7 @@
                                     </mat-select>
                                 </mat-form-field>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                     <mat-form-field>
                                         <mat-label>Customer Name</mat-label>
                                         <mat-select placeholder="Customer Name" #ref [(ngModel)]="selectedCustomerValue" (selectionChange)="communicationProcess(selectedCustomerValue)">
@@ -282,47 +278,33 @@
                                         </mat-select>
                                     </mat-form-field>
                                 </div>
+                                <div class="col-md-2">
+                                    <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="startDate" placeholder="Start Date" name="start_Date" formControlName="start_Date" id="start_Date"
+                                                  (dateChange)="addEvent('change', $event)">
+                                            <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #startDate></mat-datepicker>
+                                            </mat-form-field>
+                                            </form>
+                                </div>
+                                <div class="col-md-2">
+                                    <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
+                                    <mat-form-field>
+                                        <input matInput [matDatepicker]="endDate" placeholder="End Date"  name="end_Date" formControlName="end_Date" id="end_Date"
+                                                    (dateChange)="addEvent('change', $event)">
+                                            <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
+                                            <mat-datepicker #endDate></mat-datepicker>
+                                            </mat-form-field></form>
+                                    </div>
+                            
+                            <div class="col-md-2">
+                                    <button class="btn docs-btn btn-sm"  (click)="unselect()">&nbsp; Clear</button> 
                         
-                            <div class="col-md-3">
-                                    <button class="btn btn-primary btn-sm"  (click)="unselect()">&nbsp; Clear</button> 
-                                <button class="btn btn-primary btn-sm" (click)="chooseDate()"><i class="fa fa-calendar">&nbsp; Select Date</i></button> 
-
-                                
                             </div>
 
 </div> 
-                        <div  *ngIf="showDatefield">
-                               
-                            
-                                <form [formGroup]="dateForm" autocomplete="off" novalidate (ngSubmit)="createOwner(dateForm.value)"> 
-                                     <div class="row">
-                            <div class="col-md-4">
-                                            <mat-form-field>
-                                                    <input matInput [matDatepicker]="startDate" placeholder="Start Date" name="start_Date" formControlName="start_Date" id="start_Date"
-                                                              (dateChange)="addEvent('change', $event)">
-                                                        <mat-datepicker-toggle matSuffix [for]="startDate"></mat-datepicker-toggle>
-                                                        <mat-datepicker #startDate></mat-datepicker>
-                                                        </mat-form-field>
-                                                    </div>
-                            <div class="col-md-4">
-                                            <mat-form-field>
-                                            <input matInput [matDatepicker]="endDate" placeholder="End Date"  name="end_Date" formControlName="end_Date" id="end_Date"
-                                                        (dateChange)="addEvent('change', $event)">
-                                                <mat-datepicker-toggle matSuffix [for]="endDate"></mat-datepicker-toggle>
-                                                <mat-datepicker #endDate></mat-datepicker>
-                                                </mat-form-field>
-
-                            </div>
-                        <div class="col-md-4">
-                         
-                                        <button class="btn btn-primary btn-sm"  [disabled]="!dateForm.valid">Submit</button>
-                                        <button class="btn btn-primary btn-sm" type="button" (click)="onCancel()">Cancel</button>
-                                    
-                        </div>
-                    </div> 
-                        </form>
-                                  
-                            </div>                                   
+                                                        
                   
                         <p-table #dt [columns]="CommunicationHistoryHead" [value]="CommunicationHistoryData" dataKey="case_number"  (sortFunction)="customSort($event)" [customSort]="true"  [paginator]="true" [rows]="5">
                               

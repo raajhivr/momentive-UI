@@ -398,7 +398,103 @@
         {"synonyms" : "ELA071","createdDate":"06/8/2019","CreatedBy":"User2"},
         {"synonyms" : "ELA129","createdDate":"12/9/2019","CreatedBy":"User3"},
         {"synonyms" : "ELA130","createdDate":"29/11/2019","CreatedBy":"User4"}
-    ]
+    ],
+   "whole_Synonyms" : [
+        {"key": "LSR2050", "synonyms" : "ELA004","createdDate":"12/1/2019","CreatedBy":"User1"},
+        {"key": "LSR2050", "synonyms" : "ELA095","createdDate":"14/2/2019","CreatedBy":"User2"},
+        {"key": "LSR2050", "synonyms" : "ELA112","createdDate":"16/3/2019","CreatedBy":"User3"},
+        {"key": "LSR2050", "synonyms" : "ELA21","createdDate":"17/4/2019","CreatedBy":"User4"},
+        {"key": "LSR2050", "synonyms" : "ELA122","createdDate":"22/4/2019","CreatedBy":"User5"},
+        {"key": "LSR2050", "synonyms" : "ELA152","createdDate":"19/5/2019","CreatedBy":"User6"},
+        {"key": "LSR2050", "synonyms" : "ELA153","createdDate":"27/6/2019","CreatedBy":"User7"},
+        {"key": "LSR2050", "synonyms" : "ELA154","createdDate":"11/7/2019","CreatedBy":"User8"},
+        {"key": "LSR2050", "synonyms" : "ELA155","createdDate":"22/8/2019","CreatedBy":"User8"},
+        {"key": "LSR2050","synonyms" : "ELA170","createdDate":"16/10/2019","CreatedBy":"User10"},
+        {"key": "LSR2050","synonyms" : "ELA189","createdDate":"07/11/2019","CreatedBy":"User11"},
+        {"key": "LSR2650","synonyms" : "ELA070","createdDate":"02/7/2019","CreatedBy":"User1"},
+        {"key": "LSR2650","synonyms" : "ELA071","createdDate":"06/8/2019","CreatedBy":"User2"},
+        {"key": "LSR2650","synonyms" : "ELA129","createdDate":"12/9/2019","CreatedBy":"User3"},
+        {"key": "LSR2650","synonyms" : "ELA130","createdDate":"29/11/2019","CreatedBy":"User4"}
+   ],
 
+   "Synonyms_CAS_Number" : [
+    { "name": "LSR 2680FC A",  "product": "product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0701","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0711","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1291","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1301","createdDate":"29/11/2019","CreatedBy":"User4"}
+    ]
+    },
+    { "name": "Silsoft* ETS", "product":"product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0702","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0712","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1292","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1302","createdDate":"29/11/2019","CreatedBy":"User4"}
+            ]},
+    { "name": "17861-60-8",  "product":"product Name",
+        "Synonyms_CAS":[
+            {"synonyms" : "ELA0703","createdDate":"02/7/2019","CreatedBy":"User1"},
+            {"synonyms" : "ELA0713","createdDate":"06/8/2019","CreatedBy":"User2"},
+            {"synonyms" : "ELA1293","createdDate":"12/9/2019","CreatedBy":"User3"},
+            {"synonyms" : "ELA1303","createdDate":"29/11/2019","CreatedBy":"User4"}
+         ]}
+],
+
+"ontology_Unassigneddocuments" : [ 
+
+    {
+        "EU Food Contact" : [
+
+           { "fileName":"2018-4-17 Nordmann, Rassmann GmbH  EU food contact statement Silopren LSR color paste color paste grey _FS",
+               "productName":"Unassigned",
+               "id":"Unassigned_1",
+               "createdDate":"07/09/2018",
+               "url":"assets/images/momentivePdf/Unassigned/2018-4-17 Nordmann, Rassmann GmbH  EU food contact statement Silopren LSR color paste color paste grey _FS.pdf",
+               "Extract_Field": {
+                   "ontology_Key": "NUll",
+                   "EU Regulation": "The ingredients are in compliance with the demands of recommendation XV 'Silicone' of the Bundesamt fur Risikobewertung(BfR) and the recommendation IX 'Colorants for Plastics and Other Polymers Used in Commodities' and can therefore be used to color silicone elastomeric food contact articles/products."
+               }
+              
+           }
+        ],
+        "category" :"EU Food Contact",
+        "id":"EUFoodContact",
+        "productName":"Unassigned",
+        "categoryName" : "EU Food Contact"
+    },
+    {
+        "US FDA" : [
+            {"fileName":"LSR2080 - FDA Compliance Letter to Nordmann, Rassmann d.o.o",
+                "category":"US FDA",
+                "productName":"Unassigned",
+                "id":"Unassigned_1",
+                "createdDate":"11/03/2018",
+                "url":"assets/images/momentivePdf/Unassigned/LSR2080 - FDA Compliance Letter to Nordmann, Rassmann d.o.o.pdf",
+                "Extract_Field": {
+                    "ontology_Key": "NUll",
+                    "FDA Compliance": "With regard to your query on the compliance of LSR2080 with U.S. Food and Drug Administration (FDA) regulations, we would like to inform you that this product is compositionally compliant with 21 CFR 177.2600 - substances employed in the preparation of rubber articles intended for repeated use."
+                }
+               },
+               {"fileName":"SAG470 - FDA Compliance Letter to Henkel",
+                "category":"US FDA",
+                "productName":"Unassigned",
+                "id":"Unassigned_2",
+                "createdDate":"09/01/2018",
+                "url":"assets/images/momentivePdf/Unassigned/SAG470 - FDA Compliance Letter to Henkel.pdf",
+                "Extract_Field": {
+                    "ontology_Key": "NUll",
+                    "FDA Compliance": "This is to certify that SAG470 Silocone Antifoam Emulsion meets the requirements of the following 21 CFR FDA  REgulations"
+                }
+               }
+         ],
+        "category":"US FDA",
+        "id":"USFDA",
+        "productName":"Unassigned",
+        "categoryName":"US FDA"
+
+    }
+]
 
 }
