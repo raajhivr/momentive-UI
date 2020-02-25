@@ -3,9 +3,6 @@ import {Subject} from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Constants } from './../constants/constants';
-import { Observable, of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
-
 
 //let url = environment.apiUrl;
 
@@ -13,10 +10,7 @@ import { delay, map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class MomentiveService {
-  invokeEvent: Subject<any> = new Subject(); 
-  itemsNew: any = [];
-
- 
+  invokeEvent: Subject<any> = new Subject();
   /**
    * Observable string streams
    */
@@ -52,25 +46,8 @@ export class MomentiveService {
   // getSearchRelavantData(data) {
   //   return this.http.post(url + "product-search-data", data);
   // }
-
-
-
-
-
-  // getAllEvents(data) {
-  //   console.log(data);
-  //   return this.http.post(Constants.SERVICES_DOMAIN + "webapp/", data);
-  // }
-
-
-  getAllEvents(data) {
-    console.log(data);
-    return this.http.post(Constants.SERVICES_DOMAIN + "all/products",data);
-  }
-
-  getSelectedProducts(data) {
-    console.log(data);
-    return this.http.post(Constants.SERVICES_DOMAIN + "all/selctedProducts", data);
+  getAllEvents() {
+    return this.http.get(Constants.SERVICES_DOMAIN + "all/products");
   }
 
 callMethodOfSecondComponent(data) {

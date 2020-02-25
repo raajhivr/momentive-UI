@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Attribute, IfStmt } from '@angular/compiler';
+import { Attribute } from '@angular/compiler';
 import { MatTableDataSource} from '@angular/material';
 import { TableModule} from 'primeng/table';
 import * as frLocale from 'date-fns/locale/fr';
@@ -14,7 +14,7 @@ import { MomentiveService} from '../service/momentive.service';
 import { Router, ActivatedRoute } from '@angular/router';
 declare var $: any;
 // tslint:disable-next-line: class-name
-interface product{
+interface product_Name {
   name: string;
 }
 
@@ -41,9 +41,6 @@ export class HeaderComponent implements OnInit {
   value: string;
   type: string;
   cols: any[];
-  SearchProducts: any;
-  searchDataLength: any;
-  searchProductList: any = [];
 
 
   // Composition Data
@@ -100,10 +97,10 @@ export class HeaderComponent implements OnInit {
   url: any;
   currentURL: any;
   sidebarIcon = true;
-  Isfirst = true;
+  newEvents:any = [];
 
   objectKeys = Object.keys;
-  public items$: Observable<product[]>;
+  public items$: Observable<product_Name[]>;
   public input$ = new Subject<string | null>();
   @ViewChild('code', {static: false}) private codeRef?: ElementRef<HTMLElement>;
 
@@ -116,25 +113,25 @@ export class HeaderComponent implements OnInit {
 
 
     this.items$ = this.input$.pipe(
-      map((term) => this.searchProduct(term, this.product_Name,this.Isfirst))
+      map((term) => this.searchProduct(term, this.product_Name))
     );
 
 
   }
 
   ngOnInit() {
- 
+    localStorage.clear();
     this.url = window.location.href.includes('home');
     console.log(this.url);
 
   // Product Name
-    // this.momentiveService.getSearchData().subscribe(data => {
-    //   this.productdata = data;
-    //   this.product_Name = this.productdata.product_Name;
-    //   console.log(this.productdata);
-    // }, err => {
-    //   console.error(err);
-    // });
+    this.momentiveService.getSearchData().subscribe(data => {
+      this.productdata = data;
+      this.product_Name = this.productdata.product_Name;
+      console.log(this.productdata);
+    }, err => {
+      console.error(err);
+    });
 // LSR 2680FC
     this.momentiveService.getSearchData().subscribe(data => {
       this.productdata = data;
@@ -209,7 +206,14 @@ export class HeaderComponent implements OnInit {
     console.error(err);
   });
 
-  
+  this.momentiveService.getAllEvents().subscribe(data => {
+    if (data) {
+        this.newEvents = data;
+        console.log(data);
+    }
+}, err => {
+    console.log(err);
+})
 
 
     this.placeholder = 'Enter the Details';
@@ -786,249 +790,189 @@ onSelectAll(items: any) {
 onDeSelectAll(items: any) {
     console.log(items);
 }
-
-searchCheckFunction(key,arr,Isfirst):any
-{
-  let promise = new Promise((resolve, reject) => {
-    if(this.searchDataLength > 3 && Isfirst) {
-  this.SearchProducts = key;
-  console.log(key);
-  this.searchDataLength = this.SearchProducts.SearchData.length;
-  if(this.searchDataLength > 0) {
-  this.momentiveService.getAllEvents(key).subscribe(data => {
-    if (data) {
-        this.product_Name = data;
-        console.log(this.product_Name);
-        resolve(data);
-    }
-}, err => {
-    console.log(err);
-    resolve([]);
-})
-  } else  {
-    this.product_Name = [];
-    resolve([]);
-  }
-} else {
-  resolve(arr)
-}
-});
-}
-
-
-
-private searchProduct(term: string | null, arr,Isfirst): product[] {
-  console.log(Isfirst)
-  console.log(arr);
+private searchProduct(term: string | null, arr): product_Name[] {
   const searchTerm = term ? term : '';
-  this.SearchProducts = {'SearchData': searchTerm};
-  console.log(this.SearchProducts);
-  this.searchDataLength = this.SearchProducts.SearchData.length;
-  console.log(this.searchCheckFunction);
-  return this.searchCheckFunction(this.SearchProducts,arr,Isfirst).then(data=> {
-    return data.filter((product) => {
-      return product.name.toLowerCase().startsWith(searchTerm.toLowerCase());
-    });
-  })
-
-    
+  if (searchTerm.length > 2) {
+  if (searchTerm === 'CUST' || searchTerm === 'MAT' || searchTerm === 'SPEC' || searchTerm === 'CAS') {
+  console.log(searchTerm);
+  return arr.filter((product_Name) => {
+    return product_Name.product.toLowerCase().startsWith(searchTerm.toLowerCase());
+  });
+  } else {
+  console.log(searchTerm);
+  return arr.filter((product_Name) => {
+    return product_Name.name.toLowerCase().startsWith(searchTerm.toLowerCase());
+  });
+}
+}
 }
 
 onChangeData(data) {
-    console.log(data);
-    console.log(data.length);
-    if (data.length === 0) {
-      this.basicDetails = true;
-      this.router.navigate(['/app-pageindex']);
-      this.secondaryNavBar = false;
-    }
-    if (data.length === 1) {
-    this.router.navigate(['/app-home']);
-    this.secondaryNavBar = true;
-    const selctedSearchDataProduct = data[0].name;
-    console.log(selctedSearchDataProduct);
-    this.router.navigate(['/app-home']);
-  this.momentiveService.getSelectedProducts(data).subscribe(data => {
-    if (data) {
-      this.Isfirst = false;
-      console.log(data);
-      this.product_Name = data;
-      this.items$ = this.input$.pipe(
-        map((term) => this.searchProduct(term,this.product_Name,this.Isfirst))
-        );
-   }
-
-}, err => {
-   console.log(err);
-})
+  console.log(data);
+  localStorage.clear();
+  localStorage.setItem('synonymsOntology', JSON.stringify(data))
+  this.sideSearchData = true;
+  console.log(this.sideSearchData);
+  this.submitDetails = true;
+  this.secondaryNavBar = true;
+  console.log(data.length);
+  if (data.length === 0) {
+    this.basicDetails = true;
+    this.router.navigate(['/app-pageindex']);
+    this.secondaryNavBar = false;
   }
+  if (data.length === 1) {
+  this.router.navigate(['/app-home']);
+  this.secondaryNavBar = true;
+  const selctedSearchDataProduct = data[0].name;
+  console.log(selctedSearchDataProduct);
+  if (selctedSearchDataProduct === 'LSR 2680FC A') {
+  localStorage.setItem('viewReportId', 'LSR 2680FC A');
+  this.basicDetails = false;
+  this.submitDetails = true;
+  this.router.navigate(['/app-home']);
+  this.basicBoxDetails = true;
+  this.items$ = this.input$.pipe(
+    map((term) => this.searchProduct(term, this.productLsr_Name))
+  );
+  this.LsrcomponentLevel = [];
+  this.LsrMaterialLevel = [];
+  this.LsrproductLevel = this.productLevel;
 
+ } else if (selctedSearchDataProduct === '68083-19-2') {
+  localStorage.setItem('ontologyCASDocumets', '68083-19-2');
+  // this.LsrproductLevel = this.productLevel;
+  this.router.navigate(['/app-home']);
+ } else if (selctedSearchDataProduct === 'LSR2050') {
+  localStorage.setItem('ontologyDocumets', 'LSR2050');
+  // this.LsrproductLevel = this.productLevel;
+  this.router.navigate(['/app-home']);
+ } else if (selctedSearchDataProduct === 'LSR2650') {
+  localStorage.setItem('ontologyDocumets', 'LSR2650');
+  this.router.navigate(['/app-home']);
+  // this.LsrproductLevel = this.productLevel;
+ } else if (selctedSearchDataProduct === '68083-19-2') {
+  this.items$ = this.input$.pipe(
+    map((term) => this.searchProduct(term, this.productLsr_Name))
+  );
+  this.LsrproductLevel = [];
+  this.LsrMaterialLevel = [];
+  this.LsrcomponentLevel = this.componentLevel;
+  this.basicDetails = false;
+  this.submitDetails = true;
+  this.router.navigate(['/app-home']);
+  this.casNumberFileter();
+  } else if (selctedSearchDataProduct === '121856 LSR2680 TH/Drum kit/400Kg') {
+  this.items$ = this.input$.pipe(
+    map((term) => this.searchProduct(term, this.productLsr_Name))
+  );
+  this.LsrproductLevel = [];
+  this.LsrMaterialLevel = this.MaterialLevel;
+  this.LsrcomponentLevel = [];
+  this.basicDetails = false;
+  this.submitDetails = true;
+  this.router.navigate(['/app-home']);
 }
-// onChangeData(data) {
-//   console.log(data);
-//   localStorage.clear();
-//   this.sideSearchData = true;
-//   console.log(this.sideSearchData);
-//   this.submitDetails = true;
-//   this.secondaryNavBar = true;
-//   console.log(data.length);
-//   if (data.length === 0) {
-//     this.basicDetails = true;
-//     this.router.navigate(['/app-pageindex']);
-//     this.secondaryNavBar = false;
-//   }
-//   if (data.length === 1) {
-//   this.router.navigate(['/app-home']);
-//   this.secondaryNavBar = true;
-//   const selctedSearchDataProduct = data[0].name;
-//   console.log(selctedSearchDataProduct);
-//   if (selctedSearchDataProduct === 'LSR 2680FC A') {
-//   localStorage.setItem('viewReportId', 'LSR 2680FC A');
-//   this.basicDetails = false;
-//   this.submitDetails = true;
-//   this.router.navigate(['/app-home']);
-//   this.basicBoxDetails = true;
+// else if(selctedSearchDataProduct == "121856 LSR2680 TH/Drum kit/400Kg"){
 //   this.items$ = this.input$.pipe(
-//     map((term) => this.searchProduct(term, this.productLsr_Name))
-//   );
-//   this.LsrcomponentLevel = [];
-//   this.LsrMaterialLevel = [];
-//   this.LsrproductLevel = this.productLevel;
-
-//  } else if (selctedSearchDataProduct === '68083-19-2') {
-//   localStorage.setItem('ontologyCASDocumets', '68083-19-2');
-//   // this.LsrproductLevel = this.productLevel;
-//   this.router.navigate(['/app-home']);
-//  } else if (selctedSearchDataProduct === 'LSR2050') {
-//   localStorage.setItem('ontologyDocumets', 'LSR2050');
-//   // this.LsrproductLevel = this.productLevel;
-//   this.router.navigate(['/app-home']);
-//  } else if (selctedSearchDataProduct === 'LSR2650') {
-//   localStorage.setItem('ontologyDocumets', 'LSR2650');
-//   this.router.navigate(['/app-home']);
-//   // this.LsrproductLevel = this.productLevel;
-//  } else if (selctedSearchDataProduct === '68083-19-2') {
-//   this.items$ = this.input$.pipe(
-//     map((term) => this.searchProduct(term, this.productLsr_Name))
-//   );
-//   this.LsrproductLevel = [];
-//   this.LsrMaterialLevel = [];
-//   this.LsrcomponentLevel = this.componentLevel;
-//   this.basicDetails = false;
-//   this.submitDetails = true;
-//   this.router.navigate(['/app-home']);
-//   this.casNumberFileter();
-//   } else if (selctedSearchDataProduct === '121856 LSR2680 TH/Drum kit/400Kg') {
-//   this.items$ = this.input$.pipe(
-//     map((term) => this.searchProduct(term, this.productLsr_Name))
-//   );
-//   this.LsrproductLevel = [];
+//     map((term) => this.searchProduct(term,this.productLsr_Name))
+//   )
 //   this.LsrMaterialLevel = this.MaterialLevel;
-//   this.LsrcomponentLevel = [];
-//   this.basicDetails = false;
-//   this.submitDetails = true;
-//   this.router.navigate(['/app-home']);
+//   this.basicDetails = true;
+//   this.intialDetails =false;
+//   this.submitDetails =false;
 // }
-// // else if(selctedSearchDataProduct == "121856 LSR2680 TH/Drum kit/400Kg"){
-// //   this.items$ = this.input$.pipe(
-// //     map((term) => this.searchProduct(term,this.productLsr_Name))
-// //   )
-// //   this.LsrMaterialLevel = this.MaterialLevel;
-// //   this.basicDetails = true;
-// //   this.intialDetails =false;
-// //   this.submitDetails =false;
-// // }
 
 
-//   } else if (data.length === 2) {
-//     const selctedSearchDataProduct = data[0].name;
-//     const selctedSearchMatId = data[1].name;
-//     if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg' ) {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrMaterialLevel = this.MaterialLevel;
-//     } else if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '68083-19-2') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrMaterialLevel = [];
-//       this.LsrcomponentLevel = this.componentLevel;
-//       this.LsrproductLevel = this.productLevel;
-//       this.casNumberFileter();
-//     } else if (selctedSearchDataProduct === '121856 LSR2680 TH/Drum kit/400Kg' && selctedSearchMatId === '68083-19-2') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrproductLevel = [];
-//       this.LsrMaterialLevel = this.MaterialLevel;
-//       this.LsrcomponentLevel = this.componentLevel;
-//     } else if (selctedSearchDataProduct === '68083-19-2' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg ') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrproductLevel = [];
-//       this.LsrMaterialLevel = this.MaterialLevel;
-//       this.LsrcomponentLevel = this.componentLevel;
-//     } else if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === 'OU EUROBIO LAB') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrcomponentLevel = [];
-//       this.LsrMaterialLevel = [];
-//       this.LsrproductLevel = this.productLevel;
-//       this.customerNameFilter();
-//     } else if (selctedSearchDataProduct === '68083-19-2' && selctedSearchMatId === 'OU EUROBIO LAB') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.LsrcomponentLevel = [];
-//       this.LsrMaterialLevel = [];
-//       this.LsrproductLevel = this.productLevel;
-//       this.customerNameFilter();
-//     }
-//     } else if (data.length === 3) {
-//       const selctedSearchDataProduct = data[0].name;
-//       const selctedSearchMatId = data[1].name;
-//       const selectedSearchCasNum = data[2].name;
-//       console.log(selectedSearchCasNum);
-//       // tslint:disable-next-line: max-line-length
-//       if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg' && selectedSearchCasNum === '68083-19-2') {
-//       this.items$ = this.input$.pipe(
-//         map((term) => this.searchProduct(term, this.productLsr_Name))
-//       );
-//       this.casNumberFileter();
-//       this.LsrcomponentLevel = this.componentLevel;
-//     }
-//   } else if (data.length === 3) {
-//     const selctedSearchDataProduct = data[0].name;
-//     const selctedSearchMatId = data[1].name;
-//     const selectedSearchCasNum = data[2].name;
-//     console.log(selectedSearchCasNum);
+  } else if (data.length === 2) {
+    const selctedSearchDataProduct = data[0].name;
+    const selctedSearchMatId = data[1].name;
+    if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg' ) {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrMaterialLevel = this.MaterialLevel;
+    } else if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '68083-19-2') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrMaterialLevel = [];
+      this.LsrcomponentLevel = this.componentLevel;
+      this.LsrproductLevel = this.productLevel;
+      this.casNumberFileter();
+    } else if (selctedSearchDataProduct === '121856 LSR2680 TH/Drum kit/400Kg' && selctedSearchMatId === '68083-19-2') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrproductLevel = [];
+      this.LsrMaterialLevel = this.MaterialLevel;
+      this.LsrcomponentLevel = this.componentLevel;
+    } else if (selctedSearchDataProduct === '68083-19-2' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg ') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrproductLevel = [];
+      this.LsrMaterialLevel = this.MaterialLevel;
+      this.LsrcomponentLevel = this.componentLevel;
+    } else if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === 'OU EUROBIO LAB') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrcomponentLevel = [];
+      this.LsrMaterialLevel = [];
+      this.LsrproductLevel = this.productLevel;
+      this.customerNameFilter();
+    } else if (selctedSearchDataProduct === '68083-19-2' && selctedSearchMatId === 'OU EUROBIO LAB') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.LsrcomponentLevel = [];
+      this.LsrMaterialLevel = [];
+      this.LsrproductLevel = this.productLevel;
+      this.customerNameFilter();
+    }
+    } else if (data.length === 3) {
+      const selctedSearchDataProduct = data[0].name;
+      const selctedSearchMatId = data[1].name;
+      const selectedSearchCasNum = data[2].name;
+      console.log(selectedSearchCasNum);
+      // tslint:disable-next-line: max-line-length
+      if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '121856 LSR2680 TH/Drum kit/400Kg' && selectedSearchCasNum === '68083-19-2') {
+      this.items$ = this.input$.pipe(
+        map((term) => this.searchProduct(term, this.productLsr_Name))
+      );
+      this.casNumberFileter();
+      this.LsrcomponentLevel = this.componentLevel;
+    }
+  } else if (data.length === 3) {
+    const selctedSearchDataProduct = data[0].name;
+    const selctedSearchMatId = data[1].name;
+    const selectedSearchCasNum = data[2].name;
+    console.log(selectedSearchCasNum);
 
-//     // tslint:disable-next-line: max-line-length
-//     if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '68083-19-2' && selectedSearchCasNum === '121856 LSR2680 TH/Drum kit/400Kg') {
-//     this.items$ = this.input$.pipe(
-//       map((term) => this.searchProduct(term, this.productLsr_Name))
-//     );
-//     this.casNumberFileter();
-//     this.LsrcomponentLevel = this.componentLevel;
-//   }
-// } else if (data.length > 3) {
-//   this.searchRelatedMessage = true;
-//   this.submitDetails = false;
-//   this.router.navigate(['/app-pageindex']);
-// } else {
-//     localStorage.clear();
-//     this.submitDetails = false;
-//     this.router.navigate(['/app-pageindex']);
-//     this.searchRelatedMessage = true;
-//     this.items$ = this.input$.pipe(
-//       map((term) => this.searchProduct(term, this.product_Name))
-//     );
+    // tslint:disable-next-line: max-line-length
+    if (selctedSearchDataProduct === 'LSR 2680FC A' && selctedSearchMatId === '68083-19-2' && selectedSearchCasNum === '121856 LSR2680 TH/Drum kit/400Kg') {
+    this.items$ = this.input$.pipe(
+      map((term) => this.searchProduct(term, this.productLsr_Name))
+    );
+    this.casNumberFileter();
+    this.LsrcomponentLevel = this.componentLevel;
+  }
+} else if (data.length > 3) {
+  this.searchRelatedMessage = true;
+  this.submitDetails = false;
+  this.router.navigate(['/app-pageindex']);
+} else {
+    localStorage.clear();
+    this.submitDetails = false;
+    this.router.navigate(['/app-pageindex']);
+    this.searchRelatedMessage = true;
+    this.items$ = this.input$.pipe(
+      map((term) => this.searchProduct(term, this.product_Name))
+    );
 
-//   }
-// }
+  }
+}
 
   // fileter the Standard Composition-CAS Number
   casNumberFileter() {
@@ -1053,8 +997,8 @@ fireEvent(event) {
   }
   }
   clearCheck(data) {
+    localStorage.clear();
     console.log(data);
-    this.Isfirst = true;
  }
 
  Ongtology() {
@@ -1069,10 +1013,13 @@ fireEvent(event) {
     this.router.navigate(['/'+ url]);
    }
    UnassignedDocuments() {
-    this.router.navigate(['ontology/unassigned-documents'])
+    this.router.navigate(['/ontology'])
    }
    OntologyMasterManagement() {
-    this.router.navigate(['/ontology/whole-ontology-management']);
+    this.router.navigate(['/ontology/synonyms']);
+   }
+   home() {
+    this.router.navigate(['/app-pageindex']);
    }
   
 }

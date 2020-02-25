@@ -29,21 +29,11 @@
 
 			<span class="navbar-text mr-md-auto mr-md-3 form-width">
         <div class="">
-        
               <div class="forms">
                   <div class="reactive-form">   
-                      <form autocomplete="off" novalidate [formGroup]="reactiveForm">
+                      <form autocomplete="off" novalidate [formGroup]="reactiveForm" (ngSubmit)="submitProduct(Searchname)">
                          <div class="row">
-                            <div class="col-md-3">
-                              <div class="dropdown-select warning">
-                                <a class="select">Search Categories</a>
-                         
-                                 <ul class="option-list">
-                                   <li><a  (click)="categoryType(data.type)" *ngFor ="let data of categoriesType">{{data.type}}</a></li>    
-                                   </ul>
-                               </div>
-                           </div>
-                              <div class="col-md-9">
+                              <div class="col-md-12">
                               <div class="new-search">
                               <ng-select #code class="custom" [items]="items$ | async"
                                     placeholder="Enter the details"
@@ -57,7 +47,6 @@
                                       [typeahead]="input$"
                                       [dropdownPosition]="'bottom'"
                                       [searchable]="true"
-                                      [loading]="loading"
                                       [selectableGroupAsModel]="false"
                                       groupBy="product"
                                       (change)="onChangeData($event)"
@@ -65,8 +54,7 @@
                                       (remove)="clearCheck($event)"
                                       [markFirst]="true">
                               </ng-select></div>   </div>
-
-                            
+                         
                          </div>
                       </form>
                   </div>
@@ -284,7 +272,7 @@
                                         <div class="row inbox-details">
                                             <div class="col-md-12">
                                                   <h5><b>Composition Level Details</b></h5><br>
-                                                  <h6 class="cursor-tab">68083-19-2</h6>
+                                                  <!-- <h6 class="cursor-tab">68083-19-2</h6> -->
                                                   
                                             </div>
                                             
